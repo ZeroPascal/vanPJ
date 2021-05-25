@@ -7,7 +7,7 @@ export default async function parsePage(mainFrame: puppeteer.Frame, pj:  PJ){
     let content = await frame.content()
     let parser = new DOMParser()
     pj = praseClasses( parser.parseFromString(content), pj)
-   console.log('PJ Parsed')
+  // console.log('PJ',pj.id, 'Parsed')
     return pj
 }
 

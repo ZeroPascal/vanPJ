@@ -6,5 +6,6 @@
       "preserveConstEnums": true,
       "sourceMap": true,
       "esModuleInterop": true,
+      "target": "es6"
     }
 }

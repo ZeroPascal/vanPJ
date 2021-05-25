@@ -3,7 +3,7 @@ import puppeteer from 'puppeteer'
 import parsePage from './parsePage'
 
 import DOMParser from 'dom-parser'
-import pjPoller from './pjPoller'
+import pjPoller, { pollPJs } from './pjPoller'
 import PJ from './pj'
 var btoa = require('btoa')
 const app = express()
@@ -118,29 +118,87 @@ const findStatus=(frame: puppeteer.Frame, indent =' '):puppeteer.Frame | undefin
   }
   return undefined
 }
+/*
 let pjs: Record<number, PJ> ={}
 pjPoller().then(res=>{
   pjs = res
 })
+*/
+const pjs = new pjPoller();
+let time = Date.now()
+console.log('Starting Poller')
+pjs.start().then(()=>{
+  console.log('PJS Built!', (Date.now()-time)/1000+'s')
+ 
+ setInterval(f,30000)
+})
+
+const f=()=>{
+  //console.log('Polling ', Date())
+  let time = Date.now()
+  pjs.pollAllPJs().then(()=>{
+    console.log('PJs Rereshed', (Date.now()-time)/1000+'s')
+  })
+}
+
+app.get('/api*',(req,res)=>{
+  //console.log(req.url)
+ // console.log(req.query)
+  let q = req.query
+  if(q.status){
+    res.status(200).json(pjs.getStatus())
+    return
+  }
+  if(q.pj){
+    
+    let pj = q.pj
+    
+    if(pj=='all'){
+      console.log('Requested All')
+      res.status(200).json(pjs.getPJs())
+      return
+    }
+    let pjID = parseInt(q.pj.toString())
+    if(!pjs || isNaN(pjID) || !pjs.getPJ(pjID)){
+      res.status(404).json('PJ NOT FOUND')
+      return
+    } 
+    
+      // pj = pjs.getPJ(pjID)
+      res.status(200).json(pjs.getPJ(pjID))
+    }
+  if(q.status){
+
+  }
+   //console.log(res)
+  
+})
 app.get('/192.168.10.*', (req, res) => {
   console.log(req.url)
   let url = 'http:/'+req.url
-  let pj = pjs[parseInt(req.url.slice(-3))]
+  let pj = pjs.getPJ(parseInt(req.url.slice(-3)))
   if(pj){
-    res.json(pj)
+    console.log(pj)
+    res.status(200).json(pj)
   }else{
-    res.sendStatus(404)
-    res.send()
+    res.status(404).json('PJ NOT FOUND')
+    
   }
 })
 
 app.get('/rigStatus', (req, res)=>{
   let rigGood = true
+  let bad: number[] = []
   Object.values(pjs).forEach(pj=>{
     if(!pj.online){
       rigGood = false
+      bad.push(pj.id)
     }
   })
-  res.json(rigGood)
+  if(rigGood){
+    res.send('Rig is Good')
+  } else{
+    res.json(bad)
+  }
 })
 

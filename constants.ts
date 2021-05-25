@@ -1,7 +1,7 @@
 
 
 export const pjWorldStart = 101
-export const pjWorldEnd = 110
+export const pjWorldEnd = 196
 export const pjWorldOmit = [109,122]
 
 export const pjWorld =()=>{
@@ -14,3 +14,5 @@ export const pjWorld =()=>{
 }
 
 export const ipTop = '192.168.10.'
+
+export const header ={ Authorization: 'Basic YWRtaW4xOnBhbmFzb25pYw==' }
