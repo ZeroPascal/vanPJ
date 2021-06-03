@@ -5,6 +5,8 @@ import PromisePool, { } from '@supercharge/promise-pool'
 import PJ from "./pj";
 import pj from "./pj";
 
+
+const pollRemote = true
 export function pollPJs(pjs:pjPoller){
   return asyncPollPJs(pjs).then((results)=>{
     return results
@@ -48,41 +50,6 @@ class poller {
 
     }
   }
-  async _buildPage() {
-    try {
-      this.browser.newPage().then(page => {
-        this.page = page
-        this.page.setExtraHTTPHeaders(header)
-        this.page.goto(this.uri).then(() => {
-          this.pollPage().then(()=>{
-           // console.log('Polled',this.id)
-          })
-        })
-
-      })
-    } catch (e) {
-
-    }
-  }
-  _pollPage() {
-    //if(!this.id) return
-    try {
-
-     // console.log('Polling', this.id)
-      this.page.reload().then(() => {
-        parsePage(this.page.mainFrame(), this.pj).then(pj => {
-          this.pj = pj
-          this.pj.online = true
-        if (this.pj.online) {
-          this.pj.lastSeen = Date.now()
-        }
-        })
-        
-      })
-    } catch (e) {
-
-    }
-  }
   get PJ() {
     return this.pj
   }
@@ -112,25 +79,8 @@ export default class pjPoller {
   browser: puppeteer.Browser
   pjs: Record<number, poller>
   constructor() {
-   // console.log(pjWorld())
     this.pjs = {}
-    // console.log('PJ Poller Started!')
-    //console.log(pjWorld())
-    /*
-    puppeteer.launch().then(browser => {
-      this.browser = browser
-      this.buildAllPJS()
-     // setInterval(this.pollAllPJS,3000)
-    }
-    )
-    */
-
-
-
-
-    //await browser.close();
-
-    //return pjs
+   
   }
   async start(){
     this.browser = await puppeteer.launch();
@@ -140,15 +90,6 @@ export default class pjPoller {
     this.browser.close()
   }
   async buildAllPJS(){
-    /*
-    await pjWorld().forEach(async pjID=>{
-      console.log('Building Poller',pjID)
-      this.pjs[pjID] =new poller(this.browser, pjID)
-      this.pjs[pjID].buildPage().then(()=>{
-        console.log('Poller Built',pjID)
-      })
-    })
-    */
    const {results, errors}= await PromisePool
    .withConcurrency(pjWorld().length)
    .for(pjWorld())
@@ -156,14 +97,6 @@ export default class pjPoller {
      this.pjs[pjID] = new poller(this.browser,pjID)
      await this.pjs[pjID].buildPage()
    })
-/*
-   for await(const pjID of pjWorld()){
-    console.log('Building Poller',pjID)
-    this.pjs[pjID]= new poller(this.browser, pjID)
-    await this.pjs[pjID].buildPage()
-    console.log('Poller Built',pjID)
-   }
-   */
   }
   async _pollAllPJs() {
     console.log('Polling All PJs')
@@ -175,26 +108,6 @@ export default class pjPoller {
   }catch(e){
     console.error(e)
   }
-  }
-  async __pollAllPJs() {
-    const { results, errors } = await PromisePool
-      .for(pjWorld())
-      .process(async pjID => {
-        console.log(pjID)
-        const page = await this.browser.newPage();
-        await page.setExtraHTTPHeaders({ Authorization: 'Basic YWRtaW4xOnBhbmFzb25pYw==' })
-        //await page.goto('http://localhost:3001/192.168.10.101'); // URL is given by the "user" (your client-side application)
-        await page.goto('http:///192.168.10.' + pjID);
-        let pj = new PJ(pjID)
-        pj = await parsePage(page.mainFrame(), pj)
-        pj.online = true
-        if (pj.online) {
-          pj.lastSeen = Date.now()
-        }
-        //  this.pjs[pjID] = pj
-        return pj
-      })
-    //console.log(pjs)
   }
   getPJs(){
     let pjs:Record<number, PJ> ={}
@@ -212,15 +125,19 @@ export default class pjPoller {
       })
     //console.log(pjs)
   }
-
+  async pollPJ(pjID: number){
+   await  this.pjs[pjID]?.pollPage()
+   console.log('Polled',pjID)
+   return this.getPJ(pjID)
+  }
   getPJ(pjID: number) {
     return this.pjs[pjID].PJ
   }
   getStatus(){
     let s = {
-      online: false,
-      power: false,
-      shutter: false
+      online: true,
+      power: true,
+      shutter: true
     }
     Object.values(this.pjs).forEach(pj=>{
       let p = pj.PJ

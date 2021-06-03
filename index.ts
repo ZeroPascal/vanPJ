@@ -12,65 +12,16 @@ const port = 3002
 const start = 101
 const end = 192
 const ipRange = '192.168.10.'
-/*
-let dif = end - start +1
-while(dif>0){
-  let ip = (dif+start)
-  app.use(ipRange+ip, express.static('FakePJS/'+ip))
-  dif --
-}
-if(dif === 0){
-  console.log('Range Made')
-  app.listen(port, () => {
-    console.log(`Server Started`)
-    
-    
-   })
-}
-*/
-/*
-app.use('/192.168.10.101' ,express.static('FakePJS/101'))
-app.use('/192.168.10.102' ,express.static('FakePJS/102'))
-app.use('/192.168.10.103' ,express.static('FakePJS/103'))
-app.use('/192.168.10.104' ,express.static('FakePJS/104'))
-app.use('/192.168.10.105' ,express.static('FakePJS/105'))
-//app.use('/192.168.10.101' ,express.static('FakePJS/101'))
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
 
-*/
 app.listen(port, () => {
   console.log(`Server Started`)
   
  })
 
-/*
-app.get('/192.168.10.101/cgi-bin*',(req ,res)=>{
-  console.log(req.rawHeaders)
-  console.log('192.168.10.101 Proj_CTL Requested')
-  //res.sendFile('Projector control window.html', {root: './FakePJS/'})
- // res.sendFile('title.html', {root:'./FakePJS/Projector control window_files'})
-})
-
-*/
-
 app.get('/',(req,res)=>{
   res.send('Hello World From Panasonic Server')
 
 })
-/*
-app.get('/192.168.10.101*',(req,res)=>{
-  console.log('sending')
-  res.send({
-    id:101,
-    ip: '192.168.10.101',
-    power: true,
-    shutter: true,
-    status: 'OK'
-  })
-})
-*/
 app.get('/screenshot', async (req, res) => {
   try{
   const browser = await puppeteer.launch();
@@ -96,41 +47,13 @@ app.get('/screenshot', async (req, res) => {
 }
 })
 
-const dumpTree=(frame: puppeteer.Frame, indent = ' ')=>{
-  console.log(indent + frame.url());
-  for (const child of frame.childFrames()) {
-    dumpTree(child, indent + '  ');
-  }
-}
-
-const findStatus=(frame: puppeteer.Frame, indent =' '):puppeteer.Frame | undefined=>{
- // console.log(indent+frame.name());
-  if(frame.name() === 'mainFrame'){
-    console.log('Found frame')
-    return frame
-  }
-   
-  for(const child of frame.childFrames()){
-      let r = findStatus(child, indent+' ')
-      if(r){
-        return r
-      }
-  }
-  return undefined
-}
-/*
-let pjs: Record<number, PJ> ={}
-pjPoller().then(res=>{
-  pjs = res
-})
-*/
 const pjs = new pjPoller();
 let time = Date.now()
 console.log('Starting Poller')
 pjs.start().then(()=>{
   console.log('PJS Built!', (Date.now()-time)/1000+'s')
  
- setInterval(f,30000)
+ setInterval(f,60000)
 })
 
 const f=()=>{
@@ -141,11 +64,12 @@ const f=()=>{
   })
 }
 
-app.get('/api*',(req,res)=>{
+app.get('/api*',async (req,res)=>{
   //console.log(req.url)
  // console.log(req.query)
   let q = req.query
   if(q.status){
+   // console.log('Requested Status')
     res.status(200).json(pjs.getStatus())
     return
   }
@@ -154,12 +78,14 @@ app.get('/api*',(req,res)=>{
     let pj = q.pj
     
     if(pj=='all'){
-      console.log('Requested All')
+      console.log('Requested All',Date())
       res.status(200).json(pjs.getPJs())
       return
     }
     let pjID = parseInt(q.pj.toString())
+    
     if(!pjs || isNaN(pjID) || !pjs.getPJ(pjID)){
+      
       res.status(404).json('PJ NOT FOUND')
       return
     } 
@@ -167,10 +93,16 @@ app.get('/api*',(req,res)=>{
       // pj = pjs.getPJ(pjID)
       res.status(200).json(pjs.getPJ(pjID))
     }
-  if(q.status){
-
+  if(q.poll){
+    //console.log('Polling')
+    let pjID = parseInt(q.poll.toString())
+    
+    if(!pjs || isNaN(pjID) || !pjs.getPJ(pjID)){
+      res.status(404).json('PJ NOT FOUNT')
+      return
+    }
+    res.status(200).json(await pjs.pollPJ(pjID))
   }
-   //console.log(res)
   
 })
 app.get('/192.168.10.*', (req, res) => {
@@ -187,18 +119,8 @@ app.get('/192.168.10.*', (req, res) => {
 })
 
 app.get('/rigStatus', (req, res)=>{
-  let rigGood = true
-  let bad: number[] = []
-  Object.values(pjs).forEach(pj=>{
-    if(!pj.online){
-      rigGood = false
-      bad.push(pj.id)
-    }
-  })
-  if(rigGood){
-    res.send('Rig is Good')
-  } else{
-    res.json(bad)
-  }
+  console.log('Rig Status')
+  res.status(200).json(pjs.getStatus())
+  
 })
 

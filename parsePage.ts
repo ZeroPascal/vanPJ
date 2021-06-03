@@ -30,16 +30,20 @@ function praseClasses(doc: DOMParser.Dom, pj: PJ){
           }
          
         }else{
-         //   console.log('Header ',header)
+        
             let inner = element.innerHTML
-            
+           /* if(pj.id === 104) {
+              console.log('Header ',header)
+              console.log('Inner', inner)
+            }  
+            */   
             switch(header){
                 case 'POWER':
                     pj.power = handlePower(inner)
                 case 'SHUTTER':
                     pj.shutter =handleShutter(inner)
                     break;
-            }
+            } 
 
             header = ''
         }
@@ -49,11 +53,11 @@ function praseClasses(doc: DOMParser.Dom, pj: PJ){
 }
 
 function handlePower(s: string){
-    return s.indexOf('fffff')<80
+    return s.indexOf('fffff')<70
 }
 function handleShutter(s: string){
     //console.log(s)
-    return s.indexOf('fffff')>80
+    return s.indexOf('fffff')>70
 }
 
 const dumpTree=(frame: puppeteer.Frame, indent = ' ')=>{
