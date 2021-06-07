@@ -5,6 +5,7 @@ import parsePage from './parsePage'
 import DOMParser from 'dom-parser'
 import pjPoller, { pollPJs } from './pjPoller'
 import PJ from './pj'
+import Telnetter from './telnet'
 var btoa = require('btoa')
 const app = express()
 const port = 3002
@@ -14,7 +15,7 @@ const end = 192
 const ipRange = '192.168.10.'
 
 app.listen(port, () => {
-  console.log(`Server Started`)
+  //console.log(`Server Started`)
   
  })
 
@@ -49,13 +50,15 @@ app.get('/screenshot', async (req, res) => {
 
 const pjs = new pjPoller();
 let time = Date.now()
+/*
 console.log('Starting Poller')
 pjs.start().then(()=>{
   console.log('PJS Built!', (Date.now()-time)/1000+'s')
  
  setInterval(f,60000)
 })
-
+*/
+let netter = new Telnetter()
 const f=()=>{
   //console.log('Polling ', Date())
   let time = Date.now()

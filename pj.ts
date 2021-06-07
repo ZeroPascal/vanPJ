@@ -4,6 +4,7 @@ export type pj={
     shutter: boolean,
     online: boolean,
     lastSeen: number,
+    lampStatus: string,
     error: string
 }
 
@@ -14,6 +15,7 @@ export default class PJ implements pj{
     shutter: boolean
     online: boolean
     lastSeen: number
+    lampStatus: string
     error: string
     constructor(id:number){
         this.id = id
@@ -22,6 +24,17 @@ export default class PJ implements pj{
         this.online = false
         this.lastSeen = -1
         this.error = ''
+        this.lampStatus = 'Unknown'
+    }
+
+    pollPower(){
+        
+    }
+    pollShutter(){
 
     }
+    pollLampStatus(){
+
+    }
+    
 }

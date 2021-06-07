@@ -1,0 +1,240 @@
+{"level":"info","message":"05/06/2021/11:45:40.406 (REQUEST) (err, res) => {\r\n                console.log(res);\r\n            }","timestamp":"2021-06-05T15:45:40.410Z"}
+{"level":"info","message":"05/06/2021/11:45:40.412 (RESPONSE)NTCONTROL 1 24e6fa6a\rERRA\r","timestamp":"2021-06-05T15:45:40.413Z"}
+{"level":"info","message":"05/06/2021/11:46:26.923 (REQUEST) (err, res) => {\r\n                console.log(res);\r\n            }","timestamp":"2021-06-05T15:46:26.926Z"}
+{"level":"info","message":"05/06/2021/11:46:26.928 (RESPONSE)NTCONTROL 1 2a540099\rERRA\r","timestamp":"2021-06-05T15:46:26.928Z"}
+{"level":"info","message":"05/06/2021/11:48:53.635 (REQUEST) 47046C7B4721","timestamp":"2021-06-05T15:48:53.637Z"}
+{"level":"info","message":"05/06/2021/11:48:53.639 (RESPONSE)NTCONTROL 1 6f0bbcca\rERRA\r","timestamp":"2021-06-05T15:48:53.639Z"}
+{"level":"info","message":"05/06/2021/11:49:39.605 (REQUEST) ","timestamp":"2021-06-05T15:49:39.608Z"}
+{"level":"info","message":"05/06/2021/11:49:39.610 (RESPONSE)NTCONTROL 1 38523518\rERRA\r","timestamp":"2021-06-05T15:49:39.610Z"}
+{"level":"info","message":"05/06/2021/11:53:32.578 (REQUEST) ","timestamp":"2021-06-05T15:53:32.581Z"}
+{"level":"info","message":"05/06/2021/11:53:32.583 (RESPONSE)NTCONTROL 1 793b7f31\rERRA\r","timestamp":"2021-06-05T15:53:32.583Z"}
+{"level":"info","message":"05/06/2021/11:53:33.705 (REQUEST) YWRtaW4xOnBhbmFzb25pYzo3OTNiN2YzMQ1FUlJBDQ==","timestamp":"2021-06-05T15:53:33.705Z"}
+{"level":"info","message":"05/06/2021/11:53:33.705 (RESPONSE)NTCONTROL 1 35610d11\rERRA\r","timestamp":"2021-06-05T15:53:33.706Z"}
+{"level":"info","message":"05/06/2021/11:54:10.876 (REQUEST) ","timestamp":"2021-06-05T15:54:10.879Z"}
+{"level":"info","message":"05/06/2021/11:54:10.881 (RESPONSE)NTCONTROL 1 0e134ddb\rERRA\r","timestamp":"2021-06-05T15:54:10.881Z"}
+{"level":"info","message":"05/06/2021/11:54:11.997 (REQUEST) YWRtaW4xOnBhbmFzb25pYzowZTEzNGRkYg1FUlJBDQ==","timestamp":"2021-06-05T15:54:11.997Z"}
+{"level":"info","message":"05/06/2021/11:54:11.998 (RESPONSE)NTCONTROL 1 2c2594cb\rERRA\r","timestamp":"2021-06-05T15:54:11.998Z"}
+{"level":"info","message":"05/06/2021/11:54:30.303 (REQUEST) ","timestamp":"2021-06-05T15:54:30.306Z"}
+{"level":"info","message":"05/06/2021/11:54:30.307 (RESPONSE)NTCONTROL 1 497591b7\rERRA\r","timestamp":"2021-06-05T15:54:30.308Z"}
+{"level":"info","message":"05/06/2021/11:54:31.318 (REQUEST) YWRtaW4xOnBhbmFzb25pYzo0OTc1OTFiNw1FUlJBDQ==","timestamp":"2021-06-05T15:54:31.318Z"}
+{"level":"info","message":"05/06/2021/11:54:31.318 (RESPONSE)NTCONTROL 1 6787d8a7\rERRA\r","timestamp":"2021-06-05T15:54:31.318Z"}
+{"level":"info","message":"05/06/2021/11:54:52.650 (REQUEST) ","timestamp":"2021-06-05T15:54:52.652Z"}
+{"level":"info","message":"05/06/2021/11:54:52.654 (RESPONSE)NTCONTROL 1 5f10aa66\rERRA\r","timestamp":"2021-06-05T15:54:52.654Z"}
+{"level":"info","message":"05/06/2021/11:54:53.780 (REQUEST) YWRtaW4xOnBhbmFzb25pYzo1ZjEwYWE2Ng1FUlJBDQ==","timestamp":"2021-06-05T15:54:53.781Z"}
+{"level":"info","message":"05/06/2021/11:54:53.781 (RESPONSE)NTCONTROL 1 1b353847\rERRA\r","timestamp":"2021-06-05T15:54:53.781Z"}
+{"level":"info","message":"05/06/2021/11:55:58.603 (REQUEST) ","timestamp":"2021-06-05T15:55:58.605Z"}
+{"level":"info","message":"05/06/2021/11:55:58.607 (RESPONSE)NTCONTROL 1 3df23b61\rERRA\r","timestamp":"2021-06-05T15:55:58.607Z"}
+{"level":"info","message":"05/06/2021/11:55:59.730 (REQUEST) YWRtaW4xOnBhbmFzb25pYzozZGYyM2I2MQ1FUlJBDQ==","timestamp":"2021-06-05T15:55:59.731Z"}
+{"level":"info","message":"05/06/2021/11:55:59.731 (RESPONSE)NTCONTROL 1 5c048252\rERRA\r","timestamp":"2021-06-05T15:55:59.731Z"}
+{"level":"info","message":"05/06/2021/11:57:15.600 (REQUEST) ","timestamp":"2021-06-05T15:57:15.603Z"}
+{"level":"info","message":"05/06/2021/11:57:15.604 (RESPONSE)NTCONTROL 1 498e91c4\rERRA\r","timestamp":"2021-06-05T15:57:15.605Z"}
+{"level":"info","message":"05/06/2021/11:57:16.720 (REQUEST) YWRtaW4xOnBhbmFzb25pYzo0OThlOTFjNA==","timestamp":"2021-06-05T15:57:16.720Z"}
+{"level":"info","message":"05/06/2021/11:57:16.721 (RESPONSE)NTCONTROL 1 67a1d8b5\rERRA\r","timestamp":"2021-06-05T15:57:16.721Z"}
+{"level":"info","message":"05/06/2021/11:59:59.752 (REQUEST) ","timestamp":"2021-06-05T15:59:59.755Z"}
+{"level":"info","message":"05/06/2021/11:59:59.756 (RESPONSE)NTCONTROL 1 0d8403f0\rERRA\r","timestamp":"2021-06-05T15:59:59.757Z"}
+{"level":"info","message":"05/06/2021/12:00:00.772 (REQUEST) 04028fdfd3dfe601dbda383356741151","timestamp":"2021-06-05T16:00:00.773Z"}
+{"level":"info","message":"05/06/2021/12:00:00.773 (RESPONSE)NTCONTROL 1 2b964ae1\rERRA\r","timestamp":"2021-06-05T16:00:00.773Z"}
+{"level":"info","message":"05/06/2021/12:02:19.936 (REQUEST) ","timestamp":"2021-06-05T16:02:19.939Z"}
+{"level":"info","message":"05/06/2021/12:02:19.941 (RESPONSE)NTCONTROL 1 7fb7cf8d\rERRA\r","timestamp":"2021-06-05T16:02:19.941Z"}
+{"level":"info","message":"05/06/2021/12:02:21.058 (REQUEST) 061489d795f225fabb29aa8c1a515f0900QPW ","timestamp":"2021-06-05T16:02:21.059Z"}
+{"level":"info","message":"05/06/2021/12:02:21.059 (RESPONSE)NTCONTROL 1 1dcb167d\rERRA\r","timestamp":"2021-06-05T16:02:21.059Z"}
+{"level":"info","message":"05/06/2021/12:02:58.238 (REQUEST) ","timestamp":"2021-06-05T16:02:58.240Z"}
+{"level":"info","message":"05/06/2021/12:02:58.242 (RESPONSE)NTCONTROL 1 767c5746\rERRA\r","timestamp":"2021-06-05T16:02:58.242Z"}
+{"level":"info","message":"05/06/2021/12:02:59.362 (REQUEST) a82c3717f0925e00b049799cbe8d306000QPW","timestamp":"2021-06-05T16:02:59.362Z"}
+{"level":"info","message":"05/06/2021/12:02:59.362 (RESPONSE)NTCONTROL 1 148f9e36\rERRA\r","timestamp":"2021-06-05T16:02:59.362Z"}
+{"level":"info","message":"05/06/2021/12:03:49.642 (REQUEST) ","timestamp":"2021-06-05T16:03:49.645Z"}
+{"level":"info","message":"05/06/2021/12:03:49.647 (RESPONSE)NTCONTROL 1 74347938\rERRA\r","timestamp":"2021-06-05T16:03:49.647Z"}
+{"level":"info","message":"05/06/2021/12:03:50.763 (REQUEST) d059df14126dcd8a28dd0f46c0f9859600QPW","timestamp":"2021-06-05T16:03:50.763Z"}
+{"level":"info","message":"05/06/2021/12:03:50.763 (RESPONSE)NTCONTROL 1 305a0719\rERRA\r","timestamp":"2021-06-05T16:03:50.763Z"}
+{"level":"info","message":"05/06/2021/12:04:27.313 (REQUEST) ","timestamp":"2021-06-05T16:04:27.316Z"}
+{"level":"info","message":"05/06/2021/12:04:27.318 (RESPONSE)NTCONTROL 1 6afa00f0\rERRA\r","timestamp":"2021-06-05T16:04:27.318Z"}
+{"level":"info","message":"05/06/2021/12:04:28.434 (REQUEST) 347549e883c89d904b709b9522f4676d00QPW","timestamp":"2021-06-05T16:04:28.435Z"}
+{"level":"info","message":"05/06/2021/12:04:28.435 (RESPONSE)NTCONTROL 1 090c47e1\rERRA\r","timestamp":"2021-06-05T16:04:28.435Z"}
+{"level":"info","message":"05/06/2021/12:04:45.143 (REQUEST) ","timestamp":"2021-06-05T16:04:45.146Z"}
+{"level":"info","message":"05/06/2021/12:04:45.147 (RESPONSE)NTCONTROL 1 0848fddd\rERRA\r","timestamp":"2021-06-05T16:04:45.147Z"}
+{"level":"info","message":"05/06/2021/12:04:46.266 (REQUEST) 8d464c6c1853cdaed6ba2c72940460dc00QPW ","timestamp":"2021-06-05T16:04:46.266Z"}
+{"level":"info","message":"05/06/2021/12:04:46.266 (RESPONSE)NTCONTROL 1 265c44cd\rERRA\r","timestamp":"2021-06-05T16:04:46.266Z"}
+{"level":"info","message":"05/06/2021/12:05:20.268 (REQUEST) ","timestamp":"2021-06-05T16:05:20.270Z"}
+{"level":"info","message":"05/06/2021/12:05:20.272 (RESPONSE)NTCONTROL 1 24d6b0c4\rERRA\r","timestamp":"2021-06-05T16:05:20.272Z"}
+{"level":"info","message":"05/06/2021/12:05:21.448 (REQUEST) 73a65f93140773c02213b36519f821a800QPW ","timestamp":"2021-06-05T16:05:21.448Z"}
+{"level":"info","message":"05/06/2021/12:05:21.448 (RESPONSE)NTCONTROL 1 42e9f7b4\rERRA\r","timestamp":"2021-06-05T16:05:21.448Z"}
+{"level":"info","message":"05/06/2021/12:06:36.140 (REQUEST) (err, res) => {\r\n                console.log(err);\r\n                console.table(res);\r\n                let a = res.split(' ');\r\n                console.log(a);\r\n                if (a.length > 2) {\r\n                    let challenge = a[2].slice(0, 8);\r\n                    let hash = md5_1.default('admin1:panasonic:' + challenge);\r\n                    console.log(challenge, challenge.length, hash, hash.length);\r\n                    let request = '00QPW ';\r\n                    console.log(hash + request);\r\n                    client.request(hash + request, (err, res) => {\r\n                        console.log(res);\r\n                    });\r\n                }\r\n            }","timestamp":"2021-06-05T16:06:36.143Z"}
+{"level":"info","message":"05/06/2021/12:06:36.144 (RESPONSE)NTCONTROL 1 1260c036\rERRA\r","timestamp":"2021-06-05T16:06:36.145Z"}
+{"level":"info","message":"05/06/2021/12:07:14.239 (REQUEST) NTCONTROL","timestamp":"2021-06-05T16:07:14.242Z"}
+{"level":"info","message":"05/06/2021/12:07:14.244 (RESPONSE)NTCONTROL 1 092647ef\rERRA\r","timestamp":"2021-06-05T16:07:14.244Z"}
+{"level":"info","message":"05/06/2021/12:07:15.363 (REQUEST) d9ece0c0885653d23564a24e2a88483400QPW ","timestamp":"2021-06-05T16:07:15.363Z"}
+{"level":"info","message":"05/06/2021/12:07:15.363 (RESPONSE)NTCONTROL 1 27388edf\rERRA\r","timestamp":"2021-06-05T16:07:15.364Z"}
+{"level":"info","message":"05/06/2021/12:07:58.569 (REQUEST) NTCONTROL","timestamp":"2021-06-05T16:07:58.575Z"}
+{"level":"info","message":"05/06/2021/12:07:58.578 (RESPONSE)NTCONTROL 1 345b794c\rERRA\r","timestamp":"2021-06-05T16:07:58.578Z"}
+{"level":"info","message":"05/06/2021/12:07:59.603 (REQUEST) 0c0dd136e17fa46f96ca3f4b529ffc8600QPW ","timestamp":"2021-06-05T16:07:59.603Z"}
+{"level":"info","message":"05/06/2021/12:07:59.603 (RESPONSE)NTCONTROL 1 526dc03c\rERRA\r","timestamp":"2021-06-05T16:07:59.603Z"}
+{"level":"info","message":"05/06/2021/12:09:02.051 (REQUEST) 00QPW","timestamp":"2021-06-05T16:09:02.054Z"}
+{"level":"info","message":"05/06/2021/12:09:02.055 (RESPONSE)NTCONTROL 1 39053576\rERRA\r","timestamp":"2021-06-05T16:09:02.056Z"}
+{"level":"info","message":"05/06/2021/12:09:03.174 (REQUEST) f4cb4cbb910c00effb3a93ff8a3653a400QPW ","timestamp":"2021-06-05T16:09:03.174Z"}
+{"level":"info","message":"05/06/2021/12:09:03.175 (RESPONSE)NTCONTROL 1 57177c67\rERRA\r","timestamp":"2021-06-05T16:09:03.175Z"}
+{"level":"info","message":"05/06/2021/12:09:29.610 (REQUEST) 00","timestamp":"2021-06-05T16:09:29.613Z"}
+{"level":"info","message":"05/06/2021/12:09:29.614 (RESPONSE)NTCONTROL 1 64fcb0d8\rERRA\r","timestamp":"2021-06-05T16:09:29.614Z"}
+{"level":"info","message":"05/06/2021/12:09:30.731 (REQUEST) cc6c9fc9bd6e6bb08deede78424658e000QPW ","timestamp":"2021-06-05T16:09:30.731Z"}
+{"level":"info","message":"05/06/2021/12:09:30.731 (RESPONSE)NTCONTROL 1 21223eb9\rERRA\r","timestamp":"2021-06-05T16:09:30.731Z"}
+{"level":"info","message":"05/06/2021/12:13:48.060 (REQUEST) 00","timestamp":"2021-06-05T16:13:48.063Z"}
+{"level":"info","message":"05/06/2021/12:13:48.064 (RESPONSE)NTCONTROL 1 51de7653\rERRA\r","timestamp":"2021-06-05T16:13:48.065Z"}
+{"level":"info","message":"05/06/2021/12:13:49.108 (REQUEST) fa25216a85119982c42e6e87b6a438f100QPW ","timestamp":"2021-06-05T16:13:49.108Z"}
+{"level":"info","message":"05/06/2021/12:13:49.108 (RESPONSE)NTCONTROL 1 6ff0bd43\rERRA\r","timestamp":"2021-06-05T16:13:49.108Z"}
+{"level":"info","message":"05/06/2021/12:15:02.769 (REQUEST) 00","timestamp":"2021-06-05T16:15:02.775Z"}
+{"level":"info","message":"05/06/2021/12:15:02.778 (RESPONSE)NTCONTROL 1 21543ed4\rERRA\r","timestamp":"2021-06-05T16:15:02.778Z"}
+{"level":"info","message":"05/06/2021/12:15:04.928 (REQUEST) 5b8817d88544b26a47c5c8c6a4df8f9b00QPW ","timestamp":"2021-06-05T16:15:04.928Z"}
+{"level":"info","message":"05/06/2021/12:15:04.929 (RESPONSE)NTCONTROL 1 5d7accb5\rERRA\r","timestamp":"2021-06-05T16:15:04.929Z"}
+{"level":"info","message":"05/06/2021/12:15:11.152 (REQUEST) 00","timestamp":"2021-06-05T16:15:11.155Z"}
+{"level":"info","message":"05/06/2021/12:15:11.157 (RESPONSE)NTCONTROL 1 11ea7659\rERRA\r","timestamp":"2021-06-05T16:15:11.157Z"}
+{"level":"info","message":"05/06/2021/12:15:12.239 (REQUEST) 21296a1584f6f5a92adf8b692a3cd20a00QPW ","timestamp":"2021-06-05T16:15:12.239Z"}
+{"level":"info","message":"05/06/2021/12:15:12.239 (RESPONSE)NTCONTROL 1 2ffcbd4a\rERRA\r","timestamp":"2021-06-05T16:15:12.240Z"}
+{"level":"info","message":"05/06/2021/12:15:16.748 (REQUEST) 00","timestamp":"2021-06-05T16:15:16.751Z"}
+{"level":"info","message":"05/06/2021/12:15:16.753 (RESPONSE)NTCONTROL 1 465a1ffe\rERRA\r","timestamp":"2021-06-05T16:15:16.753Z"}
+{"level":"info","message":"05/06/2021/12:15:17.870 (REQUEST) 8aca68534ef9481e37b80c47a483a9c800QPW ","timestamp":"2021-06-05T16:15:17.870Z"}
+{"level":"info","message":"05/06/2021/12:15:17.870 (RESPONSE)NTCONTROL 1 646d66ee\rERRA\r","timestamp":"2021-06-05T16:15:17.871Z"}
+{"level":"info","message":"05/06/2021/12:18:00.974 (REQUEST) 00","timestamp":"2021-06-05T16:18:00.980Z"}
+{"level":"info","message":"05/06/2021/12:18:00.983 (RESPONSE)NTCONTROL 1 0a4e922a\rERRA\r","timestamp":"2021-06-05T16:18:00.983Z"}
+{"level":"info","message":"05/06/2021/12:18:02.023 (REQUEST) ¢CÐñ<¶nÖ³ºµÚ 00QPW ","timestamp":"2021-06-05T16:18:02.023Z"}
+{"level":"info","message":"05/06/2021/12:18:02.023 (RESPONSE)NTCONTROL 1 2860d91a\rERRA\r","timestamp":"2021-06-05T16:18:02.024Z"}
+{"level":"info","message":"05/06/2021/12:18:19.735 (REQUEST) 00","timestamp":"2021-06-05T16:18:19.738Z"}
+{"level":"info","message":"05/06/2021/12:18:19.740 (RESPONSE)NTCONTROL 1 279e8f16\rERRA\r","timestamp":"2021-06-05T16:18:19.740Z"}
+{"level":"info","message":"05/06/2021/12:18:20.861 (REQUEST) 102,66,251,25,152,46,240,30,229,116,228,144,203,174,84,4400QPW ","timestamp":"2021-06-05T16:18:20.861Z"}
+{"level":"info","message":"05/06/2021/12:18:20.861 (RESPONSE)NTCONTROL 1 63c41cf6\rERRA\r","timestamp":"2021-06-05T16:18:20.861Z"}
+{"level":"info","message":"05/06/2021/12:18:36.733 (REQUEST) 00","timestamp":"2021-06-05T16:18:36.736Z"}
+{"level":"info","message":"05/06/2021/12:18:36.738 (RESPONSE)NTCONTROL 1 44ee8c01\rERRA\r","timestamp":"2021-06-05T16:18:36.738Z"}
+{"level":"info","message":"05/06/2021/12:18:37.957 (REQUEST) 4077f2eeb775ed874408b07515a356a900QPW ","timestamp":"2021-06-05T16:18:37.958Z"}
+{"level":"info","message":"05/06/2021/12:18:37.958 (RESPONSE)NTCONTROL 1 6301d2f2\rERRA\r","timestamp":"2021-06-05T16:18:37.958Z"}
+{"level":"info","message":"05/06/2021/12:18:51.377 (REQUEST) 00","timestamp":"2021-06-05T16:18:51.380Z"}
+{"level":"info","message":"05/06/2021/12:18:51.381 (RESPONSE)NTCONTROL 1 4eeb4e4d\rERRA\r","timestamp":"2021-06-05T16:18:51.381Z"}
+{"level":"info","message":"05/06/2021/12:18:52.499 (REQUEST) cf6fec1767e1067c721bd2917dbf72ed00QPW ","timestamp":"2021-06-05T16:18:52.499Z"}
+{"level":"info","message":"05/06/2021/12:18:52.500 (RESPONSE)NTCONTROL 1 6cff953d\rERRA\r","timestamp":"2021-06-05T16:18:52.500Z"}
+{"level":"info","message":"05/06/2021/12:19:27.212 (REQUEST) 00","timestamp":"2021-06-05T16:19:27.215Z"}
+{"level":"info","message":"05/06/2021/12:19:27.217 (RESPONSE)NTCONTROL 1 098c4825\rERRA\r","timestamp":"2021-06-05T16:19:27.217Z"}
+{"level":"info","message":"05/06/2021/12:19:28.333 (REQUEST) e0ca421e794d7f46744d618a223b339c00QPW ","timestamp":"2021-06-05T16:19:28.333Z"}
+{"level":"info","message":"05/06/2021/12:19:28.334 (RESPONSE)NTCONTROL 1 279e8f16\rERRA\r","timestamp":"2021-06-05T16:19:28.334Z"}
+{"level":"info","message":"05/06/2021/12:19:39.287 (REQUEST) 00","timestamp":"2021-06-05T16:19:39.290Z"}
+{"level":"info","message":"05/06/2021/12:19:39.292 (RESPONSE)NTCONTROL 1 726b9b6c\rERRA\r","timestamp":"2021-06-05T16:19:39.292Z"}
+{"level":"info","message":"05/06/2021/12:19:40.413 (REQUEST) 23afb1d7de5619dc0876e8748e2bbd1b00QPW ","timestamp":"2021-06-05T16:19:40.414Z"}
+{"level":"info","message":"05/06/2021/12:19:40.414 (RESPONSE)NTCONTROL 1 107de25d\rERRA\r","timestamp":"2021-06-05T16:19:40.414Z"}
+{"level":"info","message":"05/06/2021/12:20:50.262 (REQUEST) 00QPW","timestamp":"2021-06-05T16:20:50.268Z"}
+{"level":"info","message":"05/06/2021/12:20:50.271 (RESPONSE)NTCONTROL 1 4998482c\rERRA\r","timestamp":"2021-06-05T16:20:50.271Z"}
+{"level":"info","message":"05/06/2021/12:20:51.295 (REQUEST) 8ed6e288792774faabf1447abea5f8b100QPW ","timestamp":"2021-06-05T16:20:51.295Z"}
+{"level":"info","message":"05/06/2021/12:20:51.295 (RESPONSE)NTCONTROL 1 67ab8f1d\rERRA\r","timestamp":"2021-06-05T16:20:51.295Z"}
+{"level":"info","message":"05/06/2021/12:21:31.549 (REQUEST) 00QPW","timestamp":"2021-06-05T16:21:31.552Z"}
+{"level":"info","message":"05/06/2021/12:21:31.553 (RESPONSE)NTCONTROL 1 1a94a4b7\rERRA\r","timestamp":"2021-06-05T16:21:31.554Z"}
+{"level":"info","message":"05/06/2021/12:21:32.655 (REQUEST) 3bd707ada0a5628e85ce326be18c2b7c00QPW ","timestamp":"2021-06-05T16:21:32.655Z"}
+{"level":"info","message":"05/06/2021/12:21:32.655 (RESPONSE)NTCONTROL 1 38a8eba8\rERRA\r","timestamp":"2021-06-05T16:21:32.656Z"}
+{"level":"info","message":"05/06/2021/12:21:50.373 (REQUEST) 00QPW","timestamp":"2021-06-05T16:21:50.376Z"}
+{"level":"info","message":"05/06/2021/12:21:50.378 (RESPONSE)NTCONTROL 1 55f7e893\rERRA\r","timestamp":"2021-06-05T16:21:50.378Z"}
+{"level":"info","message":"05/06/2021/12:21:51.496 (REQUEST) 8a8946ac1683ecf330963a95d88033f400QPW ","timestamp":"2021-06-05T16:21:51.496Z"}
+{"level":"info","message":"05/06/2021/12:21:51.497 (RESPONSE)NTCONTROL 1 740a2f84\rERRA\r","timestamp":"2021-06-05T16:21:51.497Z"}
+{"level":"info","message":"05/06/2021/12:22:52.729 (REQUEST) 00QPW","timestamp":"2021-06-05T16:22:52.732Z"}
+{"level":"info","message":"05/06/2021/12:22:52.733 (RESPONSE)NTCONTROL 1 1e7d16dc\rERRA\r","timestamp":"2021-06-05T16:22:52.734Z"}
+{"level":"info","message":"05/06/2021/12:22:53.857 (REQUEST) 83cf146c098261a8f237ed5398724d1f00QPW ","timestamp":"2021-06-05T16:22:53.857Z"}
+{"level":"info","message":"05/06/2021/12:22:53.857 (RESPONSE)NTCONTROL 1 5aa2a4be\rERRA\r","timestamp":"2021-06-05T16:22:53.858Z"}
+{"level":"info","message":"05/06/2021/12:23:27.535 (REQUEST) 00QPW","timestamp":"2021-06-05T16:23:27.538Z"}
+{"level":"info","message":"05/06/2021/12:23:27.539 (RESPONSE)NTCONTROL 1 3b09c9c3\rERRA\r","timestamp":"2021-06-05T16:23:27.539Z"}
+{"level":"info","message":"05/06/2021/12:23:28.761 (REQUEST) 74778ad8bc408df062d1f918e26bc93000QPW","timestamp":"2021-06-05T16:23:28.761Z"}
+{"level":"info","message":"05/06/2021/12:23:28.762 (RESPONSE)NTCONTROL 1 591d10b4\rERRA\r","timestamp":"2021-06-05T16:23:28.762Z"}
+{"level":"info","message":"05/06/2021/12:24:40.244 (REQUEST) 00QPW","timestamp":"2021-06-05T16:24:40.247Z"}
+{"level":"info","message":"05/06/2021/12:24:40.249 (RESPONSE)NTCONTROL 1 4e5d0463\rERRA\r","timestamp":"2021-06-05T16:24:40.249Z"}
+{"level":"info","message":"05/06/2021/12:24:41.364 (REQUEST) ce0829a08ccb8098ab0ee0bd3a3a932900QPW","timestamp":"2021-06-05T16:24:41.364Z"}
+{"level":"info","message":"05/06/2021/12:24:41.364 (RESPONSE)NTCONTROL 1 6c6f4b54\rERRA\r","timestamp":"2021-06-05T16:24:41.364Z"}
+{"level":"info","message":"05/06/2021/12:50:08.387 (REQUEST) 00QPW","timestamp":"2021-06-05T16:50:08.389Z"}
+{"level":"info","message":"05/06/2021/12:50:08.391 (RESPONSE)NTCONTROL 1 4dbc70d3\rERRA\r","timestamp":"2021-06-05T16:50:08.391Z"}
+{"level":"info","message":"05/06/2021/12:50:09.603 (REQUEST) e1c52dadd1499736c8370b69bb8cea3d00QPW","timestamp":"2021-06-05T16:50:09.603Z"}
+{"level":"info","message":"05/06/2021/12:50:09.604 (RESPONSE)NTCONTROL 1 6bceb7c4\rERRA\r","timestamp":"2021-06-05T16:50:09.604Z"}
+{"level":"info","message":"05/06/2021/12:50:48.939 (REQUEST) 00QPW","timestamp":"2021-06-05T16:50:48.944Z"}
+{"level":"info","message":"05/06/2021/12:50:48.945 (RESPONSE)NTCONTROL 1 00a6866d\rERRA\r","timestamp":"2021-06-05T16:50:48.945Z"}
+{"level":"info","message":"05/06/2021/12:50:50.036 (REQUEST) a7b1427ca13528f70da74eb55b6aac8900QPW","timestamp":"2021-06-05T16:50:50.036Z"}
+{"level":"info","message":"05/06/2021/12:50:50.036 (RESPONSE)NTCONTROL 1 1eb9cd5e\rERRA\r","timestamp":"2021-06-05T16:50:50.036Z"}
+{"level":"info","message":"05/06/2021/12:51:15.859 (REQUEST) 00QPW","timestamp":"2021-06-05T16:51:15.862Z"}
+{"level":"info","message":"05/06/2021/12:51:15.863 (RESPONSE)NTCONTROL 1 4ab148c0\rERRA\r","timestamp":"2021-06-05T16:51:15.864Z"}
+{"level":"info","message":"05/06/2021/12:51:17.099 (REQUEST) 643827c82795231ca80b6748602154d800QPW","timestamp":"2021-06-05T16:51:17.100Z"}
+{"level":"info","message":"05/06/2021/12:51:17.100 (RESPONSE)NTCONTROL 1 68c38fb1\rERRA\r","timestamp":"2021-06-05T16:51:17.100Z"}
+{"level":"info","message":"05/06/2021/12:51:33.685 (REQUEST) 00QPW","timestamp":"2021-06-05T16:51:33.688Z"}
+{"level":"info","message":"05/06/2021/12:51:33.690 (RESPONSE)NTCONTROL 1 49edfebb\rERRA\r","timestamp":"2021-06-05T16:51:33.690Z"}
+{"level":"info","message":"05/06/2021/12:51:34.991 (REQUEST) dbdd2dabd3d4d68c5dd970ec0c29fa6400QPW","timestamp":"2021-06-05T16:51:34.991Z"}
+{"level":"info","message":"05/06/2021/12:51:34.991 (RESPONSE)NTCONTROL 1 06138c9c\rERRA\r","timestamp":"2021-06-05T16:51:34.992Z"}
+{"level":"info","message":"05/06/2021/12:52:42.727 (REQUEST) 00QPW","timestamp":"2021-06-05T16:52:42.730Z"}
+{"level":"info","message":"05/06/2021/12:52:42.731 (RESPONSE)NTCONTROL 1 0308648a\rERRA\r","timestamp":"2021-06-05T16:52:42.732Z"}
+{"level":"info","message":"05/06/2021/12:52:43.753 (REQUEST) dbdd2dabd3d4d68c5dd970ec0c29fa6400QPW","timestamp":"2021-06-05T16:52:43.753Z"}
+{"level":"info","message":"05/06/2021/12:52:43.754 (RESPONSE)NTCONTROL 1 211aab7b\rERRA\r","timestamp":"2021-06-05T16:52:43.754Z"}
+{"level":"info","message":"05/06/2021/12:53:03.569 (REQUEST) 00QPW","timestamp":"2021-06-05T16:53:03.572Z"}
+{"level":"info","message":"05/06/2021/12:53:03.573 (RESPONSE)NTCONTROL 1 5c7def57\rERRA\r","timestamp":"2021-06-05T16:53:03.574Z"}
+{"level":"info","message":"05/06/2021/12:53:04.692 (REQUEST) b1a3909dc954db70ceede5b3c30d9d4600QPW","timestamp":"2021-06-05T16:53:04.692Z"}
+{"level":"info","message":"05/06/2021/12:53:04.692 (RESPONSE)NTCONTROL 1 7a903647\rERRA\r","timestamp":"2021-06-05T16:53:04.692Z"}
+{"level":"info","message":"05/06/2021/12:58:00.851 (REQUEST) QPW","timestamp":"2021-06-05T16:58:00.854Z"}
+{"level":"info","message":"05/06/2021/12:58:00.855 (RESPONSE)NTCONTROL 1 5e36837b\rERRA\r","timestamp":"2021-06-05T16:58:00.856Z"}
+{"level":"info","message":"05/06/2021/12:58:31.600 (REQUEST) QPW","timestamp":"2021-06-05T16:58:31.603Z"}
+{"level":"info","message":"05/06/2021/12:58:31.605 (RESPONSE)NTCONTROL 1 6465d3af\rERRA\r","timestamp":"2021-06-05T16:58:31.605Z"}
+{"level":"info","message":"05/06/2021/13:00:30.349 (REQUEST) 00QPW","timestamp":"2021-06-05T17:00:30.352Z"}
+{"level":"info","message":"05/06/2021/13:00:30.354 (RESPONSE)NTCONTROL 1 5f11cd8e\rERRA\r","timestamp":"2021-06-05T17:00:30.354Z"}
+{"level":"info","message":"05/06/2021/13:01:12.866 (REQUEST) 00QPW","timestamp":"2021-06-05T17:01:12.869Z"}
+{"level":"info","message":"05/06/2021/13:01:12.871 (RESPONSE)NTCONTROL 1 6c34b7fa\rERRA\r","timestamp":"2021-06-05T17:01:12.871Z"}
+{"level":"info","message":"05/06/2021/13:02:00.046 (REQUEST) 00QPW","timestamp":"2021-06-05T17:02:00.049Z"}
+{"level":"info","message":"05/06/2021/13:02:00.050 (RESPONSE)NTCONTROL 1 71a1be28\rERRA\r","timestamp":"2021-06-05T17:02:00.051Z"}
+{"level":"info","message":"05/06/2021/13:02:24.319 (REQUEST) 00QPW","timestamp":"2021-06-05T17:02:24.321Z"}
+{"level":"info","message":"05/06/2021/13:02:24.323 (RESPONSE)NTCONTROL 1 436164b9\rERRA\r","timestamp":"2021-06-05T17:02:24.323Z"}
+{"level":"info","message":"05/06/2021/13:03:10.296 (REQUEST) 00QPW","timestamp":"2021-06-05T17:03:10.298Z"}
+{"level":"info","message":"05/06/2021/13:03:10.300 (RESPONSE)NTCONTROL 1 2abb23f7\rERRA\r","timestamp":"2021-06-05T17:03:10.300Z"}
+{"level":"info","message":"05/06/2021/13:03:11.420 (REQUEST) fc5e80e36705c13ca18821c565e42ba900QPW","timestamp":"2021-06-05T17:03:11.420Z"}
+{"level":"info","message":"05/06/2021/13:03:11.420 (RESPONSE)NTCONTROL 1 48cf6ae8\rERRA\r","timestamp":"2021-06-05T17:03:11.420Z"}
+{"level":"info","message":"05/06/2021/13:03:12.583 (REQUEST) ff3ec8484770860ef71b9bae8a124ae100QPW","timestamp":"2021-06-05T17:03:12.583Z"}
+{"level":"info","message":"05/06/2021/13:03:12.583 (RESPONSE)NTCONTROL 1 66e1b1d9\rERRA\r","timestamp":"2021-06-05T17:03:12.583Z"}
+{"level":"info","message":"05/06/2021/13:03:56.063 (REQUEST) 00QPW","timestamp":"2021-06-05T17:03:56.066Z"}
+{"level":"info","message":"05/06/2021/13:03:56.067 (RESPONSE)NTCONTROL 1 1215e336\rERRA\r","timestamp":"2021-06-05T17:03:56.068Z"}
+{"level":"info","message":"05/06/2021/13:03:57.186 (REQUEST) 4d72f7115cbd5c127707926e0ef7d9de00QPW","timestamp":"2021-06-05T17:03:57.186Z"}
+{"level":"info","message":"05/06/2021/13:03:57.186 (RESPONSE)NTCONTROL 1 30292a26\rERRA\r","timestamp":"2021-06-05T17:03:57.187Z"}
+{"level":"info","message":"05/06/2021/13:04:30.775 (REQUEST) 00QPW","timestamp":"2021-06-05T17:04:30.781Z"}
+{"level":"info","message":"05/06/2021/13:04:30.783 (RESPONSE)NTCONTROL 1 10904f2c\rERRA\r","timestamp":"2021-06-05T17:04:30.784Z"}
+{"level":"info","message":"05/06/2021/13:04:31.897 (REQUEST) bec852a9613f228899decfc6bc0d705700QPW","timestamp":"2021-06-05T17:04:31.897Z"}
+{"level":"info","message":"05/06/2021/13:04:31.898 (RESPONSE)NTCONTROL 1 2ea3961d\rERRA\r","timestamp":"2021-06-05T17:04:31.898Z"}
+{"level":"info","message":"05/06/2021/13:05:47.572 (REQUEST) 00QPW","timestamp":"2021-06-05T17:05:47.575Z"}
+{"level":"info","message":"05/06/2021/13:05:47.576 (RESPONSE)NTCONTROL 1 1c2da58e\rERRA\r","timestamp":"2021-06-05T17:05:47.577Z"}
+{"level":"info","message":"05/06/2021/13:05:48.695 (REQUEST) 5511a2098d5ad22a49f71634332af08800QPW","timestamp":"2021-06-05T17:05:48.695Z"}
+{"level":"info","message":"05/06/2021/13:05:48.696 (RESPONSE)NTCONTROL 1 3a3fec7f\rERRA\r","timestamp":"2021-06-05T17:05:48.696Z"}
+{"level":"info","message":"05/06/2021/13:05:49.821 (REQUEST) 4e3dc636e277fbbe7535a391f55d69de00QPW","timestamp":"2021-06-05T17:05:49.821Z"}
+{"level":"info","message":"05/06/2021/13:05:49.821 (RESPONSE)NTCONTROL 1 58523370\rERRA\r","timestamp":"2021-06-05T17:05:49.821Z"}
+{"level":"info","message":"05/06/2021/13:05:50.946 (REQUEST) 27d8cd7dc21dfa8453a163c55db97e5700QPW","timestamp":"2021-06-05T17:05:50.946Z"}
+{"level":"info","message":"05/06/2021/13:05:50.947 (RESPONSE)NTCONTROL 1 76657a61\rERRA\r","timestamp":"2021-06-05T17:05:50.947Z"}
+{"level":"info","message":"05/06/2021/13:54:03.651 (REQUEST) 00QPW","timestamp":"2021-06-05T17:54:03.654Z"}
+{"level":"info","message":"05/06/2021/13:54:03.656 (RESPONSE)NTCONTROL 1 4f432805\rERRA\r","timestamp":"2021-06-05T17:54:03.656Z"}
+{"level":"info","message":"05/06/2021/13:54:04.805 (REQUEST) ee4d1524866530eb0a6df80dc1b8955600QPW","timestamp":"2021-06-05T17:54:04.805Z"}
+{"level":"info","message":"05/06/2021/13:54:04.805 (RESPONSE)NTCONTROL 1 6d566ef6\rERRA\r","timestamp":"2021-06-05T17:54:04.805Z"}
+{"level":"info","message":"05/06/2021/13:54:30.073 (REQUEST) 00NTCONTROL","timestamp":"2021-06-05T17:54:30.076Z"}
+{"level":"info","message":"05/06/2021/13:54:30.078 (RESPONSE)NTCONTROL 1 7b3ba366\rERRA\r","timestamp":"2021-06-05T17:54:30.078Z"}
+{"level":"info","message":"05/06/2021/13:54:31.198 (REQUEST) 6d91ca4bcb6a8c8ed8c2525fe01fffce00NTCONTROL","timestamp":"2021-06-05T17:54:31.198Z"}
+{"level":"info","message":"05/06/2021/13:54:31.198 (RESPONSE)NTCONTROL 1 194dea57\rERRA\r","timestamp":"2021-06-05T17:54:31.199Z"}
+{"level":"info","message":"05/06/2021/13:56:45.659 (REQUEST) 00NTCONTROL","timestamp":"2021-06-05T17:56:45.664Z"}
+{"level":"info","message":"05/06/2021/13:56:45.666 (RESPONSE)NTCONTROL 1 57120c50\rERRA\r","timestamp":"2021-06-05T17:56:45.667Z"}
+{"level":"info","message":"05/06/2021/13:56:46.776 (REQUEST) bae951d0bdbab6ca58970bdc7d18ab4100NTCONTROL","timestamp":"2021-06-05T17:56:46.776Z"}
+{"level":"info","message":"05/06/2021/13:56:46.777 (RESPONSE)NTCONTROL 1 75255340\rERRA\r","timestamp":"2021-06-05T17:56:46.777Z"}
+{"level":"info","message":"05/06/2021/13:57:00.835 (REQUEST) 00NTCONTROL","timestamp":"2021-06-05T17:57:00.841Z"}
+{"level":"info","message":"05/06/2021/13:57:00.844 (RESPONSE)NTCONTROL 1 1a2a346a\rERRA\r","timestamp":"2021-06-05T17:57:00.844Z"}
+{"level":"info","message":"05/06/2021/13:57:01.936 (REQUEST) aa69c0f88b2d96418b209b482688283e00NTCONTROL","timestamp":"2021-06-05T17:57:01.936Z"}
+{"level":"info","message":"05/06/2021/13:57:01.937 (RESPONSE)NTCONTROL 1 383d7b5b\rERRA\r","timestamp":"2021-06-05T17:57:01.937Z"}
+{"level":"info","message":"05/06/2021/14:00:28.569 (REQUEST) 00NTCONTROL","timestamp":"2021-06-05T18:00:28.572Z"}
+{"level":"info","message":"05/06/2021/14:00:28.574 (RESPONSE)NTCONTROL 1 0953d7f3\rERRA\r","timestamp":"2021-06-05T18:00:28.574Z"}
+{"level":"info","message":"05/06/2021/14:00:29.693 (REQUEST) 3d72bb4512cb86db2278e25c964d696f00NTCONTROL","timestamp":"2021-06-05T18:00:29.694Z"}
+{"level":"info","message":"05/06/2021/14:00:29.694 (RESPONSE)NTCONTROL 1 27671ee4\rERRA\r","timestamp":"2021-06-05T18:00:29.694Z"}
+{"level":"info","message":"05/06/2021/14:00:42.901 (REQUEST) 00QPW","timestamp":"2021-06-05T18:00:42.903Z"}
+{"level":"info","message":"05/06/2021/14:00:42.905 (RESPONSE)NTCONTROL 1 2e58b91d\rERRA\r","timestamp":"2021-06-05T18:00:42.905Z"}
+{"level":"info","message":"05/06/2021/14:00:44.024 (REQUEST) e88184eb91f1f3ffa5f1a7d6e2ae56ea00QPW","timestamp":"2021-06-05T18:00:44.024Z"}
+{"level":"info","message":"05/06/2021/14:00:44.024 (RESPONSE)NTCONTROL 1 6a7e46fd\rERRA\r","timestamp":"2021-06-05T18:00:44.024Z"}
+{"level":"info","message":"05/06/2021/14:02:36.258 (REQUEST) open","timestamp":"2021-06-05T18:02:36.260Z"}
+{"level":"info","message":"05/06/2021/14:02:36.262 (RESPONSE)NTCONTROL 1 12a85047\rERRA\r","timestamp":"2021-06-05T18:02:36.262Z"}
+{"level":"info","message":"05/06/2021/14:02:37.380 (REQUEST) 8d5cb3d7d946913dabba3fe5bb6c62f6open","timestamp":"2021-06-05T18:02:37.380Z"}
+{"level":"info","message":"05/06/2021/14:02:37.381 (RESPONSE)NTCONTROL 1 30bb9738\rERRA\r","timestamp":"2021-06-05T18:02:37.381Z"}
+{"level":"info","message":"05/06/2021/14:05:52.043 (REQUEST) open","timestamp":"2021-06-05T18:05:52.046Z"}
+{"level":"info","message":"05/06/2021/14:05:52.048 (RESPONSE)NTCONTROL 1 18f1a088\rERRA\r","timestamp":"2021-06-05T18:05:52.048Z"}
+{"level":"info","message":"05/06/2021/14:05:53.091 (REQUEST) ed41f0968ebcf89012429949b00892ebopen","timestamp":"2021-06-05T18:05:53.091Z"}
+{"level":"info","message":"05/06/2021/14:05:53.092 (RESPONSE)NTCONTROL 1 3703e779\rERRA\r","timestamp":"2021-06-05T18:05:53.092Z"}
+{"level":"info","message":"05/06/2021/14:06:11.826 (REQUEST) open","timestamp":"2021-06-05T18:06:11.828Z"}
+{"level":"info","message":"05/06/2021/14:06:11.830 (RESPONSE)NTCONTROL 1 5453e465\rERRA\r","timestamp":"2021-06-05T18:06:11.830Z"}
+{"level":"info","message":"05/06/2021/14:06:12.947 (REQUEST) 74dff5c8b287f6649809a84a236da6b0open","timestamp":"2021-06-05T18:06:12.947Z"}
+{"level":"info","message":"05/06/2021/14:06:12.948 (RESPONSE)NTCONTROL 1 72672b56\rERRA\r","timestamp":"2021-06-05T18:06:12.948Z"}
+{"level":"info","message":"05/06/2021/14:06:43.362 (REQUEST) 00QPW","timestamp":"2021-06-05T18:06:43.365Z"}
+{"level":"info","message":"05/06/2021/14:06:43.366 (RESPONSE)NTCONTROL 1 16a9c27a\rERRA\r","timestamp":"2021-06-05T18:06:43.366Z"}
+{"level":"info","message":"05/06/2021/14:06:44.382 (REQUEST) 2a91458b74ac2a90ddf938d586304ce100QPW","timestamp":"2021-06-05T18:06:44.382Z"}
+{"level":"info","message":"05/06/2021/14:06:44.382 (RESPONSE)NTCONTROL 1 34bc096b\rERRA\r","timestamp":"2021-06-05T18:06:44.382Z"}
