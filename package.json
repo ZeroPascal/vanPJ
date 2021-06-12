@@ -14,9 +14,11 @@
     "atob": "^2.1.2",
     "dom-parser": "^0.1.6",
     "express": "^4.17.1",
+    "fs": "^0.0.1-security",
     "hex-encode-decode": "^1.0.0",
     "md5": "^2.3.0",
     "puppeteer": "^9.1.1",
+    "socket.io": "^4.1.2",
     "tcp-client": "^1.1.9",
     "telnet-client": "^1.4.9"
   },
