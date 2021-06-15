@@ -8,3 +8,4 @@
 3. Run - `npm install`
 4. Run - `npm start`
 5. Configure new ServerConfig.json file
+6. Restart server Ctrl+c then `npm start`
