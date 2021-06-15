@@ -3,6 +3,7 @@
 /.pnp
 .pnp.js
 /certs
+/log
 ServerConfig.json
 
 # testing
@@ -16,7 +17,7 @@ ServerConfig.json
 .env.development.local
 .env.test.local
 .env.production.local
-/log
+
 
 npm-debug.log*
 yarn-debug.log*
