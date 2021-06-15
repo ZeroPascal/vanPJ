@@ -1,28 +1,23 @@
 import express from 'express'
 import { Socket } from 'socket.io'
 import { Server } from 'socket.io'
-import { ControlCommands, ControlKeys, ioCommands } from './constants'
+import { Config, ControlCommands, ControlKeys, defaultConfig, ioCommands } from './constants'
 import pjPoller from './pjPoller'
 
 const https = require('https')
-const fs = require('fs')
-const key = fs.readFileSync('./certs/server.key')
-const cert = fs.readFileSync('./certs/server.crt')
-const path = require('path');
-var btoa = require('btoa')
 const app = express()
+const path = require('path');
+
 const port = 3002
+const fs = require('fs')
+export let config: Config = defaultConfig
+try{
+  config = JSON.parse(fs.readFileSync('./ServerConfig.json').toString())
+  //console.log(config)
 
-const start = 101
-const end = 192
-const ipRange = '192.168.10.'
-
-
-const polling = true //Sets the Interval Start
-//app.set('trust proxy', 1) //trust first proxy
-
-
-
+}catch(e){
+ console.log('Could Not read Config')
+}
 
 app.use(express.static(path.join(__dirname, 'build')));
 
@@ -41,11 +36,12 @@ const pjs = new pjPoller();
 let time = Date.now()
 
 console.log('Starting Poller')
+
 pjs.start().then(() => {
   console.log('PJS Built!', (Date.now() - time) / 1000 + 's')
 
-  if (polling)
-    setInterval(f, 60000)
+  if (config.Polling)
+    setInterval(f, config.Polling_Interval)
 })
 
 //getStatus(101)
@@ -112,32 +108,30 @@ app.get('/api/set/*', async (req, res) => {
     } else if(q.command) {
         let pj = pjs.getPJ(pjID)
         let cmd = q.command.toString() as ControlKeys
+     
         if (Object.keys(ControlCommands).includes(cmd)) {
-          res.status(200).json('Good Command')
-          pj.Control(cmd).then(res =>{
+          res.status(200).json('Good Command') 
+          let vartiable = q.vartiable? q.vartiable.toString() : undefined;
+          pj.Control(cmd, vartiable).then(res =>{
           pjs.updateStatus()
           io.emit(ioCommands.REQUEST_UPDATE)
-         
-          return
         })
+          return
         } else {
           res.status(404).json('Bad Command')
+          return
         }
     }
 
   }
   res.status(404).json('Bad Command')
+  return
 })
-app.get('/192.168.10.*', (req, res) => {
-  console.log(req.url)
-  let url = 'http:/' + req.url
-  let pj = pjs.getPJ(parseInt(req.url.slice(-3)))
-  if (pj) {
-    console.log(pj)
-    res.status(200).json(pj)
-  } else {
-    res.status(404).json('PJ NOT FOUND')
 
+app.get('/api/config*',(req,res)=>{
+  let q = req.query
+  if(req.query){
+    
   }
 })
 
@@ -153,12 +147,16 @@ const io = new Server(server);
 pjs.io = io
 io.on('connection', (socket: Socket) => {
   socket.emit(ioCommands.REQUEST_UPDATE)
-
+  socket.emit(ioCommands.EMITTING_CONFIG, config)
   console.log('Socket Conencted')
   socket.on(ioCommands.REQUESTING_UPDATE, () => {
     socket.emit(ioCommands.EMITTING_PJS, pjs.pjs)
     socket.emit(ioCommands.EMITTING_STATUS, pjs.getStatus())
   })
+  socket.on(ioCommands.REQUEST_CONFIG, ()=>{
+    socket.emit(ioCommands.EMITTING_CONFIG,config)
+  })
+  
 
 });
 

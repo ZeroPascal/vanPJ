@@ -3,6 +3,7 @@
 /.pnp
 .pnp.js
 /certs
+ServerConfig.json
 
 # testing
 /coverage

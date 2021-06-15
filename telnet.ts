@@ -2,14 +2,13 @@
 import net from 'net'
 import md5 from 'md5'
 import { functions } from './ControlCommands'
-
+import {config} from './index'
 interface tel_parmas {
     host: string,
     port: number
 
 }
 
-const authString = 'admin1:panasonic:'
 
 async function timeout() {
     return new Promise(res => {
@@ -36,7 +35,7 @@ export const netConnect = async (pjID: number, request: string): Promise<string>
     //console.log('NetConnect',pjID)
     return new Promise((res, err) => {
         try {
-            let socket = net.connect(1024, '192.168.10.' + pjID)
+            let socket = net.connect(config.Projector_Port, config.IP_Top + pjID)
             socket.setTimeout(1500)
             socket.on('timeout', () => {
                 // console.log('Socket Timeout')
@@ -60,7 +59,7 @@ export const netConnect = async (pjID: number, request: string): Promise<string>
                             if (parseInt(a[1]) === 1) {
                                 // console.log('Auth Challnege')
                                 let challenge = a[2].slice(0, 8)
-                                hash = md5(authString + challenge)
+                                hash = md5(config.TCP_Auth + challenge)
                             }
                             try {
                               //  console.log(request)
@@ -73,7 +72,11 @@ export const netConnect = async (pjID: number, request: string): Promise<string>
                         }
                     }
                 } else {
-                    // console.log(pjID,data)
+                     //console.log(pjID,data)
+                    if(data==='ERR1\r'){
+                        console.log('ERR1')
+                        err(new Error('Undefined Control Command '+request))
+                    }
                     res(data)
                 }
             })

@@ -20,7 +20,10 @@ export default class pjPoller {
       shutter: false,
       blend: false,
       blendMarker: false,
-      testPattren: false
+      testPattren: false,
+      lampStatus: false,
+      hdmiInput: false,
+      signalName: false
     }
     
   }
@@ -74,13 +77,16 @@ export default class pjPoller {
     return this.rigStatus
   }
   updateStatus(){
-    let s = {
+    let s:RigStatus = {
       online: true,
       power: true,
       shutter: true,
       blend: true,
       blendMarker: true,
-      testPattren: true
+      testPattren: true,
+      lampStatus : true,
+      hdmiInput: true,
+      signalName: true
     }
     Object.values(this.pjs).forEach(pj=>{
       
@@ -101,6 +107,15 @@ export default class pjPoller {
       }
       if(pj.testPattren !=='Off'){
         s.testPattren = false
+      }
+      if(pj.lampStatus !=='Lamp On'){
+        s.lampStatus = false
+      }
+      if(pj.hdmiResolution !== '1920x1200p' || pj.hmdiSignalLevel !=='Auto'){
+        s.hdmiInput = false
+      }
+      if(pj.inputSignalName_Main !== '1920x1200/60RB'){
+        s.signalName = false
       }
     })
     this.rigStatus = s
