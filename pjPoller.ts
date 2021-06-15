@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer";
+
 import { ioCommands, pjWorld, RigStatus } from "./constants";
 import PromisePool, { } from '@supercharge/promise-pool'
 import PJ from "./pj";
@@ -8,7 +8,6 @@ import  {Server}  from "socket.io";
 
 
 export default class pjPoller {
-  browser: puppeteer.Browser
   pjs: Record<number, pj>
   rigStatus : RigStatus
   io?: Server
