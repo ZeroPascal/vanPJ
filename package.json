@@ -7,8 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.ts"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "ZeroPascal",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ZeroPascal/panasonicServer.git"
+  },
+  "license": "MIT",
   "dependencies": {
     "@supercharge/promise-pool": "^1.7.0",
     "dom-parser": "^0.1.6",
