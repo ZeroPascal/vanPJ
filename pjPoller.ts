@@ -3,7 +3,7 @@ import { ioCommands, RigStatus } from "./constants";
 import PromisePool, { } from '@supercharge/promise-pool'
 import  {Server}  from "socket.io";
 import ConfigHandler from "./ConfigHandler";
-import PJ from "./PJ";
+import PJ from "./pj";
 
 
 export default class pjPoller {
