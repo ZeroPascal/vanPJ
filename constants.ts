@@ -5,7 +5,7 @@ export const pjWorldEnd = 198
 export const pjWorldOmit: number[] = []
 */
 
-import Projector from "./projector"
+import Projector from "./Projector"
 
 
 export enum PROJECTOR_MAKES {
