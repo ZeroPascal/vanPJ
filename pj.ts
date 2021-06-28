@@ -1,6 +1,6 @@
 import { functions, hexFunction } from "./ControlCommands"
 import { ControlCommands, ControlKeys, PJ_OBJ } from './constants'
-import { netConnect } from "./Telnet"
+import { netConnect } from "./telnet"
 import Projector from "./Projector"
 
 
