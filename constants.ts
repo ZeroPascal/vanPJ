@@ -4,18 +4,8 @@ export const pjWorldStart = 101
 export const pjWorldEnd = 198
 export const pjWorldOmit: number[] = []
 */
-import { config } from './index'
-export const pjWorld = () => {
-    if (config.PJ_World.length > 0) {
-        return config.PJ_World
-    }
-    let world = []
-    for (let i = config.PJ_World_Start; i <= config.PJ_World_End; i++) {
-        if (!config.PJ_World_Omit.includes(i))
-            world.push(i)
-    }
-    return world
-}
+
+import Projector from "./projector"
 
 
 export enum PROJECTOR_MAKES {
@@ -25,32 +15,36 @@ export enum PROJECTOR_MAKES {
 export type Group = {name: string, group: number[]}
 export type Groups = Record<number, Group>
 export type PROJECTOR_MAKE = keyof typeof PROJECTOR_MAKES
-export interface Config {
-    "IP_Top": string,
-    "Projector_Port": number,
-    "TCP_Auth": string,
-    "PJ_World_Start": number,
-    "PJ_World_End": number,
-    "PJ_World_Omit": number[],
-    "PJ_World": number[],
-    "PJ_Type": PROJECTOR_MAKE,
-    "Polling": boolean,
-    "Polling_Interval": number,
-    "Groups": Groups
+
+export enum ConfigHeaders{
+    LOCATION = 'LOCATION',
+    LAST_UPDATED = 'LAST_UPDATED',
+    POLLING = 'POLLING',
+    POLLING_INTERVAL = 'POLLING_INTERVAL',
+    PATCH = 'PATCH'
+    
 }
+export type Patch = Record<string,Projector>
+export interface Config {
+    Patch: Patch,
+    Location: string,
+    LastUpdated: string,
+    Polling: boolean,
+    Polling_Interval: number,
+    Groups: Groups,
+    SchemaVersion: number
+}
+
+
+export type ConfigKeys = keyof typeof ConfigHeaders
 export const defaultConfig: Config = {
-    "IP_Top": "192.168.10.",
-    "Projector_Port": 1024,
-    "TCP_Auth": "admin1:",
-    "PJ_World_Start": 101,
-    "PJ_World_End": 198,
-    "PJ_World_Omit": [],
-    "PJ_World": [],
-    "PJ_Type": PROJECTOR_MAKES.PANASONIC,
-    "Polling": false,
-    "Polling_Interval": 60000,
-    "Groups": {
-    }
+    Patch: {},
+    Location: '',
+    LastUpdated: Date(),
+    Polling: false,
+    Polling_Interval: 60000,
+    Groups: {},
+    SchemaVersion: 1
 }
 
 
@@ -124,7 +118,9 @@ export enum ioCommands {
     EMITTING_PJS = 'EMITTING_PJS',
     EMITTING_STATUS = 'EMITTING_STATUS',
     REQUEST_CONFIG = 'REQUEST_CONFIG',
-    EMITTING_CONFIG = 'EMITTING_CONFIG'
+    EMITTING_CONFIG = 'EMITTING_CONFIG',
+    REQUESTING_CONFIG = 'REQUESTING_CONFIG', 
+    EMITTING_PATCH = 'EMITTING_PATCH'
 }
 export interface RigStatus {
     online: boolean,

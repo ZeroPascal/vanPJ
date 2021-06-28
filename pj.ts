@@ -1,11 +1,12 @@
 import { functions, hexFunction } from "./ControlCommands"
 import { ControlCommands, ControlKeys, PJ_OBJ } from './constants'
-import { netConnect } from "./telnet"
+import { netConnect } from "./Telnet"
+import Projector from "./projector"
+import projector from "./projector"
 
 
 
-export default class PJ implements PJ_OBJ {
-    id: number
+export default class PJ extends Projector implements PJ_OBJ  {
     power: string
     name: string
     shutter: string
@@ -24,8 +25,8 @@ export default class PJ implements PJ_OBJ {
     osdPostion: string
     inputSignalName_Main: string
     error: string
-    constructor(id: number) {
-        this.id = id
+    constructor(projectorInfo: projector) {
+        super(projectorInfo)
         this.power = 'Unknown'
         this.name = 'Unknown'
         this.shutter = 'Unknown'
@@ -47,7 +48,7 @@ export default class PJ implements PJ_OBJ {
     private async poll(hexFunction: hexFunction) {
         if (!hexFunction) { return 'Unknown' }
         try {
-            let res = await netConnect(this.id, hexFunction.query)
+            let res = await netConnect(this, hexFunction.query)
             this.lastSeen = Date.now()
             this.online = 'true'
             if( hexFunction.name === 'Projector Name' || hexFunction.name === 'Input Signal Name - Main'){
@@ -75,7 +76,7 @@ export default class PJ implements PJ_OBJ {
         } catch (e) {
             console.log(this.id, 'Error:', e.message)
            
-            this.error = e.message
+            this.error = this.error+e.message
             this.online = 'false'
             return 'Unknown'
         }
@@ -84,7 +85,7 @@ export default class PJ implements PJ_OBJ {
         try {
            // console.log('Setting: ', this.id, hexFunction)
            // console.log(vartiable)
-            let responce = await netConnect(this.id, hexFunction.control[command].command+(vartiable?'='+vartiable+'\r':''))
+            let responce = await netConnect(this, hexFunction.control[command].command+(vartiable?'='+vartiable+'\r':''))
            // console.log('TCP Responce:', responce)
             return (responce === hexFunction.control[command].command)
 
@@ -134,6 +135,7 @@ export default class PJ implements PJ_OBJ {
         return Date.now()
     }
     async pollStatus() {
+        this.error = ''
         try {
 
             await this.pollPower()

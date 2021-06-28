@@ -1,7 +1,8 @@
 import express from 'express'
 import { Socket } from 'socket.io'
 import { Server } from 'socket.io'
-import { Config, ControlCommands, ControlKeys, defaultConfig, ioCommands } from './constants'
+import ConfigHandler from './ConfigHandler'
+import { Config, ControlCommands, ControlKeys, defaultConfig, ioCommands, Patch } from './constants'
 import pjPoller from './pjPoller'
 
 const https = require('https')
@@ -9,15 +10,7 @@ const app = express()
 const path = require('path');
 
 const port = 3002
-const fs = require('fs')
-export let config: Config = defaultConfig
-try{
-  config = JSON.parse(fs.readFileSync('./ServerConfig.json').toString())
-  //console.log(config)
 
-}catch(e){
- console.log('Could Not read Config')
-}
 
 app.use(express.static(path.join(__dirname, 'build')));
 
@@ -30,9 +23,8 @@ app.get('/test', (req, res) => {
 
 })
 
-
-
-const pjs = new pjPoller();
+export let config = new ConfigHandler()
+const pjs = new pjPoller(config);
 let time = Date.now()
 
 console.log('Starting Poller')
@@ -40,19 +32,51 @@ console.log('Starting Poller')
 pjs.start().then(() => {
   console.log('PJS Built!', (Date.now() - time) / 1000 + 's')
 
-  if (config.Polling)
-    setInterval(f, config.Polling_Interval)
+  config.PollingFunction = () => {
+    console.log('Polling ', Date())
+    let time = Date.now()
+    pjs.pollAllPJs().then(() => {
+      console.log('PJs Rereshed', (Date.now() - time) / 1000 + 's')
+      io.emit('pjs', pjs.pjs)
+    })
+  }
 })
 
+
+app.get('/api/config*', (req, res) => {
+  //res.send('Hello World From Panasonic Server')
+  // console.log('Config',req.query)
+  if (req.query) {
+    config.processUpdate(req.query)
+    /*
+    let query = req.query
+    Object.entries(query).forEach(item=>{
+      let target = item[0].toString().trim() as keyof Config
+      let value = item[1].toString()
+     
+      if(target && value){
+       switch(target){
+         case 'IP_TOP':
+           console.log('Changing IP_Top')
+           config.IP_Top= value
+           break
+       }
+      }
+    })
+    console.log(config.IP_Top)
+    
+    */
+  }
+  io.emit(ioCommands.REQUEST_CONFIG)
+  res.status(200).json({})
+})
+
+
+
+
+
 //getStatus(101)
-const f = () => {
-  console.log('Polling ', Date())
-  let time = Date.now()
-  pjs.pollAllPJs().then(() => {
-    console.log('PJs Rereshed', (Date.now() - time) / 1000 + 's')
-    io.emit('pjs', pjs.pjs)
-  })
-}
+
 app.get('/api/status/*', async (req, res, next) => {
 
   let q = req.query
@@ -68,7 +92,7 @@ app.get('/api/status/*', async (req, res, next) => {
     let pj = q.pj
 
     if (pj == 'all') {
-     // console.log('Requested All', Date())
+      // console.log('Requested All', Date())
       res.status(200).json(pjs.getPJs())
       return
     }
@@ -105,22 +129,22 @@ app.get('/api/set/*', async (req, res) => {
     if (!pjs || isNaN(pjID) || !pjs.getPJ(pjID)) {
       res.status(404).json('PJ NOT FOUND')
       return
-    } else if(q.command) {
-        let pj = pjs.getPJ(pjID)
-        let cmd = q.command.toString() as ControlKeys
-     
-        if (Object.keys(ControlCommands).includes(cmd)) {
-          res.status(200).json('Good Command') 
-          let vartiable = q.vartiable? q.vartiable.toString() : undefined;
-          pj.Control(cmd, vartiable).then(res =>{
+    } else if (q.command) {
+      let pj = pjs.getPJ(pjID)
+      let cmd = q.command.toString() as ControlKeys
+
+      if (Object.keys(ControlCommands).includes(cmd)) {
+        res.status(200).json('Good Command')
+        let vartiable = q.vartiable ? q.vartiable.toString() : undefined;
+        pj.Control(cmd, vartiable).then(res => {
           pjs.updateStatus()
           io.emit(ioCommands.REQUEST_UPDATE)
         })
-          return
-        } else {
-          res.status(404).json('Bad Command')
-          return
-        }
+        return
+      } else {
+        res.status(404).json('Bad Command')
+        return
+      }
     }
 
   }
@@ -128,10 +152,10 @@ app.get('/api/set/*', async (req, res) => {
   return
 })
 
-app.get('/api/config*',(req,res)=>{
+app.get('/api/config*', (req, res) => {
   let q = req.query
-  if(req.query){
-    
+  if (req.query) {
+
   }
 })
 
@@ -145,18 +169,29 @@ const server = require('http').createServer(app);
 
 const io = new Server(server);
 pjs.io = io
+config.io = io
 io.on('connection', (socket: Socket) => {
   socket.emit(ioCommands.REQUEST_UPDATE)
-  socket.emit(ioCommands.EMITTING_CONFIG, config)
-  console.log('Socket Conencted')
+  socket.emit(ioCommands.REQUEST_CONFIG)
+
+  //console.log('Socket Conencted')
+
   socket.on(ioCommands.REQUESTING_UPDATE, () => {
     socket.emit(ioCommands.EMITTING_PJS, pjs.pjs)
     socket.emit(ioCommands.EMITTING_STATUS, pjs.getStatus())
   })
-  socket.on(ioCommands.REQUEST_CONFIG, ()=>{
-    socket.emit(ioCommands.EMITTING_CONFIG,config)
+  socket.on(ioCommands.REQUESTING_CONFIG, () => {
+    // console.log('Sending Current Config')
+    socket.emit(ioCommands.EMITTING_CONFIG, config.config)
   })
-  
+
+  socket.on(ioCommands.EMITTING_PATCH, (patch) => {
+
+    config.Patch = patch as Patch
+    socket.emit(ioCommands.REQUEST_CONFIG
+    )
+  })
+
 
 });
 

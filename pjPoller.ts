@@ -1,9 +1,10 @@
 
-import { ioCommands, pjWorld, RigStatus } from "./constants";
+import { ioCommands, RigStatus } from "./constants";
 import PromisePool, { } from '@supercharge/promise-pool'
-import PJ from "./pj";
-import pj from "./pj";
+import PJ from "./PJ";
+import pj from "./PJ";
 import  {Server}  from "socket.io";
+import ConfigHandler from "./ConfigHandler";
 
 
 
@@ -11,7 +12,9 @@ export default class pjPoller {
   pjs: Record<number, pj>
   rigStatus : RigStatus
   io?: Server
-  constructor() {
+  config: ConfigHandler
+  constructor(config: ConfigHandler) {
+    this.config = config
     this.pjs = {}
     this.rigStatus = {
       online: false,
@@ -27,8 +30,8 @@ export default class pjPoller {
     
   }
   async start(){
-    pjWorld().forEach(pjID=>{
-      this.pjs[pjID] = new PJ(pjID)
+    Object.values(this.config.Patch).forEach(pj=>{
+      this.pjs[pj.ID] = new PJ(pj)
     })
     await this.buildAllPJS()
   }
