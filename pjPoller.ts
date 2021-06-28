@@ -2,14 +2,13 @@
 import { ioCommands, RigStatus } from "./constants";
 import PromisePool, { } from '@supercharge/promise-pool'
 import PJ from "./PJ";
-import pj from "./PJ";
 import  {Server}  from "socket.io";
 import ConfigHandler from "./ConfigHandler";
 
 
 
 export default class pjPoller {
-  pjs: Record<number, pj>
+  pjs: Record<number, PJ>
   rigStatus : RigStatus
   io?: Server
   config: ConfigHandler
