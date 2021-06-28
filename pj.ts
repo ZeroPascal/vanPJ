@@ -1,8 +1,7 @@
 import { functions, hexFunction } from "./ControlCommands"
 import { ControlCommands, ControlKeys, PJ_OBJ } from './constants'
 import { netConnect } from "./Telnet"
-import Projector from "./projector"
-import projector from "./projector"
+import Projector from "./Projector"
 
 
 
@@ -25,7 +24,7 @@ export default class PJ extends Projector implements PJ_OBJ  {
     osdPostion: string
     inputSignalName_Main: string
     error: string
-    constructor(projectorInfo: projector) {
+    constructor(projectorInfo: Projector) {
         super(projectorInfo)
         this.power = 'Unknown'
         this.name = 'Unknown'

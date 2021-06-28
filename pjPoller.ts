@@ -6,7 +6,6 @@ import ConfigHandler from "./ConfigHandler";
 import PJ from "./PJ";
 
 
-
 export default class pjPoller {
   pjs: Record<number, PJ>
   rigStatus : RigStatus
