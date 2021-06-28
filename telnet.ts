@@ -2,7 +2,7 @@
 import net from 'net'
 import md5 from 'md5'
 import { functions } from './ControlCommands'
-import Projector from './projector'
+import Projector from './Projector'
 interface tel_parmas {
     host: string,
     port: number
