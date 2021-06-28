@@ -2,18 +2,41 @@ import { Config, ConfigHeaders, ConfigKeys, defaultConfig, ioCommands, Patch } f
 import {Server} from 'socket.io'
 import * as _ from 'lodash'
 const fs = require('fs')
+const path =require('path')
 
-const configLocation = './local/ServerConfig.json'
-function writeConfig(config: Config){
-   // console.log('Writting Config',config)
-    fs.writeFile(configLocation, JSON.stringify(config), (err:any)=> {
-        err? console.log('ServerConfig Write Error: ',err) : ''
+
+const configFolder = path.join(__dirname, 'local')
+const configFile = path.join(configFolder, 'ServerConfig.json')
+
+function writeFile(config: Config){
+    console.log('Writting Config',)
+    fs.writeFile(configFile, JSON.stringify(config), (err:any)=> {
+        if(err) throw new Error('ServerConfig Write Error: '+err)
     })
+}
+function writeConfig(config: Config){
+    try{
+    if(!fs.existsSync(configFolder)){
+        fs.mkdir(configFolder,(err: any)=>{
+            if(err){
+                throw new Error('ServerConfig MKDIR Error: '+err)
+            } else{
+                writeFile(config)
+            }
+        })
+    }else{
+        writeFile(config)
+    }
+   
+    
+    }catch(e){
+        console.error(e)
+    }
 }
 function getLocalConfig() {
 
     try {
-        return JSON.parse(fs.readFileSync(configLocation).toString())
+        return JSON.parse(fs.readFileSync(configFile).toString())
 
     } catch (e) {
         console.log('Could Not read Config')
