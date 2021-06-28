@@ -136,7 +136,7 @@ app.get('/api/set/*', async (req, res) => {
       if (Object.keys(ControlCommands).includes(cmd)) {
         res.status(200).json('Good Command')
         let vartiable = q.vartiable ? q.vartiable.toString() : undefined;
-        pj.Control(cmd, vartiable).then(res => {
+        pj.Control(cmd, vartiable).then((res: any) => {
           pjs.updateStatus()
           io.emit(ioCommands.REQUEST_UPDATE)
         })
