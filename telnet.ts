@@ -2,7 +2,7 @@
 import net from 'net'
 import md5 from 'md5'
 import { functions } from './ControlCommands'
-import {config} from './index'
+import Projector from './Projector'
 interface tel_parmas {
     host: string,
     port: number
@@ -31,11 +31,11 @@ async function querySocket(socket: net.Socket, request: string, auth = '') {
     await timeout()
 
 }
-export const netConnect = async (pjID: number, request: string): Promise<string> => {
+export const netConnect = async (pj: Projector, request: string): Promise<string> => {
     //console.log('NetConnect',pjID)
     return new Promise((res, err) => {
         try {
-            let socket = net.connect(config.Projector_Port, config.IP_Top + pjID)
+            let socket = net.connect(pj.Port, pj.IP_Address)
             socket.setTimeout(1500)
             socket.on('timeout', () => {
                 // console.log('Socket Timeout')
@@ -59,7 +59,7 @@ export const netConnect = async (pjID: number, request: string): Promise<string>
                             if (parseInt(a[1]) === 1) {
                                 // console.log('Auth Challnege')
                                 let challenge = a[2].slice(0, 8)
-                                hash = md5(config.TCP_Auth + challenge)
+                                hash = md5(pj.Auth + challenge)
                             }
                             try {
                               //  console.log(request)
@@ -99,12 +99,12 @@ export const netConnect = async (pjID: number, request: string): Promise<string>
 
 
 }
-export async function getStatus(pjID: number) {
-    console.log('PJ', pjID)
+export async function getStatus(pj: Projector) {
+   // console.log('PJ', pjID)
     Object.values(functions).forEach(async value => {
         try {
             //   console.log('Checking',value.query)
-            let res = await netConnect(pjID, value.query) as string
+            let res = await netConnect(pj, value.query) as string
             //console.log(res)
 
             if (Object.keys(value.response).includes(res))

@@ -1,17 +1,18 @@
 
-import { ioCommands, pjWorld, RigStatus } from "./constants";
+import { ioCommands, RigStatus } from "./constants";
 import PromisePool, { } from '@supercharge/promise-pool'
-import PJ from "./pj";
-import pj from "./pj";
 import  {Server}  from "socket.io";
-
+import ConfigHandler from "./ConfigHandler";
+import PJ from "./pj";
 
 
 export default class pjPoller {
-  pjs: Record<number, pj>
+  pjs: Record<number, PJ>
   rigStatus : RigStatus
   io?: Server
-  constructor() {
+  config: ConfigHandler
+  constructor(config: ConfigHandler) {
+    this.config = config
     this.pjs = {}
     this.rigStatus = {
       online: false,
@@ -27,15 +28,22 @@ export default class pjPoller {
     
   }
   async start(){
-    pjWorld().forEach(pjID=>{
-      this.pjs[pjID] = new PJ(pjID)
-    })
+  
     await this.buildAllPJS()
   }
  async buildAllPJS(){
+
+  Object.values(this.config.Patch).forEach(pj=>{
+  
+    this.pjs[pj.id] = new PJ(pj)
+  })
+  await this.pollAllPJs()
+  /*
   return new Promise(res=>{
     let i = Object.values(this.pjs).length
+   // console.log(this.pjs)
     Object.values(this.pjs).forEach(async pj => {
+     
       await pj.pollStatus()
       i--
       if(i===0){
@@ -45,7 +53,7 @@ export default class pjPoller {
       }
    })
   
-  })
+  }) */
  }
   set Io(IO: Server){
     this.io = IO
@@ -55,10 +63,18 @@ export default class pjPoller {
     return this.pjs
   }
   async pollAllPJs() {
+    let l = Object.values(this.pjs).length
+    let p = 0
+    this.io?.emit(ioCommands.EMITTING_POLLING_PROGRESS,0)
     const { results, errors } = await PromisePool
       .for(Object.values(this.pjs))
       .process(async pj => {
+        this.io?.emit(ioCommands.EMITTING_POLLING_PROGRESS,(p/l*100))
         await pj.pollStatus()
+        p++
+       
+        this.io?.emit(ioCommands.EMITTING_POLLING_PROGRESS,(p/l*100))
+      
       })
       this.updateStatus()
      this.io?.emit(ioCommands.REQUEST_UPDATE)
