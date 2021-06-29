@@ -73,7 +73,7 @@ export default class PJ extends Projector implements PJ_OBJ  {
             }
 
         } catch (e) {
-            console.log(this.id, 'Error:', e.message)
+          //  console.log(this.id, 'Error:', e.message)
            
             this.error = this.error+e.message
             this.online = 'false'
@@ -134,6 +134,8 @@ export default class PJ extends Projector implements PJ_OBJ  {
         return Date.now()
     }
     async pollStatus() {
+
+       // console.log('Polling',this.ID)
         this.error = ''
         try {
 

@@ -174,7 +174,7 @@ io.on('connection', (socket: Socket) => {
   socket.emit(ioCommands.REQUEST_UPDATE)
   socket.emit(ioCommands.REQUEST_CONFIG)
 
-  //console.log('Socket Conencted')
+  console.log('Socket Conencted')
 
   socket.on(ioCommands.REQUESTING_UPDATE, () => {
     socket.emit(ioCommands.EMITTING_PJS, pjs.pjs)
@@ -188,8 +188,8 @@ io.on('connection', (socket: Socket) => {
   socket.on(ioCommands.EMITTING_PATCH, (patch) => {
 
     config.Patch = patch as Patch
-    socket.emit(ioCommands.REQUEST_CONFIG
-    )
+    socket.emit(ioCommands.REQUEST_CONFIG)
+    pjs.buildAllPJS()
   })
 
 

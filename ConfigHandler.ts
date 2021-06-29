@@ -9,7 +9,7 @@ const configFolder = path.join(__dirname, 'local')
 const configFile = path.join(configFolder, 'ServerConfig.json')
 
 function writeFile(config: Config){
-    console.log('Writting Config',)
+   // console.log('Writing Config',Object.values(config.Patch).length)
     fs.writeFile(configFile, JSON.stringify(config), (err:any)=> {
         if(err) throw new Error('ServerConfig Write Error: '+err)
     })
@@ -39,7 +39,7 @@ function getLocalConfig() {
         return JSON.parse(fs.readFileSync(configFile).toString())
 
     } catch (e) {
-        console.log('Could Not read Config')
+       // console.log('Could Not Read Config')
         
        writeConfig(defaultConfig)
            
@@ -66,7 +66,10 @@ export default class ConfigHandler {
         this.pollingFunction = f
         this.startPolling()
     }
-
+    update(){
+        writeConfig(this.config)
+        this.io?.emit(ioCommands.REQUEST_CONFIG)
+    }
     startPolling(){
       //  console.log('Setting Polling Interval')
         if(this.pollingFunctionInt){
@@ -114,9 +117,7 @@ export default class ConfigHandler {
             }
         })
        // console.log(this.config)
-        writeConfig(this.config)
-       
-        this.io?.emit(ioCommands.REQUEST_CONFIG)
+        this.update()
     }
     get Polling(){
         return this.config.Polling
@@ -152,10 +153,18 @@ export default class ConfigHandler {
     set Patch(patch: Patch){
         
         this.config.Patch =patch
+
+        this.setAllGroup()
         this.LastUpdated = Date()
-        writeConfig(this.config)
+        this.update()
         
-        //  console.log(this.config.Patch)
+        
+       
+    }
+    setAllGroup(){
+        let all = Object.values(this.Patch).map(pj=> { return pj.id})
+        this.config.Groups[0] = {name: 'All', group: all}
+        this.update()
     }
 /*
     get World(){
