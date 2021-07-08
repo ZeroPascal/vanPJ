@@ -77,7 +77,7 @@ export default class pjPoller {
       
       })
       this.updateStatus()
-     this.io?.emit(ioCommands.REQUEST_UPDATE)
+     // this.io?.emit(ioCommands.REQUEST_UPDATE)
     //console.log(pjs)
   }
   async pollPJ(pjID: number){
@@ -92,6 +92,7 @@ export default class pjPoller {
     return this.rigStatus
   }
   updateStatus(){
+    console.log('Updating Rig Status')
     let s:RigStatus = {
       online: true,
       power: true,
@@ -134,6 +135,7 @@ export default class pjPoller {
       }
     })
     this.rigStatus = s
+    this.io?.emit(ioCommands.EMITTING_STATUS, this.getStatus())
   }
 }
 

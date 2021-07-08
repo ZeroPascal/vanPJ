@@ -112,6 +112,8 @@ export type PJ_OBJ = {
     error: string
 
 }
+
+export type CommandPackage = {cmd: ControlKeys, pjIDs: number[], vartiable: string | undefined}
 export enum ioCommands {
     REQUEST_UPDATE = 'REQUEST_UPDATE',
     REQUESTING_UPDATE = 'REQUESTING_UPDATE',
@@ -121,7 +123,8 @@ export enum ioCommands {
     EMITTING_CONFIG = 'EMITTING_CONFIG',
     REQUESTING_CONFIG = 'REQUESTING_CONFIG', 
     EMITTING_PATCH = 'EMITTING_PATCH',
-    EMITTING_POLLING_PROGRESS = 'EMITTING_POLLING_PROGRESS'
+    EMITTING_POLLING_PROGRESS = 'EMITTING_POLLING_PROGRESS',
+    EMITTING_CMD = 'EMITTING_CMD'
 }
 export interface RigStatus {
     online: boolean,

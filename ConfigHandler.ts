@@ -68,7 +68,7 @@ export default class ConfigHandler {
     }
     update(){
         writeConfig(this.config)
-        this.io?.emit(ioCommands.REQUEST_CONFIG)
+       // this.io?.emit(ioCommands.REQUEST_CONFIG)
     }
     startPolling(){
       //  console.log('Setting Polling Interval')

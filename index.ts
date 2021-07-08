@@ -1,8 +1,9 @@
+import PromisePool from '@supercharge/promise-pool/dist'
 import express from 'express'
 import { Socket } from 'socket.io'
 import { Server } from 'socket.io'
 import ConfigHandler from './ConfigHandler'
-import { Config, ControlCommands, ControlKeys, defaultConfig, ioCommands, Patch } from './constants'
+import { CommandPackage, Config, ControlCommands, ControlKeys, defaultConfig, ioCommands, Patch } from './constants'
 import pjPoller from './pjPoller'
 
 const https = require('https')
@@ -166,23 +167,31 @@ app.get('/rigStatus', (req, res) => {
 })
 
 const server = require('http').createServer(app);
-
+let clients  = 0
 const io = new Server(server);
 pjs.io = io
 config.io = io
 io.on('connection', (socket: Socket) => {
-  socket.emit(ioCommands.REQUEST_UPDATE)
-  socket.emit(ioCommands.REQUEST_CONFIG)
-
-  console.log('Socket Conencted')
-
+  socket.emit(ioCommands.EMITTING_PJS, pjs.pjs)
+  socket.emit(ioCommands.EMITTING_STATUS, pjs.getStatus())
+  socket.emit(ioCommands.EMITTING_CONFIG, config.config)
+  //socket.emit(ioCommands.REQUEST_UPDATE)
+  //socket.emit(ioCommands.REQUEST_CONFIG)
+  clients++
+  console.log('Socket Conencted',clients)
+  socket.on('disconnect',()=>{
+    
+    clients--
+    console.log('Socket Disconnected',clients)
+  })
   socket.on(ioCommands.REQUESTING_UPDATE, () => {
-    socket.emit(ioCommands.EMITTING_PJS, pjs.pjs)
-    socket.emit(ioCommands.EMITTING_STATUS, pjs.getStatus())
+    console.log('Requested Update')
+    //socket.emit(ioCommands.EMITTING_PJS, pjs.pjs)
+    //socket.emit(ioCommands.EMITTING_STATUS, pjs.getStatus())
   })
   socket.on(ioCommands.REQUESTING_CONFIG, () => {
-    // console.log('Sending Current Config')
-    socket.emit(ioCommands.EMITTING_CONFIG, config.config)
+     console.log('Sending Current Config')
+    //socket.emit(ioCommands.EMITTING_CONFIG, config.config)
   })
 
   socket.on(ioCommands.EMITTING_PATCH, (patch) => {
@@ -192,6 +201,25 @@ io.on('connection', (socket: Socket) => {
     pjs.buildAllPJS()
   })
 
+  socket.on(ioCommands.EMITTING_CMD, async (CommandPackage: CommandPackage)=>{
+    console.log('Got CMD',CommandPackage.cmd,CommandPackage.pjIDs?.length)
+    if(!CommandPackage.pjIDs) return
+    console.log('Running CMD',CommandPackage.cmd)
+    let activePJs = CommandPackage.pjIDs.map(pjID=>{
+      return pjs.getPJ(pjID)
+    })
+    
+    const { results, errors } = await PromisePool
+    .for(activePJs)
+    .process(async pj => {
+      await pj.Control(CommandPackage.cmd,CommandPackage.vartiable)
+    
+    })
+      pjs.updateStatus()
+     // io.emit(ioCommands.REQUEST_UPDATE)
+      console.log('CMD Done',CommandPackage.cmd)
+  })
+  
 
 });
 

@@ -154,6 +154,7 @@ export default class PJ extends Projector implements PJ_OBJ  {
 
     }
     async Control(command: ControlKeys, vartiable: undefined | string) {
+        console.log('PJ Running CMD',this.ID,command)
         switch (command) {
             case ControlCommands.POWER_OFF:
             case ControlCommands.POWER_ON:
