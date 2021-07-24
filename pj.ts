@@ -2,10 +2,11 @@ import { functions, hexFunction } from "./ControlCommands"
 import { ControlCommands, ControlKeys, PJ_OBJ } from './constants'
 import { netConnect } from "./telnet"
 import Projector from "./Projector"
+import { times } from "lodash"
 
 
 
-export default class PJ extends Projector implements PJ_OBJ  {
+export default class PJ extends Projector implements PJ_OBJ {
     power: string
     name: string
     shutter: string
@@ -19,6 +20,7 @@ export default class PJ extends Projector implements PJ_OBJ  {
     edgeBlendingRight: string
     edgeBlendingUpper: string
     testPattren: string
+    backColor: string
     hdmiResolution: string
     hmdiSignalLevel: string
     osdPostion: string
@@ -42,7 +44,8 @@ export default class PJ extends Projector implements PJ_OBJ  {
         this.edgeBlendingUpper = 'Unknown'
         this.hdmiResolution = 'Unknown'
         this.hmdiSignalLevel = 'Unknown'
-        this.osdPostion = 'Unknonw'
+        this.osdPostion = 'Unknown'
+        this.backColor = 'Unknown'
     }
     private async poll(hexFunction: hexFunction) {
         if (!hexFunction) { return 'Unknown' }
@@ -50,11 +53,11 @@ export default class PJ extends Projector implements PJ_OBJ  {
             let res = await netConnect(this, hexFunction.query)
             this.lastSeen = Date.now()
             this.online = 'true'
-            if( hexFunction.name === 'Projector Name' || hexFunction.name === 'Input Signal Name - Main'){
-                return res.slice(8,-1)
+            if (hexFunction.name === 'Projector Name' || hexFunction.name === 'Input Signal Name - Main') {
+                return res.slice(8, -1)
             }
-            if( hexFunction.name ===''){
-                return res.slice(8,-1)
+            if (hexFunction.name === '') {
+                return res.slice(8, -1)
             }
             if (hexFunction.response[res]) {
                 return hexFunction.response[res]
@@ -73,19 +76,19 @@ export default class PJ extends Projector implements PJ_OBJ  {
             }
 
         } catch (e) {
-          //  console.log(this.id, 'Error:', e.message)
-           
-            this.error = this.error+e.message
+            //  console.log(this.id, 'Error:', e.message)
+
+            this.error = this.error + e.message
             this.online = 'false'
             return 'Unknown'
         }
     }
-    private async setter(hexFunction: hexFunction, command: ControlKeys, vartiable?: string  ) {
+    private async setter(hexFunction: hexFunction, command: ControlKeys, vartiable?: string) {
         try {
-           // console.log('Setting: ', this.id, hexFunction)
-           // console.log(vartiable)
-            let responce = await netConnect(this, hexFunction.control[command].command+(vartiable?'='+vartiable+'\r':''))
-           // console.log('TCP Responce:', responce)
+            // console.log('Setting: ', this.id, hexFunction)
+            // console.log(vartiable)
+            let responce = await netConnect(this, hexFunction.control[command].command + (vartiable ? '=' + vartiable + '\r' : ''))
+            // console.log('TCP Responce:', responce)
             return (responce === hexFunction.control[command].command)
 
         } catch (e) {
@@ -122,11 +125,15 @@ export default class PJ extends Projector implements PJ_OBJ  {
         this.hdmiResolution = await this.poll(functions.HDMI_In_EDID_Resolution)
         this.inputSignalName_Main = await this.poll(functions.Input_Signal_Name_Main)
     }
-    async pollOSD(){
+    async pollOSD() {
         this.osdPostion = await this.poll(functions.OSD)
     }
-    async pollName(){
+    async pollName() {
         this.name = await this.poll(functions.Projector_Name)
+    }
+
+    async pollBackColor(){
+        this.backColor = await this.poll(functions.BackColor)
     }
 
     printTimeDif(now: number) {
@@ -135,7 +142,7 @@ export default class PJ extends Projector implements PJ_OBJ  {
     }
     async pollStatus() {
 
-       // console.log('Polling',this.ID)
+        // console.log('Polling',this.ID)
         this.error = ''
         try {
 
@@ -147,6 +154,7 @@ export default class PJ extends Projector implements PJ_OBJ  {
             await this.pollTestPattren()
             await this.pollHDMI()
             await this.pollName()
+            await this.pollBackColor()
 
         } catch (e) {
             console.log(this.id, ' PollStatus Error', e)
@@ -154,7 +162,7 @@ export default class PJ extends Projector implements PJ_OBJ  {
 
     }
     async Control(command: ControlKeys, vartiable: undefined | string) {
-        console.log('PJ Running CMD',this.ID,command)
+        console.log('PJ Running CMD', this.ID, command)
         switch (command) {
             case ControlCommands.POWER_OFF:
             case ControlCommands.POWER_ON:
@@ -187,13 +195,13 @@ export default class PJ extends Projector implements PJ_OBJ  {
 
             case ControlCommands.EDGE_BLENDING_MARKERS_OFF:
             case ControlCommands.EDGE_BLENDING_MARKERS_ON:
-                await this.setter(functions.Edge_Blending_Markers,command)
+                await this.setter(functions.Edge_Blending_Markers, command)
                 await this.pollEdgeBlendingMarkers()
                 return true
-            
-            case ControlCommands.EDGE_BLENDING_OFF: 
+
+            case ControlCommands.EDGE_BLENDING_OFF:
             case ControlCommands.EDGE_BLENDING_ON:
-                await this.setter(functions.edgeBlending,command)
+                await this.setter(functions.edgeBlending, command)
                 await this.pollEdgeBlending()
                 return true
             case ControlCommands.EDGE_BLENDING_UPPER_OFF:
@@ -230,12 +238,73 @@ export default class PJ extends Projector implements PJ_OBJ  {
                 await this.setter(functions.OSD, command)
                 await this.pollOSD()
                 return true
-            
+
             case ControlCommands.PROJECTOR_NAME:
-                await this.setter(functions.Projector_Name,command, vartiable)
+                await this.setter(functions.Projector_Name, command, vartiable)
                 await this.pollName()
                 return true
 
+            case ControlCommands.NUMBER_KEY_0:
+            case ControlCommands.NUMBER_KEY_1:
+            case ControlCommands.NUMBER_KEY_2:
+            case ControlCommands.NUMBER_KEY_3:
+            case ControlCommands.NUMBER_KEY_4:
+            case ControlCommands.NUMBER_KEY_5:
+            case ControlCommands.NUMBER_KEY_6:
+            case ControlCommands.NUMBER_KEY_7:
+            case ControlCommands.NUMBER_KEY_8:
+            case ControlCommands.NUMBER_KEY_9:
+                await this.setter(functions.NumericKey, command)
+                return true
+
+            case ControlCommands.LENS_POSTION_HOME:
+                await this.setter(functions.LensPositionHome, command)
+                return true
+
+            case ControlCommands.LENS_SHIFT_H_FN:
+            case ControlCommands.LENS_SHIFT_H_FP:
+            case ControlCommands.LENS_SHIFT_H_NN:
+            case ControlCommands.LENS_SHIFT_H_NP:
+            case ControlCommands.LENS_SHIFT_H_SN:
+            case ControlCommands.LENS_SHIFT_H_SP:
+            case ControlCommands.LENS_SHIFT_V_FN:
+            case ControlCommands.LENS_SHIFT_V_FP:
+            case ControlCommands.LENS_SHIFT_V_NN:
+            case ControlCommands.LENS_SHIFT_V_NP:
+            case ControlCommands.LENS_SHIFT_V_SN:
+            case ControlCommands.LENS_SHIFT_V_SP:
+                await this.setter(functions.LensShift, command)
+                return true
+
+            case ControlCommands.LENS_FOCUS_SP:
+            case ControlCommands.LENS_FOCUS_SN:
+            case ControlCommands.LENS_FOCUS_NP:
+            case ControlCommands.LENS_FOCUS_NN:
+            case ControlCommands.LENS_FOCUS_FP:
+            case ControlCommands.LENS_FOCUS_FN:
+                await this.setter(functions.LensFocus, command)
+                return true
+
+            case ControlCommands.LENS_ZOOM_SP:
+            case ControlCommands.LENS_ZOOM_SN:
+            case ControlCommands.LENS_ZOOM_NP:
+            case ControlCommands.LENS_ZOOM_NN:
+            case ControlCommands.LENS_ZOOM_FP:
+            case ControlCommands.LENS_ZOOM_FN:
+                await this.setter(functions.LensZoom, command)
+                return true
+
+            case ControlCommands.LENS_CALIBRATION:
+                await this.setter(functions.LensCalibration, command)
+                return true;
+
+            case ControlCommands.BACK_COLOR_BLUE:
+            case ControlCommands.BACK_COLOR_BLACK:
+            case ControlCommands.BACK_COLOR_USER_LOGO:
+            case ControlCommands.BACK_COLOR_DEFAULT_LOGO:
+                await this.setter(functions.BackColor, command)
+                await this.pollBackColor()
+                return true
 
             default:
                 return false
