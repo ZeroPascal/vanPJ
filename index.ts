@@ -202,7 +202,7 @@ io.on('connection', (socket: Socket) => {
   })
 
   socket.on(ioCommands.EMITTING_CMD, async (CommandPackage: CommandPackage)=>{
-    console.log('Got CMD',CommandPackage.cmd,CommandPackage.pjIDs?.length)
+    console.log('Got CMD',CommandPackage.cmd,CommandPackage.pjIDs?.length, CommandPackage.vartiable)
     if(!CommandPackage.pjIDs) return
     console.log('Running CMD',CommandPackage.cmd)
     let activePJs = CommandPackage.pjIDs.map(pjID=>{
