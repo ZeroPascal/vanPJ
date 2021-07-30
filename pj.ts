@@ -203,7 +203,7 @@ export default class PJ extends Projector implements PJ_OBJ {
 
             case ControlCommands.EDGE_BLENDING_OFF:
             case ControlCommands.EDGE_BLENDING_ON:
-                await this.setter(functions.edgeBlending, command)
+                await this.setter(functions.Edge_Blending, command)
                 await this.pollEdgeBlending()
                 return true
             case ControlCommands.EDGE_BLENDING_UPPER_OFF:
