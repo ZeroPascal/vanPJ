@@ -15,83 +15,83 @@ export interface hexFunction {
 }
 
 const getControl = (name: string, command: string): control => {
-    return { name, command }
+    return { name, command: '00'+command }
 }
 export const functions: Record<string, hexFunction> = {
     Power: {
         name: 'Power',
-        control: { [ControlCommands.POWER_ON]: getControl('Power On', '00PON\r'), [ControlCommands.POWER_OFF]: getControl('Power Off', '00POF\r') },
-        query: '00QPW\r',
+        control: { [ControlCommands.POWER_ON]: getControl('Power On', 'PON'), [ControlCommands.POWER_OFF]: getControl('Power Off', 'POF') },
+        query: '00QPW',
         response: {
-            '00001\r': 'On',
-            '00000\r': 'Off'
+            '00001': 'On',
+            '00000': 'Off'
         }
     },
     Shutter: {
         name: 'Shutter',
-        control: { [ControlCommands.SHUTTER_OPEN]: getControl('Shutter Open', '00OSH:0\r'), [ControlCommands.SHUTTER_CLOSED]: getControl('Shutter Closed', '00OSH:1\r') },
-        query: '00QSH\r',
+        control: { [ControlCommands.SHUTTER_OPEN]: getControl('Shutter Open', 'OSH:0'), [ControlCommands.SHUTTER_CLOSED]: getControl('Shutter Closed', 'OSH:1') },
+        query: '00QSH',
         response: {
-            '000\r': 'Open',
-            '001\r': 'Closed'
+            '000': 'Open',
+            '001': 'Closed'
         }
     },
     Edge_Blending: {
         name: 'Edge Blending',
-        control: { [ControlCommands.EDGE_BLENDING_OFF]: getControl('Off', '00VXX:EDBI0=+00000\r'), [ControlCommands.EDGE_BLENDING_ON]: getControl('On', 'VXX:EDBI0=+00001\r'), 'User': getControl('User', 'VXX:EDBI0=+00002\r') },
-        query: '00QVX:EDBI0\r',
+        control: { [ControlCommands.EDGE_BLENDING_OFF]: getControl('Off', 'VXX:EDBI0=+00000'), [ControlCommands.EDGE_BLENDING_ON]: getControl('On', 'VXX:EDBI0=+00001'), 'User': getControl('User', 'VXX:EDBI0=+00002') },
+        query: '00QVX:EDBI0',
         response: {
-            '00EDBI0=+00000\r': 'Off',
-            '00EDBI0=+00001\r': 'On',
-            '00EDBI0=+00002\r': 'User'
+            '00EDBI0=+00000': 'Off',
+            '00EDBI0=+00001': 'On',
+            '00EDBI0=+00002': 'User'
         }
     },
     Edge_Blending_Markers: {
         name: 'Edge Blending Markers',
-        control: { [ControlCommands.EDGE_BLENDING_MARKERS_ON]: getControl('Marker On', '00VGM:1\r'), [ControlCommands.EDGE_BLENDING_MARKERS_OFF]: getControl('Marker Off', '00VGM:0\r') },
-        query: '00QGM\r',
+        control: { [ControlCommands.EDGE_BLENDING_MARKERS_ON]: getControl('Marker On', 'VGM:1'), [ControlCommands.EDGE_BLENDING_MARKERS_OFF]: getControl('Marker Off', 'VGM:0') },
+        query: '00QGM',
         response: {
-            '000\r': 'Off',
-            '001\r': 'On'
+            '000': 'Off',
+            '001': 'On'
         }
     },
     Lamp_Control_Status: {
         name: 'Lamp Control Status',
         control: {},
-        query: '00Q$S\r',
+        query: '00Q$S',
         response: {
-            '000\r': 'Lamp Off',
-            '001\r': 'In Turning On',
-            '002\r': 'Lamp On',
-            '003\r': 'Lamp Cooling'
+            '000': 'Lamp Off',
+            '001': 'In Turning On',
+            '002': 'Lamp On',
+            '003': 'Lamp Cooling'
         }
     },
     Test_Pattern: {
         name: 'Test Pattern',
         control: {
-            [ControlCommands.TEST_PATTERN_OFF]: getControl('Off', '00OTS:00\r'),
-            [ControlCommands.TEST_PATTERN_WHITE]: getControl('White', '00OTS:01\r'),
-            [ControlCommands.TEST_PATTERN_BLACK]: getControl('Black', '00OTS:02\r'),
-            [ControlCommands.TEST_PATTERN_FOCUS_RED]: getControl('Focus Red', '00OTS:70\r')
+            [ControlCommands.TEST_PATTERN_OFF]: getControl('Off', 'OTS:00'),
+            [ControlCommands.TEST_PATTERN_WHITE]: getControl('White', 'OTS:01'),
+            [ControlCommands.TEST_PATTERN_BLACK]: getControl('Black', 'OTS:02'),
+            [ControlCommands.TEST_PATTERN_FOCUS_RED]: getControl('Focus Red', 'OTS:70')
         },
-        query: '00QTS\r',
+        query: '00QTS',
         response: {
-            '0000\r': 'Off',
-            '0001\r': 'White',
-            '0002\r': 'Black',
+            '0000': 'Off',
+            '0001': 'White',
+            '0002': 'Black',
 
         }
     },
     Menu: {
         name: 'Menu',
         control: {
-            [ControlCommands.MENU]: getControl('Menu', '00OMN\r'),
-            [ControlCommands.MENU_ENTER_KEY]: getControl('Enter', '00OEN\r'),
-            [ControlCommands.MENU_UP_KEY]: getControl('Up', '00OCU\r'),
-            [ControlCommands.MENU_RIGHT_KEY]: getControl('Right', '00OCR\r'),
-            [ControlCommands.MENU_DOWN_KEY]: getControl('Down', '00OCD\r'),
-            [ControlCommands.MENU_LEFT_KEY]: getControl('Left', '00OCL\r'),
-            [ControlCommands.MENU_DEFAULT_KEY]: getControl('Default', '00OST\r')
+            [ControlCommands.MENU]: getControl('Menu', 'OMN'),
+            [ControlCommands.MENU_ENTER_KEY]: getControl('Enter', 'OEN'),
+            [ControlCommands.MENU_UP_KEY]: getControl('Up', 'OCU'),
+            [ControlCommands.MENU_RIGHT_KEY]: getControl('Right', 'OCR'),
+            [ControlCommands.MENU_DOWN_KEY]: getControl('Down', 'OCD'),
+            [ControlCommands.MENU_LEFT_KEY]: getControl('Left', 'OCL'),
+            [ControlCommands.MENU_DEFAULT_KEY]: getControl('Default', 'OST')
 
         },
         query: '',
@@ -101,16 +101,16 @@ export const functions: Record<string, hexFunction> = {
     NumericKey: {
         name: 'Numeric Key',
         control: {
-            [ControlCommands.NUMBER_KEY_0]: getControl('0', '00ONK:0\r'),
-            [ControlCommands.NUMBER_KEY_1]: getControl('1', '00ONK:1\r'),
-            [ControlCommands.NUMBER_KEY_2]: getControl('2', '00ONK:2\r'),
-            [ControlCommands.NUMBER_KEY_3]: getControl('3', '00ONK:3\r'),
-            [ControlCommands.NUMBER_KEY_4]: getControl('4', '00ONK:4\r'),
-            [ControlCommands.NUMBER_KEY_5]: getControl('5', '00ONK:5\r'),
-            [ControlCommands.NUMBER_KEY_6]: getControl('6', '00ONK:6\r'),
-            [ControlCommands.NUMBER_KEY_7]: getControl('7', '00ONK:7\r'),
-            [ControlCommands.NUMBER_KEY_8]: getControl('8', '00ONK:8\r'),
-            [ControlCommands.NUMBER_KEY_9]: getControl('9', '00ONK:9\r')
+            [ControlCommands.NUMBER_KEY_0]: getControl('0', 'ONK:0'),
+            [ControlCommands.NUMBER_KEY_1]: getControl('1', 'ONK:1'),
+            [ControlCommands.NUMBER_KEY_2]: getControl('2', 'ONK:2'),
+            [ControlCommands.NUMBER_KEY_3]: getControl('3', 'ONK:3'),
+            [ControlCommands.NUMBER_KEY_4]: getControl('4', 'ONK:4'),
+            [ControlCommands.NUMBER_KEY_5]: getControl('5', 'ONK:5'),
+            [ControlCommands.NUMBER_KEY_6]: getControl('6', 'ONK:6'),
+            [ControlCommands.NUMBER_KEY_7]: getControl('7', 'ONK:7'),
+            [ControlCommands.NUMBER_KEY_8]: getControl('8', 'ONK:8'),
+            [ControlCommands.NUMBER_KEY_9]: getControl('9', 'ONK:9')
         },
         query: '',
         response: { 'None': '' }
@@ -118,7 +118,7 @@ export const functions: Record<string, hexFunction> = {
     LensPositionHome: {
         name: 'Lens Position Home',
         control: {
-            [ControlCommands.LENS_POSTION_HOME]: getControl('Home', '00VXX:LNSI1=+00001\r')
+            [ControlCommands.LENS_POSTION_HOME]: getControl('Home', 'VXX:LNSI1=+00001')
         },
         query: '',
         response: { 'None': '' }
@@ -126,18 +126,18 @@ export const functions: Record<string, hexFunction> = {
     LensShift: {
         name: 'Lens Shift',
         control: {
-            [ControlCommands.LENS_SHIFT_V_SP]: getControl('Vertical Slow +', '00VXX:LNSI3=+00000\r'),
-            [ControlCommands.LENS_SHIFT_V_SN]: getControl('Vertical Slow -', '00VXX:LNSI3=+00001\r'),
-            [ControlCommands.LENS_SHIFT_V_NP]: getControl('Vertical Normal +', '00VXX:LNSI3=+00100\r'),
-            [ControlCommands.LENS_SHIFT_V_NN]: getControl('Vertical Normal -', '00VXX:LNSI3=+00101\r'),
-            [ControlCommands.LENS_SHIFT_V_FP]: getControl('Vertical Fast +', '00VXX:LNSI3=+00200\r'),
-            [ControlCommands.LENS_SHIFT_V_FN]: getControl('Vertical Fast -', '00VXX:LNSI3=+00201\r'),
-            [ControlCommands.LENS_SHIFT_H_SP]: getControl('Horizontal Slow +', '00VXX:LNSI2=+00000\r'),
-            [ControlCommands.LENS_SHIFT_H_SN]: getControl('Horizontal Slow -', '00VXX:LNSI2=+00001\r'),
-            [ControlCommands.LENS_SHIFT_H_NP]: getControl('Horizontal Normal +', '00VXX:LNSI2=+00100\r'),
-            [ControlCommands.LENS_SHIFT_H_NN]: getControl('Horizontal Normal -', '00VXX:LNSI2=+00101\r'),
-            [ControlCommands.LENS_SHIFT_H_FP]: getControl('Horizontal Fast +', '00VXX:LNSI2=+00200\r'),
-            [ControlCommands.LENS_SHIFT_H_FN]: getControl('Horizontal Fast -', '00VXX:LNSI2=+00201\r'),
+            [ControlCommands.LENS_SHIFT_V_SP]: getControl('Vertical Slow +', 'VXX:LNSI3=+00000'),
+            [ControlCommands.LENS_SHIFT_V_SN]: getControl('Vertical Slow -', 'VXX:LNSI3=+00001'),
+            [ControlCommands.LENS_SHIFT_V_NP]: getControl('Vertical Normal +', 'VXX:LNSI3=+00100'),
+            [ControlCommands.LENS_SHIFT_V_NN]: getControl('Vertical Normal -', 'VXX:LNSI3=+00101'),
+            [ControlCommands.LENS_SHIFT_V_FP]: getControl('Vertical Fast +', 'VXX:LNSI3=+00200'),
+            [ControlCommands.LENS_SHIFT_V_FN]: getControl('Vertical Fast -', 'VXX:LNSI3=+00201'),
+            [ControlCommands.LENS_SHIFT_H_SP]: getControl('Horizontal Slow +', 'VXX:LNSI2=+00000'),
+            [ControlCommands.LENS_SHIFT_H_SN]: getControl('Horizontal Slow -', 'VXX:LNSI2=+00001'),
+            [ControlCommands.LENS_SHIFT_H_NP]: getControl('Horizontal Normal +', 'VXX:LNSI2=+00100'),
+            [ControlCommands.LENS_SHIFT_H_NN]: getControl('Horizontal Normal -', 'VXX:LNSI2=+00101'),
+            [ControlCommands.LENS_SHIFT_H_FP]: getControl('Horizontal Fast +', 'VXX:LNSI2=+00200'),
+            [ControlCommands.LENS_SHIFT_H_FN]: getControl('Horizontal Fast -', 'VXX:LNSI2=+00201'),
         },
         query: '',
         response: { 'None': '' }
@@ -145,12 +145,12 @@ export const functions: Record<string, hexFunction> = {
     LensFocus: {
         name: 'Lens Focus',
         control: {
-            [ControlCommands.LENS_FOCUS_SP]: getControl('Slow +', '00VXX:LNSI4=+00000\r'),
-            [ControlCommands.LENS_FOCUS_SN]: getControl('Slow -', '00VXX:LNSI4=+00001\r'),
-            [ControlCommands.LENS_FOCUS_NP]: getControl('Normal +', '00VXX:LNSI4=+00100\r'),
-            [ControlCommands.LENS_FOCUS_NN]: getControl('Normal -', '00VXX:LNSI4=+00101\r'),
-            [ControlCommands.LENS_FOCUS_FP]: getControl('Fast +', '00VXX:LNSI4=+00200\r'),
-            [ControlCommands.LENS_FOCUS_FN]: getControl('Fast -', '00VXX:LNSI4=+00201\r'),
+            [ControlCommands.LENS_FOCUS_SP]: getControl('Slow +', 'VXX:LNSI4=+00000'),
+            [ControlCommands.LENS_FOCUS_SN]: getControl('Slow -', 'VXX:LNSI4=+00001'),
+            [ControlCommands.LENS_FOCUS_NP]: getControl('Normal +', 'VXX:LNSI4=+00100'),
+            [ControlCommands.LENS_FOCUS_NN]: getControl('Normal -', 'VXX:LNSI4=+00101'),
+            [ControlCommands.LENS_FOCUS_FP]: getControl('Fast +', 'VXX:LNSI4=+00200'),
+            [ControlCommands.LENS_FOCUS_FN]: getControl('Fast -', 'VXX:LNSI4=+00201'),
         },
         query: '',
         response: { 'None': '' }
@@ -158,12 +158,12 @@ export const functions: Record<string, hexFunction> = {
     LensZoom: {
         name: 'Lens Zoom',
         control: {
-            [ControlCommands.LENS_ZOOM_SP]: getControl('Slow +', '00VXX:LNSI5=+00000\r'),
-            [ControlCommands.LENS_ZOOM_SN]: getControl('Slow -', '00VXX:LNSI5=+00001\r'),
-            [ControlCommands.LENS_ZOOM_NP]: getControl('Normal +', '00VXX:LNSI5=+00100\r'),
-            [ControlCommands.LENS_ZOOM_NN]: getControl('Normal -', '00VXX:LNSI5=+00101\r'),
-            [ControlCommands.LENS_ZOOM_FP]: getControl('Fast +', '00VXX:LNSI5=+00200\r'),
-            [ControlCommands.LENS_ZOOM_FN]: getControl('Fast -', '00VXX:LNSI5=+00201\r'),
+            [ControlCommands.LENS_ZOOM_SP]: getControl('Slow +', 'VXX:LNSI5=+00000'),
+            [ControlCommands.LENS_ZOOM_SN]: getControl('Slow -', 'VXX:LNSI5=+00001'),
+            [ControlCommands.LENS_ZOOM_NP]: getControl('Normal +', 'VXX:LNSI5=+00100'),
+            [ControlCommands.LENS_ZOOM_NN]: getControl('Normal -', 'VXX:LNSI5=+00101'),
+            [ControlCommands.LENS_ZOOM_FP]: getControl('Fast +', 'VXX:LNSI5=+00200'),
+            [ControlCommands.LENS_ZOOM_FN]: getControl('Fast -', 'VXX:LNSI5=+00201'),
         },
         query: '',
         response: { 'None': '' }
@@ -171,7 +171,7 @@ export const functions: Record<string, hexFunction> = {
     LensCalibration: {
         name: 'Lens Calibration',
         control: {
-            [ControlCommands.LENS_CALIBRATION]: getControl('Lens Cal', '00VXX:LNSI0=+00000\r')
+            [ControlCommands.LENS_CALIBRATION]: getControl('Lens Cal', 'VXX:LNSI0=+00000')
         },
         query: '',
         response: { 'None': '' }
@@ -179,39 +179,39 @@ export const functions: Record<string, hexFunction> = {
     BackColor: {
         name: 'Back Color',
         control: {
-            [ControlCommands.BACK_COLOR_BLUE]: getControl('Blue', '00OBC:0\r'),
-            [ControlCommands.BACK_COLOR_BLACK]: getControl('Black', '00OBC:1\r'),
-            [ControlCommands.BACK_COLOR_USER_LOGO]: getControl('User Logo', '00OBC:2\r'),
-            [ControlCommands.BACK_COLOR_DEFAULT_LOGO]: getControl('Default Logo', '00OBC:3\r')
+            [ControlCommands.BACK_COLOR_BLUE]: getControl('Blue', 'OBC:0'),
+            [ControlCommands.BACK_COLOR_BLACK]: getControl('Black', 'OBC:1'),
+            [ControlCommands.BACK_COLOR_USER_LOGO]: getControl('User Logo', 'OBC:2'),
+            [ControlCommands.BACK_COLOR_DEFAULT_LOGO]: getControl('Default Logo', 'OBC:3')
         },
         query: '00QBC',
-        response: { '000\r': 'Blue', '001\r': 'Black', '002\r': 'User Logo', '003\r': 'Default Logo' }
+        response: { '000': 'Blue', '001': 'Black', '002': 'User Logo', '003': 'Default Logo' }
     },
     OSD: {
         name: 'OSD',
         control: {
-            [ControlCommands.OSD_POSITION_UPPER_LEFT]: getControl('Upper Left', '00ODP:1\r'),
-            [ControlCommands.OSD_POSITION_CENTER_LEFT]: getControl('Center Left', '00ODP:2\r'),
-            [ControlCommands.OSD_POSITION_LOWER_LEFT]: getControl('Lower Left', '00ODP:3\r'),
-            [ControlCommands.OSD_POSITION_TOP_CENTER]: getControl('Top Center', '00ODP:4\r'),
-            [ControlCommands.OSD_POSITION_CENTER]: getControl('Center', '00ODP:5\r'),
-            [ControlCommands.OSD_POSITION_LOWER_CENTER]: getControl('Lower Center', '00ODP:6\r'),
-            [ControlCommands.OSD_POSITION_UPPER_RIGHT]: getControl('Upper Right', '00ODP:7\r'),
-            [ControlCommands.OSD_POSITION_CENTER_RIGHT]: getControl('Center Right', '00ODP:8\r'),
-            [ControlCommands.OSD_POSITION_LOWER_RIGHT]: getControl('Lower Right', '00ODP:9\r'),
+            [ControlCommands.OSD_POSITION_UPPER_LEFT]: getControl('Upper Left', 'ODP:1'),
+            [ControlCommands.OSD_POSITION_CENTER_LEFT]: getControl('Center Left', 'ODP:2'),
+            [ControlCommands.OSD_POSITION_LOWER_LEFT]: getControl('Lower Left', 'ODP:3'),
+            [ControlCommands.OSD_POSITION_TOP_CENTER]: getControl('Top Center', 'ODP:4'),
+            [ControlCommands.OSD_POSITION_CENTER]: getControl('Center', 'ODP:5'),
+            [ControlCommands.OSD_POSITION_LOWER_CENTER]: getControl('Lower Center', 'ODP:6'),
+            [ControlCommands.OSD_POSITION_UPPER_RIGHT]: getControl('Upper Right', 'ODP:7'),
+            [ControlCommands.OSD_POSITION_CENTER_RIGHT]: getControl('Center Right', 'ODP:8'),
+            [ControlCommands.OSD_POSITION_LOWER_RIGHT]: getControl('Lower Right', 'ODP:9'),
 
         },
-        query: '00QDP\r',
+        query: '00QDP',
         response: {
-            '001\r': 'Upper Left',
-            '002\r': 'Center Left',
-            '003\r': 'Lower Left',
-            '004\r': 'Top Center',
-            '005\r': 'Center',
-            '006\r': 'Lower Center',
-            '007\r': 'Upper Right',
-            '008\r': 'Center Right',
-            '009\r': 'Lower Right'
+            '001': 'Upper Left',
+            '002': 'Center Left',
+            '003': 'Lower Left',
+            '004': 'Top Center',
+            '005': 'Center',
+            '006': 'Lower Center',
+            '007': 'Upper Right',
+            '008': 'Center Right',
+            '009': 'Lower Right'
         }
 
     },
@@ -219,84 +219,84 @@ export const functions: Record<string, hexFunction> = {
     Edge_Blending_Upper: {
         name: 'Edge Blending Upper',
         control: {
-            [ControlCommands.EDGE_BLENDING_UPPER_ON]: getControl('On', '00VGU:1\r'),
-            [ControlCommands.EDGE_BLENDING_UPPER_OFF]: getControl('Off', '00VGU:0\r')
+            [ControlCommands.EDGE_BLENDING_UPPER_ON]: getControl('On', 'VGU:1'),
+            [ControlCommands.EDGE_BLENDING_UPPER_OFF]: getControl('Off', 'VGU:0')
 
         },
-        query: '00QGU\r',
-        response: { '001\r': 'On', '000\r': 'Off' }
+        query: '00QGU',
+        response: { '001': 'On', '000': 'Off' }
     },
     Edge_Blending_Lower: {
         name: 'Edge Blending Lower',
         control: {
-            [ControlCommands.EDGE_BLENDING_LOWER_ON]: getControl('On', '00VGB:1\r'),
-            [ControlCommands.EDGE_BLENDING_LOWER_OFF]: getControl('Off', '00VGB:0\r')
+            [ControlCommands.EDGE_BLENDING_LOWER_ON]: getControl('On', 'VGB:1'),
+            [ControlCommands.EDGE_BLENDING_LOWER_OFF]: getControl('Off', 'VGB:0')
 
         },
-        query: '00QGB\r',
-        response: { '001\r': 'On', '000\r': 'Off' }
+        query: '00QGB',
+        response: { '001': 'On', '000': 'Off' }
     },
     Edge_Blending_Right: {
         name: 'Edge Blending Right',
         control: {
-            [ControlCommands.EDGE_BLENDING_RIGHT_ON]: getControl('On', '00VGR:1\r'),
-            [ControlCommands.EDGE_BLENDING_RIGHT_OFF]: getControl('Off', '00VGR:0\r')
+            [ControlCommands.EDGE_BLENDING_RIGHT_ON]: getControl('On', 'VGR:1'),
+            [ControlCommands.EDGE_BLENDING_RIGHT_OFF]: getControl('Off', 'VGR:0')
 
         },
-        query: '00QGR\r',
-        response: { '001\r': 'On', '000\r': 'Off' }
+        query: '00QGR',
+        response: { '001': 'On', '000': 'Off' }
     },
     Edge_Blending_Left: {
         name: 'Edge Blending Left',
         control: {
-            [ControlCommands.EDGE_BLENDING_LEFT_ON]: getControl('On', '00VGL:1\r'),
-            [ControlCommands.EDGE_BLENDING_LEFT_OFF]: getControl('Off', '00VGL:0\r')
+            [ControlCommands.EDGE_BLENDING_LEFT_ON]: getControl('On', 'VGL:1'),
+            [ControlCommands.EDGE_BLENDING_LEFT_OFF]: getControl('Off', 'VGL:0')
 
         },
-        query: '00QGL\r',
-        response: { '001\r': 'On', '000\r': 'Off' }
+        query: '00QGL',
+        response: { '001': 'On', '000': 'Off' }
     },
     Input_Signal_Name_Main: {
         name: 'Input Signal Name - Main',
         control: {},
-        query: '00QVX:NSGS1\r',
+        query: '00QVX:NSGS1',
         response: {}
     },
     HDMI_In_Signal_Level: {
         name: 'HDMI In-Signal Level',
         control: {},
-        query: '00QVX:HSLI0\r',
+        query: '00QVX:HSLI0',
         response: {
-            '00HSLI0=+00000\r': '0-1023',
-            '00HSLI0=+00001\r': '64-940',
-            '00HSLI0=+00002\r': 'Auto'
+            '00HSLI0=+00000': '0-1023',
+            '00HSLI0=+00001': '64-940',
+            '00HSLI0=+00002': 'Auto'
         }
     },
     HDMI_In_EDID_Resolution: {
         name: 'HDMI In-EDID Resolution',
         control: {},
-        query: '00QVX:EDRS3\r',
+        query: '00QVX:EDRS3',
         response: {
-            '00EDRS3=1024:0768:p\r': '1024x768p',
-            '00EDRS3=1280:0720:p\r': '1280x720p',
-            '00EDRS3=1280:0768:p\r': '1280x768p',
-            '00EDRS3=1280:0800:p\r': '1280x800p',
-            '00EDRS3=1280:1024:p\r': '1280x1024p',
-            '00EDRS3=1366:0768:p\r': '1366x768p',
-            '00EDRS3=1400:1050:p\r': '1400x1050p',
-            '00EDRS3=1440:0900:p\r': '1440x900p',
-            '00EDRS3=1600:0900:p\r': '1600x900p',
-            '00EDRS3=1600:1200:p\r': '1600x1200p',
-            '00EDRS3=1680:1050:p\r': '1680x1050p',
-            '00EDRS3=1920:1080:p\r': '1920x1080p',
-            '00EDRS3=1920:1080:i\r': '1920x1080i',
-            '00EDRS3=1920:1200:p\r': '1920x1200p'
+            '00EDRS3=1024:0768:p': '1024x768p',
+            '00EDRS3=1280:0720:p': '1280x720p',
+            '00EDRS3=1280:0768:p': '1280x768p',
+            '00EDRS3=1280:0800:p': '1280x800p',
+            '00EDRS3=1280:1024:p': '1280x1024p',
+            '00EDRS3=1366:0768:p': '1366x768p',
+            '00EDRS3=1400:1050:p': '1400x1050p',
+            '00EDRS3=1440:0900:p': '1440x900p',
+            '00EDRS3=1600:0900:p': '1600x900p',
+            '00EDRS3=1600:1200:p': '1600x1200p',
+            '00EDRS3=1680:1050:p': '1680x1050p',
+            '00EDRS3=1920:1080:p': '1920x1080p',
+            '00EDRS3=1920:1080:i': '1920x1080i',
+            '00EDRS3=1920:1200:p': '1920x1200p'
         }
     },
     Projector_Name: {
         name: 'Projector Name',
-        control: { [ControlCommands.PROJECTOR_NAME]: getControl('Name', '00VXX:NCGS8') }, //Drops Return and Equal, Handled In Setter
-        query: '00QVX:NCGS8\r',
+        control: { [ControlCommands.PROJECTOR_NAME]: getControl('Name', 'VXX:NCGS8') }, //Drops Return and Equal, Handled In Setter
+        query: '00QVX:NCGS8',
         response: {}
     }
 

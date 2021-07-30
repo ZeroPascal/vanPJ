@@ -12,7 +12,7 @@ interface tel_parmas {
 
 async function timeout() {
     return new Promise(res => {
-        setTimeout(res, 100)
+        setTimeout(res, 150)
     })
 }
 
@@ -20,6 +20,7 @@ async function querySocket(socket: net.Socket, request: string, auth = '') {
   
     try {
        if(socket.writable)
+       //console.log(auth+request)
         socket.write(auth + request + '\r', (error) => {
             if (error) {
                 throw error
@@ -32,18 +33,19 @@ async function querySocket(socket: net.Socket, request: string, auth = '') {
 
 }
 export const netConnect = async (pj: Projector, request: string): Promise<string> => {
-    //console.log('NetConnect',pjID)
+    //console.log('NetConnect',pj.IP_Address)
     return new Promise((res, err) => {
         try {
             let socket = net.connect(pj.Port, pj.IP_Address)
+            
             socket.setTimeout(1500)
             socket.on('timeout', () => {
-                // console.log('Socket Timeout')
+                console.log('NETSocket Timeout '+pj.ID)
                 socket.end()
                 err('Socket Timed Out. Query: ' + request)
             })
             socket.on('connect', (res: string) => {
-                // console.log('Socket Connected',pjID)
+               //  console.log('NETSocket Connected',pj.ID, pj.IP_Address)
             })
 
             socket.on('data', async (response: any) => {
@@ -57,9 +59,9 @@ export const netConnect = async (pj: Projector, request: string): Promise<string
                         if (a.length > 1) {
                             let hash = ''
                             if (parseInt(a[1]) === 1) {
-                                // console.log('Auth Challnege')
+                               //  console.log('Auth Challnege')
                                 let challenge = a[2].slice(0, 8)
-                                hash = md5(pj.Auth + challenge)
+                                hash = md5(pj.Auth +':'+ challenge)
                             }
                             try {
                               //  console.log(request)
@@ -74,14 +76,15 @@ export const netConnect = async (pj: Projector, request: string): Promise<string
                 } else {
                      //console.log(pjID,data)
                     if(data==='ERR1\r'){
-                        console.log('ERR1')
+                      //  console.log('ERR1')
                         err(new Error('Undefined Control Command '+request))
                     }
+                   // console.log('NETSocket Data',data)
                     res(data)
                 }
             })
             socket.on('error',(error)=>{
-               // console.log('Socket got ERROR!')
+               console.log('NETSocket got ERROR!')
                 err(new Error('Socket '+error.message))
             })
             socket.on('end', ()=>{

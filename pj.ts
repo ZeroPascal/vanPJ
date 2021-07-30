@@ -59,17 +59,19 @@ export default class PJ extends Projector implements PJ_OBJ {
             if (hexFunction.name === '') {
                 return res.slice(8, -1)
             }
+            res = res.trim()
             if (hexFunction.response[res]) {
+               // console.log('PJ Res',res, hexFunction.response[res])
                 return hexFunction.response[res]
             } else {
-                if (res === '00ER401\r') {
+                if (res === '00ER401') {
 
                     let error: string = 'Can not executed: ' + hexFunction.query
                     //  console.log(error)
                     throw new Error(error)
 
                 }
-                if (res === '00ER402\r') {
+                if (res === '00ER402') {
                     throw new Error(hexFunction.query + ' Invalid parameter')
                 }
                 throw new Error(hexFunction.query + ' Unknown Responce: ' + res)
