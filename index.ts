@@ -3,7 +3,7 @@ import express from 'express'
 import { Socket } from 'socket.io'
 import { Server } from 'socket.io'
 import ConfigHandler from './ConfigHandler'
-import { CommandPackage, Config, ControlCommands, ControlKeys, defaultConfig, ioCommands, Patch } from './constants'
+import { CommandPackage, Config, ControlCommands, ControlKeys, defaultConfig, Group, ioCommands, Patch } from './constants'
 import pjPoller from './pjPoller'
 
 const https = require('https')
@@ -200,7 +200,9 @@ io.on('connection', (socket: Socket) => {
     socket.emit(ioCommands.REQUEST_CONFIG)
     pjs.buildAllPJS()
   })
-
+  socket.on(ioCommands.STORE_GROUP, (group: Group)=>{
+    config.setGroup(group)
+  })
   socket.on(ioCommands.EMITTING_CMD, async (CommandPackage: CommandPackage)=>{
     console.log('Got CMD',CommandPackage.cmd,CommandPackage.pjIDs?.length, CommandPackage.vartiable)
     if(!CommandPackage.pjIDs) return

@@ -21,7 +21,8 @@ export enum ConfigHeaders {
     LAST_UPDATED = 'LAST_UPDATED',
     POLLING = 'POLLING',
     POLLING_INTERVAL = 'POLLING_INTERVAL',
-    PATCH = 'PATCH'
+    PATCH = 'PATCH',
+    GROUP ='GROUP'
 
 }
 export type Patch = Record<string, Projector>
@@ -167,7 +168,8 @@ export enum ioCommands {
     REQUESTING_CONFIG = 'REQUESTING_CONFIG',
     EMITTING_PATCH = 'EMITTING_PATCH',
     EMITTING_POLLING_PROGRESS = 'EMITTING_POLLING_PROGRESS',
-    EMITTING_CMD = 'EMITTING_CMD'
+    EMITTING_CMD = 'EMITTING_CMD',
+    STORE_GROUP = 'STORE_GROUP'
 }
 export interface RigStatus {
     online: boolean,

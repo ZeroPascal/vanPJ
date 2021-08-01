@@ -1,6 +1,7 @@
-import { Config, ConfigHeaders, ConfigKeys, defaultConfig, ioCommands, Patch } from "./constants"
+import { Config, ConfigHeaders, ConfigKeys, defaultConfig, Group, ioCommands, Patch } from "./constants"
 import {Server} from 'socket.io'
 import * as _ from 'lodash'
+import { uniqueId } from "lodash"
 const fs = require('fs')
 const path =require('path')
 
@@ -68,7 +69,7 @@ export default class ConfigHandler {
     }
     update(){
         writeConfig(this.config)
-       // this.io?.emit(ioCommands.REQUEST_CONFIG)
+        this.io?.emit(ioCommands.EMITTING_CONFIG,this.config)
     }
     startPolling(){
       //  console.log('Setting Polling Interval')
@@ -119,6 +120,33 @@ export default class ConfigHandler {
        // console.log(this.config)
         this.update()
     }
+    get HighestGroupNumber(){
+        let i = 0
+        Object.entries(this.config.Groups).forEach(g =>{
+            if(parseInt(g[0])>i){
+                i= parseInt(g[0])
+            }
+        })
+        return i
+    }
+    getPJIDs(){
+        return Object.values(this.Patch).map(pj=> {return pj.id})
+    }
+    setGroup(group: Group){
+        let good = true
+        let ids = this.getPJIDs()
+        let newGroup = Object.values(group.group).map(pj=>{
+            if(ids.includes(pj)){
+                return pj
+            }
+        })
+        this.config.Groups[this.HighestGroupNumber+1] = {
+            name:group.name,
+            group: newGroup
+        }
+        this.update()
+       
+    }
     get Polling(){
         return this.config.Polling
     }
@@ -155,11 +183,23 @@ export default class ConfigHandler {
         this.config.Patch =patch
 
         this.setAllGroup()
+        //this.cleanGroups()
         this.LastUpdated = Date()
         this.update()
         
         
        
+    }
+    cleanGroups(){
+        let ids = this.getPJIDs()
+        Object.entries(this.config.Groups).forEach(group=>{
+            let g= Object.values(group[1].group).filter(pj =>{ return ids.includes(pj)})
+            console.log('Group ',group[1].name, g)
+            if(g.length === 0){
+               delete this.config.Groups[parseInt(group[0])]
+            } else
+            this.config.Groups[parseInt(group[0])].group = g
+        })
     }
     setAllGroup(){
         let all = Object.values(this.Patch).map(pj=> { return pj.id})

@@ -126,12 +126,12 @@ export const functions: Record<string, hexFunction> = {
     LensShift: {
         name: 'Lens Shift',
         control: {
-            [ControlCommands.LENS_SHIFT_V_SP]: getControl('Vertical Slow +', 'VXX:LNSI3=+00000'),
-            [ControlCommands.LENS_SHIFT_V_SN]: getControl('Vertical Slow -', 'VXX:LNSI3=+00001'),
-            [ControlCommands.LENS_SHIFT_V_NP]: getControl('Vertical Normal +', 'VXX:LNSI3=+00100'),
-            [ControlCommands.LENS_SHIFT_V_NN]: getControl('Vertical Normal -', 'VXX:LNSI3=+00101'),
-            [ControlCommands.LENS_SHIFT_V_FP]: getControl('Vertical Fast +', 'VXX:LNSI3=+00200'),
-            [ControlCommands.LENS_SHIFT_V_FN]: getControl('Vertical Fast -', 'VXX:LNSI3=+00201'),
+            [ControlCommands.LENS_SHIFT_V_SP]: getControl('Vertical Slow +', 'VXX:LNSI3=+00001'),
+            [ControlCommands.LENS_SHIFT_V_SN]: getControl('Vertical Slow -', 'VXX:LNSI3=+00000'),
+            [ControlCommands.LENS_SHIFT_V_NP]: getControl('Vertical Normal +', 'VXX:LNSI3=+00101'),
+            [ControlCommands.LENS_SHIFT_V_NN]: getControl('Vertical Normal -', 'VXX:LNSI3=+00100'),
+            [ControlCommands.LENS_SHIFT_V_FP]: getControl('Vertical Fast +', 'VXX:LNSI3=+00201'),
+            [ControlCommands.LENS_SHIFT_V_FN]: getControl('Vertical Fast -', 'VXX:LNSI3=+00200'),
             [ControlCommands.LENS_SHIFT_H_SP]: getControl('Horizontal Slow +', 'VXX:LNSI2=+00000'),
             [ControlCommands.LENS_SHIFT_H_SN]: getControl('Horizontal Slow -', 'VXX:LNSI2=+00001'),
             [ControlCommands.LENS_SHIFT_H_NP]: getControl('Horizontal Normal +', 'VXX:LNSI2=+00100'),
