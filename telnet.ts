@@ -84,7 +84,7 @@ export const netConnect = async (pj: Projector, request: string): Promise<string
                 }
             })
             socket.on('error',(error)=>{
-               console.log('NETSocket got ERROR!')
+               //console.log('NETSocket got ERROR!')
                 err(new Error('Socket '+error.message))
             })
             socket.on('end', ()=>{

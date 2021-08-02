@@ -204,7 +204,7 @@ io.on('connection', (socket: Socket) => {
     config.setGroup(group)
   })
   socket.on(ioCommands.EMITTING_CMD, async (CommandPackage: CommandPackage)=>{
-    console.log('Got CMD',CommandPackage.cmd,CommandPackage.pjIDs?.length, CommandPackage.vartiable)
+    console.group('Got CMD',CommandPackage.cmd,CommandPackage.pjIDs?.length, CommandPackage.vartiable)
     if(!CommandPackage.pjIDs) return
     console.log('Running CMD',CommandPackage.cmd)
     let activePJs = CommandPackage.pjIDs.map(pjID=>{
@@ -220,6 +220,7 @@ io.on('connection', (socket: Socket) => {
       pjs.updateStatus()
      // io.emit(ioCommands.REQUEST_UPDATE)
       console.log('CMD Done',CommandPackage.cmd)
+      console.groupEnd()
   })
   
 
