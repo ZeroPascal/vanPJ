@@ -1,3 +1,4 @@
+import { query, response } from 'express'
 import { ControlCommands, ControlKeys } from './constants'
 
 interface responce {
@@ -297,6 +298,12 @@ export const functions: Record<string, hexFunction> = {
         name: 'Projector Name',
         control: { [ControlCommands.PROJECTOR_NAME]: getControl('Name', 'VXX:NCGS8') }, //Drops Return and Equal, Handled In Setter
         query: '00QVX:NCGS8',
+        response: {}
+    },
+    Projector_ID: {
+        name: 'Projector ID',
+        control: { [ControlCommands.PROJECTOR_ID]: getControl('ID', 'QIS') }, //Drops Return and Equal, Handled In Setter
+        query: '',
         response: {}
     }
 

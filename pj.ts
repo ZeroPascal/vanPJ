@@ -88,8 +88,12 @@ export default class PJ extends Projector implements PJ_OBJ {
     private async setter(hexFunction: hexFunction, command: ControlKeys, vartiable?: string) {
         try {
             // console.log('Setting: ', this.id, hexFunction)
-            // console.log(hexFunction.control[command].command + (vartiable ? '=' + vartiable + '\r' : ''))
-            let responce = await netConnect(this, hexFunction.control[command].command + (vartiable ? '=' + vartiable + '\r' : ''))
+            let responce 
+            if(command === ControlCommands.PROJECTOR_ID){
+                 responce = await netConnect(this, hexFunction.control[command].command + vartiable + '\r' )
+            } else {
+                 responce = await netConnect(this, hexFunction.control[command].command + (vartiable ? '=' + vartiable + '\r' : ''))
+            }
             // console.log('TCP Responce:', responce)
             return (responce === hexFunction.control[command].command)
 
@@ -307,6 +311,8 @@ export default class PJ extends Projector implements PJ_OBJ {
                 await this.setter(functions.BackColor, command)
                 await this.pollBackColor()
                 return true
+            case ControlCommands.PROJECTOR_ID:
+                await this.setter(functions.Projector_ID, command, vartiable)
 
             default:
                 return false
