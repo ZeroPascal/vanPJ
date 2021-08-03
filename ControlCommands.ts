@@ -302,7 +302,7 @@ export const functions: Record<string, hexFunction> = {
     },
     Projector_ID: {
         name: 'Projector ID',
-        control: { [ControlCommands.PROJECTOR_ID]: getControl('ID', 'QIS') }, //Drops Return and Equal, Handled In Setter
+        control: { [ControlCommands.PROJECTOR_ID]: getControl('ID', 'QIS:') }, //Drops Return and Equal, Handled In Setter
         query: '',
         response: {}
     }
