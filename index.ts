@@ -32,7 +32,7 @@ console.log('Starting Poller')
 
 pjs.start().then(() => {
   console.log('PJS Built!', (Date.now() - time) / 1000 + 's')
-  io.emit(ioCommands.EMITTING_PJS, pjs)
+  //io.emit(ioCommands.EMITTING_PJS, pjs)
   config.PollingFunction = () => {
     console.log('Polling ', Date())
     let time = Date.now()
