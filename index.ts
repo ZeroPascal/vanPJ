@@ -218,7 +218,8 @@ io.on('connection', (socket: Socket) => {
     
     })
       pjs.updateStatus()
-     // io.emit(ioCommands.REQUEST_UPDATE)
+      io.emit(ioCommands.EMITTING_PJS, pjs)
+      io.emit(ioCommands.EMITTING_STATUS, pjs.getStatus())
       console.log('CMD Done',CommandPackage.cmd)
       console.groupEnd()
   })
