@@ -38,7 +38,7 @@ pjs.start().then(() => {
     let time = Date.now()
     pjs.pollAllPJs().then(() => {
       console.log('PJs Rereshed', (Date.now() - time) / 1000 + 's')
-      io.emit('pjs', pjs.pjs)
+      io.emit(ioCommands.EMITTING_PJS, pjs.pjs)
     })
   }
 })

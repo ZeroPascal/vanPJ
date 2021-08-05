@@ -40,7 +40,7 @@ export const netConnect = async (pj: Projector, request: string): Promise<string
             
             socket.setTimeout(1500)
             socket.on('timeout', () => {
-                console.log('NETSocket Timeout '+pj.ID)
+               // console.log('NETSocket Timeout '+pj.ID)
                 socket.end()
                 err('Socket Timed Out. Query: ' + request)
             })
