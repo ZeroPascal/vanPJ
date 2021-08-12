@@ -127,7 +127,7 @@ export default class pjPoller {
       if(pj.lampStatus !=='Lamp On'){
         s.lampStatus = false
       }
-      if(pj.hdmiResolution !== '1920x1200p' || pj.hmdiSignalLevel !=='Auto'){
+      if(pj.hdmiResolution !== '1920x1200p' || pj.hdmiSignalLevel !=='Auto'){
         s.hdmiInput = false
       }
       if(pj.inputSignalName_Main !== '1920x1200/60RB'){

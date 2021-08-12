@@ -64,6 +64,7 @@ export enum ControlCommands {
     TEST_PATTERN_WHITE = 'TEST_PATTERN_WHITE',
     TEST_PATTERN_BLACK = 'TEST_PATTERN_BLACK',
     TEST_PATTERN_FOCUS_RED = 'TEST_PATTERN_FOCUS_RED',
+    TEST_PATTERN_FOCUS_WHITE= 'TEST_PATTERN_FOCUS_WHITE',
     MENU = 'MENU',
     MENU_DOWN_KEY = 'MENU_DOWN_KEY',
     MENU_UP_KEY = 'MENU_UP_KEY',
@@ -129,7 +130,11 @@ export enum ControlCommands {
     BACK_COLOR_BLACK = 'BACK_COLOR_BLACK',
     BACK_COLOR_USER_LOGO = 'BACK_COLOR_USER_LOGO',
     BACK_COLOR_DEFAULT_LOGO = 'BACK_COLOR_DEFAULT_LOGO',
-    PROJECTOR_ID = 'PROJECTOR_ID'
+    PROJECTOR_ID = 'PROJECTOR_ID',
+    OSD_ON = 'OSD_ON',
+    OSD_OFF = 'OSD_OFF',
+    FREEZE_OFF = 'FREEZE_OFF',
+    FREEZE_ON = 'FREEZE_ON'
 
 
 }
@@ -150,8 +155,9 @@ export type PJ_OBJ = {
     edgeBlendingLeft: string,
     testPattren: string,
     backColor: string,
-    hmdiSignalLevel: string,
+    hdmiSignalLevel: string,
     hdmiResolution: string,
+    hdmiVerticalFrequency: string,
     osdPostion: string,
     inputSignalName_Main: string,
     error: string

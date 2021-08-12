@@ -73,7 +73,8 @@ export const functions: Record<string, hexFunction> = {
             [ControlCommands.TEST_PATTERN_OFF]: getControl('Off', 'OTS:00'),
             [ControlCommands.TEST_PATTERN_WHITE]: getControl('White', 'OTS:01'),
             [ControlCommands.TEST_PATTERN_BLACK]: getControl('Black', 'OTS:02'),
-            [ControlCommands.TEST_PATTERN_FOCUS_RED]: getControl('Focus Red', 'OTS:70')
+            [ControlCommands.TEST_PATTERN_FOCUS_RED]: getControl('Focus Red', 'OTS:70'),
+            [ControlCommands.TEST_PATTERN_FOCUS_WHITE]: getControl('Focus White','OTS:59')
         },
         query: '00QTS',
         response: {
@@ -188,8 +189,18 @@ export const functions: Record<string, hexFunction> = {
         query: '00QBC',
         response: { '000': 'Blue', '001': 'Black', '002': 'User Logo', '003': 'Default Logo' }
     },
-    OSD: {
-        name: 'OSD',
+    OSD:{
+        name: 'OSD On/OFf',
+        control:{
+            [ControlCommands.OSD_OFF]: getControl('Off','OOS:0'),
+            [ControlCommands.OSD_ON]: getControl('On','OOS:1')
+        },
+        query: '00QOS',
+        response: {'000': 'Off', '001': 'On'}
+
+    },
+    OSDPostion: {
+        name: 'OSD Postion',
         control: {
             [ControlCommands.OSD_POSITION_UPPER_LEFT]: getControl('Upper Left', 'ODP:1'),
             [ControlCommands.OSD_POSITION_CENTER_LEFT]: getControl('Center Left', 'ODP:2'),
@@ -291,8 +302,23 @@ export const functions: Record<string, hexFunction> = {
             '00EDRS3=1680:1050:p': '1680x1050p',
             '00EDRS3=1920:1080:p': '1920x1080p',
             '00EDRS3=1920:1080:i': '1920x1080i',
-            '00EDRS3=1920:1200:p': '1920x1200p'
+            '00EDRS3=1920:1200:p': '1920x1200p',
+            '00EDRS3=3840:2400:p': '3840x2400p'
         }
+    },
+    HDMI_In_EDID_Vertical_Scan:{
+        name: 'HDMI In-EDID Vertical Scan Frequency',
+        control: {},
+        query: '00QVX:EDVI3',
+        response:{
+            '00EDVI3=+06000': '60Hz',
+            '00EDVI3=+05000': '50Hz',
+            '00EDVI3=+04800': '48Hz',
+            '00EDVI3=+03000': '30Hz',
+            '00EDVI3=+02500': '25Hz',
+            '00EDVI3=+02400': '24Hz'
+        }
+
     },
     Projector_Name: {
         name: 'Projector Name',
@@ -305,6 +331,15 @@ export const functions: Record<string, hexFunction> = {
         control: { [ControlCommands.PROJECTOR_ID]: getControl('ID', 'QIS:') }, //Drops Return and Equal, Handled In Setter
         query: '',
         response: {}
+    },
+    Freeze:{
+        name: 'Freeze',
+        control:{
+            [ControlCommands.FREEZE_OFF]: getControl('Off','OFZ:0'),
+            [ControlCommands.FREEZE_ON]: getControl('On','OFZ:1')
+        },
+        query: '00QFZ',
+        response: {'000': 'Off', '001': 'On'}
     }
 
 

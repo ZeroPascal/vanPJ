@@ -22,7 +22,8 @@ export default class PJ extends Projector implements PJ_OBJ {
     testPattren: string
     backColor: string
     hdmiResolution: string
-    hmdiSignalLevel: string
+    hdmiSignalLevel: string
+    hdmiVerticalFrequency: string
     osdPostion: string
     inputSignalName_Main: string
     error: string
@@ -43,7 +44,8 @@ export default class PJ extends Projector implements PJ_OBJ {
         this.edgeBlendingRight = 'Unknown'
         this.edgeBlendingUpper = 'Unknown'
         this.hdmiResolution = 'Unknown'
-        this.hmdiSignalLevel = 'Unknown'
+        this.hdmiSignalLevel = 'Unknown'
+        this.hdmiVerticalFrequency ='Unknown'
         this.osdPostion = 'Unknown'
         this.backColor = 'Unknown'
     }
@@ -53,11 +55,14 @@ export default class PJ extends Projector implements PJ_OBJ {
             let res = await netConnect(this, hexFunction.query)
             this.lastSeen = Date.now()
             this.online = 'true'
-            if (hexFunction.name === 'Projector Name' || hexFunction.name === 'Input Signal Name - Main') {
-                return res.slice(8, -1)
-            }
-            if (hexFunction.name === '') {
-                return res.slice(8, -1)
+           
+            switch (hexFunction.name){
+                case functions.Projector_Name.name:
+                case functions.Input_Signal_Name_Main.name:
+                    return res.slice(8,-1)
+                case '':
+                    return res.slice(8,-1)
+
             }
             res = res.trim()
             if (hexFunction.response[res]) {
@@ -127,9 +132,10 @@ export default class PJ extends Projector implements PJ_OBJ {
         this.testPattren = await this.poll(functions.Test_Pattern)
     }
     async pollHDMI() {
-        this.hmdiSignalLevel = await this.poll(functions.HDMI_In_Signal_Level)
+        this.hdmiSignalLevel = await this.poll(functions.HDMI_In_Signal_Level)
         this.hdmiResolution = await this.poll(functions.HDMI_In_EDID_Resolution)
         this.inputSignalName_Main = await this.poll(functions.Input_Signal_Name_Main)
+        this.hdmiVerticalFrequency = await this.poll(functions.HDMI_In_EDID_Vertical_Scan)
     }
     async pollOSD() {
         this.osdPostion = await this.poll(functions.OSD)
@@ -185,6 +191,7 @@ export default class PJ extends Projector implements PJ_OBJ {
             case ControlCommands.TEST_PATTERN_OFF:
             case ControlCommands.TEST_PATTERN_WHITE:
             case ControlCommands.TEST_PATTERN_FOCUS_RED:
+            case ControlCommands.TEST_PATTERN_FOCUS_WHITE:
             case ControlCommands.TEST_PATTERN_BLACK:
                 await this.setter(functions.Test_Pattern, command)
                 await this.pollTestPattren()
@@ -243,6 +250,15 @@ export default class PJ extends Projector implements PJ_OBJ {
             case ControlCommands.OSD_POSITION_LOWER_RIGHT:
                 await this.setter(functions.OSD, command)
                 await this.pollOSD()
+                return true
+            case ControlCommands.OSD_ON:
+            case ControlCommands.OSD_OFF:
+                await this.setter(functions.OSD, command)
+                return true
+            
+            case ControlCommands.FREEZE_OFF:
+            case ControlCommands.FREEZE_ON:
+                await this.setter(functions.Freeze, command)
                 return true
 
             case ControlCommands.PROJECTOR_NAME:
