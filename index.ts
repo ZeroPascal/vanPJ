@@ -213,6 +213,7 @@ io.on('connection', (socket: Socket) => {
     
     const { results, errors } = await PromisePool
     .for(activePJs)
+    .withConcurrency(activePJs.length)
     .process(async pj => {
       await pj.Control(CommandPackage.cmd,CommandPackage.vartiable)
     
