@@ -210,6 +210,15 @@ io.on('connection', (socket: Socket) => {
     let activePJs = CommandPackage.pjIDs.map(pjID=>{
       return pjs.getPJ(pjID)
     })
+    if(activePJs.length>1){
+    const { results, errors } = await PromisePool
+    .for(activePJs)
+    .withConcurrency(activePJs.length)
+    .process(async pj => {
+      await pj.Control(CommandPackage.cmd,CommandPackage.vartiable)
+    
+    })
+  } else {
     
     const { results, errors } = await PromisePool
     .for(activePJs)
@@ -218,6 +227,7 @@ io.on('connection', (socket: Socket) => {
       await pj.Control(CommandPackage.cmd,CommandPackage.vartiable)
     
     })
+  }
       pjs.updateStatus()
      // io.emit(ioCommands.EMITTING_PJS, pjs)
      // io.emit(ioCommands.EMITTING_STATUS, pjs.getStatus())
