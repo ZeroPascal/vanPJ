@@ -36,6 +36,8 @@ async function querySocket(socket: net.Socket, request: string, auth = '') {
 }
 export const netConnect = async (pj: Projector, request: string): Promise<string> => {
     console.log('NetConnect',pj.IP_Address, request)
+    if(request.includes('QVX'))
+        return 
     return new Promise((res, err) => {
         try {
             let socket = net.connect(pj.Port, pj.IP_Address)
