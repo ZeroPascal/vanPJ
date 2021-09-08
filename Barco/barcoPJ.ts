@@ -156,7 +156,7 @@ export default class barcoPJ extends Projector implements PJ{
     }
 
     async pollBackColor(){
-       // this.backColor = await this.poll(functions.BackColor)
+        this.backColor = await this.poll(functions.BackColor)
     }
 
     printTimeDif(now: number) {
@@ -177,7 +177,7 @@ export default class barcoPJ extends Projector implements PJ{
             await this.pollTestPattren()
             await this.pollHDMI()
             await this.pollName()
-           // await this.pollBackColor()
+            await this.pollBackColor()
 
         } catch (e) {
             console.log(this.id, ' PollStatus Error', e)
@@ -338,6 +338,7 @@ export default class barcoPJ extends Projector implements PJ{
                 await this.setter(functions.BackColor, command)
                 await this.pollBackColor()
                 return true
+                
             case ControlCommands.PROJECTOR_ID:
                 await this.setter(functions.Projector_ID, command, vartiable)
                 return true

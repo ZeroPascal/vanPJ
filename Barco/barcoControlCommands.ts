@@ -165,18 +165,17 @@ export const functions: Record<string, hexFunction> = {
         response: { 'None': '' }
     },
 
-    /*
     BackColor: {
         name: 'Back Color',
         control: {
-            [ControlCommands.BACK_COLOR_BLUE]: getControl('Blue', 'OBC:0'),
-            [ControlCommands.BACK_COLOR_BLACK]: getControl('Black', 'OBC:1'),
-            [ControlCommands.BACK_COLOR_USER_LOGO]: getControl('User Logo', 'OBC:2'),
-            [ControlCommands.BACK_COLOR_DEFAULT_LOGO]: getControl('Default Logo', 'OBC:3')
+            [ControlCommands.BACK_COLOR_BLUE]: getControl('Blue', 'BGCL1'),
+            [ControlCommands.BACK_COLOR_BLACK]: getControl('Black', 'BGCL2'),
+            [ControlCommands.BACK_COLOR_USER_LOGO]: getControl('User Logo', 'BGCL3'),
+            [ControlCommands.BACK_COLOR_DEFAULT_LOGO]: getControl('Default Logo', 'BGCL0')
         },
-        query: '00QBC',
-        response: { '000': 'Blue', '001': 'Black', '002': 'User Logo', '003': 'Default Logo' }
-    },*/
+        query: getQuery('BGCL'),
+        response: { '[BGCL!0]': 'Logo', '[BGCL!1]': 'Blue', '[BGCL!2]': 'Black', '[BGCL!3]': 'White' }
+    },
     OSD:{
         name: 'OSD On/OFf',
         control:{
