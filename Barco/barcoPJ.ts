@@ -251,7 +251,7 @@ export default class barcoPJ extends Projector implements PJ{
             case ControlCommands.OSD_POSITION_UPPER_RIGHT:
             case ControlCommands.OSD_POSITION_CENTER_RIGHT:
             case ControlCommands.OSD_POSITION_LOWER_RIGHT:
-                await this.setter(functions.OSD, command)
+                await this.setter(functions.OSDPostion, command)
                 await this.pollOSD()
                 return true
             case ControlCommands.OSD_ON:
