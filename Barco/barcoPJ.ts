@@ -79,13 +79,16 @@ export default class barcoPJ extends Projector implements PJ{
         try {
              console.log('Setting: ', this.id, command)
              let cmd = hexFunction.control[command].command
+             if(vartiable){
+                cmd = cmd.slice(-1)+vartiable+']'
+             }
             let count = 1
             let responce =''
             switch(command){
                 case(ControlCommands.PROJECTOR_ID):
                     //cmd === ControlCommands.PROJECTOR_ID
-                    console.log(cmd+vartiable)
-                    responce = await this.loopCommand(hexFunction.control[command].command + vartiable, count )
+                    console.log(cmd)
+                    responce = await this.loopCommand(cmd, count )
                     return
                 case(ControlCommands.PROJECTOR_NAME):
                    // cmd === ControlCommands.PROJECTOR_NAME
