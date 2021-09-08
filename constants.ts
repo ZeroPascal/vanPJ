@@ -5,11 +5,13 @@ export const pjWorldEnd = 198
 export const pjWorldOmit: number[] = []
 */
 
+import { hexFunction } from "./Panasonic/panasonicControlCommands"
 import Projector from "./Projector"
 
 
 export enum PROJECTOR_MAKES {
-    PANASONIC = 'PANASONIC'
+    PANASONIC = 'PANASONIC',
+    BARCO = 'BARCO'
 }
 
 export type Group = { name: string, group: number[] }
@@ -191,3 +193,22 @@ export interface RigStatus {
 }
 
 export type ControlKeys = keyof typeof ControlCommands
+
+export type poll = (hexFuntion: hexFunction) => Promise<string>
+export type setter = (hexFunction: hexFunction, command: ControlKeys, vartiable?: string)=>Promise<boolean>;
+export interface PJ extends Projector{
+    //poll: poll,
+   // setter: setter,
+    pollPower: ()=>Promise<void>,
+    pollShutter: ()=>Promise<void>,
+    pollEdgeBlending: ()=>Promise<void>,
+    pollEdgeBlendingMarkers: ()=>Promise<void>,
+    pollTestPattren: ()=>Promise<void>,
+    pollHDMI: ()=>Promise<void>,
+    pollOSD:()=>Promise<void>,
+    pollName:()=> Promise<void>,
+    pollBackColor: ()=>Promise<void>,
+    pollStatus: ()=>Promise<void>,
+    Control: (command:ControlKeys, vartiable: undefined | string) => Promise<boolean>
+
+}

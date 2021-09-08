@@ -1,53 +1,15 @@
-import { functions, hexFunction } from "./ControlCommands"
-import { ControlCommands, ControlKeys, PJ_OBJ } from './constants'
-import { netConnect } from "./telnet"
-import Projector from "./Projector"
+import { functions, hexFunction } from "./panasonicControlCommands"
+import { ControlCommands, ControlKeys, PJ, PJ_OBJ, PROJECTOR_MAKE, PROJECTOR_MAKES } from '../constants'
+import { netConnect } from "./panasoincTelnet"
+import Projector from "../Projector"
 import { times } from "lodash"
 
 
 
-export default class PJ extends Projector implements PJ_OBJ {
-    power: string
-    name: string
-    shutter: string
-    online: string
-    lastSeen: number
-    lampStatus: string
-    edgeBlending: string
-    edgeBlendingMarker: string
-    edgeBlendingLeft: string
-    edgeBlendingLower: string
-    edgeBlendingRight: string
-    edgeBlendingUpper: string
-    testPattren: string
-    backColor: string
-    hdmiResolution: string
-    hdmiSignalLevel: string
-    hdmiVerticalFrequency: string
-    osdPostion: string
-    inputSignalName_Main: string
-    error: string
+export default class panasonicPJ extends Projector implements PJ{
+
     constructor(projectorInfo: Projector) {
         super(projectorInfo)
-        this.power = 'Unknown'
-        this.name = 'Unknown'
-        this.shutter = 'Unknown'
-        this.online = 'Unknown'
-        this.lastSeen = -1
-        this.error = ''
-        this.lampStatus = 'Unknown'
-        this.edgeBlending = 'Unknown'
-        this.testPattren = 'Unknown'
-        this.edgeBlendingMarker = 'Unknown'
-        this.edgeBlendingLeft = 'Unknown'
-        this.edgeBlendingLower = 'Unknown'
-        this.edgeBlendingRight = 'Unknown'
-        this.edgeBlendingUpper = 'Unknown'
-        this.hdmiResolution = 'Unknown'
-        this.hdmiSignalLevel = 'Unknown'
-        this.hdmiVerticalFrequency ='Unknown'
-        this.osdPostion = 'Unknown'
-        this.backColor = 'Unknown'
     }
     private async poll(hexFunction: hexFunction) {
         if (!hexFunction) { return 'Unknown' }

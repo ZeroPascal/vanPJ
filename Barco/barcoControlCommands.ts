@@ -1,5 +1,5 @@
 import { query, response } from 'express'
-import { ControlCommands, ControlKeys } from './constants'
+import { ControlCommands, ControlKeys } from '../constants'
 
 interface responce {
     callbacks: Record<string, string | boolean>
@@ -16,25 +16,29 @@ export interface hexFunction {
 }
 
 const getControl = (name: string, command: string): control => {
-    return { name, command: '00'+command }
+    let header = 'PA..E..|-.S..E../@['
+    return { name, command: header+command+']' }
+}
+const getQuery = (command: string)=>{
+    return '.PA..E..|-.S..E../?['+command+'?]';
 }
 export const functions: Record<string, hexFunction> = {
     Power: {
         name: 'Power',
-        control: { [ControlCommands.POWER_ON]: getControl('Power On', 'PON'), [ControlCommands.POWER_OFF]: getControl('Power Off', 'POF') },
-        query: '00QPW',
+        control: { [ControlCommands.POWER_ON]: getControl('Power On', 'POWR1'), [ControlCommands.POWER_OFF]: getControl('Power Off', 'POWR0') },
+        query: getQuery('POWR'),
         response: {
-            '00001': 'On',
-            '00000': 'Off'
+            '[POWR!1]': 'On',
+            '[POWR!0]': 'Off'
         }
     },
     Shutter: {
         name: 'Shutter',
-        control: { [ControlCommands.SHUTTER_OPEN]: getControl('Shutter Open', 'OSH:0'), [ControlCommands.SHUTTER_CLOSED]: getControl('Shutter Closed', 'OSH:1') },
-        query: '00QSH',
+        control: { [ControlCommands.SHUTTER_OPEN]: getControl('Shutter Open', 'PMUT0'), [ControlCommands.SHUTTER_CLOSED]: getControl('Shutter Closed', 'PMUT1') },
+        query: getQuery('PMUT'),
         response: {
-            '000': 'Open',
-            '001': 'Closed'
+            '[PMUT!00]': 'Open',
+            '[PMUT!01]': 'Closed'
         }
     },
     Edge_Blending: {
@@ -59,28 +63,29 @@ export const functions: Record<string, hexFunction> = {
     Lamp_Control_Status: {
         name: 'Lamp Control Status',
         control: {},
-        query: '00Q$S',
+        query: getQuery('POWR'),
         response: {
-            '000': 'Lamp Off',
-            '001': 'In Turning On',
-            '002': 'Lamp On',
-            '003': 'Lamp Cooling'
+            '[POWR!1]': 'Lamp On',
+            '[POWR!0]': 'Lamp Off'
         }
     },
     Test_Pattern: {
         name: 'Test Pattern',
         control: {
-            [ControlCommands.TEST_PATTERN_OFF]: getControl('Off', 'OTS:00'),
-            [ControlCommands.TEST_PATTERN_WHITE]: getControl('White', 'OTS:01'),
-            [ControlCommands.TEST_PATTERN_BLACK]: getControl('Black', 'OTS:02'),
+            [ControlCommands.TEST_PATTERN_OFF]: getControl('Off', 'TPRN0'),
+            [ControlCommands.TEST_PATTERN_WHITE]: getControl('White', 'TPRN2'),
+            [ControlCommands.TEST_PATTERN_BLACK]: getControl('Black', 'TPRN3'),
             [ControlCommands.TEST_PATTERN_FOCUS_RED]: getControl('Focus Red', 'OTS:70'),
-            [ControlCommands.TEST_PATTERN_FOCUS_WHITE]: getControl('Focus White','OTS:59')
+            [ControlCommands.TEST_PATTERN_FOCUS_WHITE]: getControl('Focus White','TPRN1')
         },
-        query: '00QTS',
+        query: getQuery('TPRN'),
         response: {
-            '0000': 'Off',
-            '0001': 'White',
-            '0002': 'Black',
+            '[TPRN!00]': 'Off',
+            '[TPRN!01]': 'Grid',
+            '[TPRN!02]': 'White',
+            '[TPRN!03]': 'Black',
+            '[TPRN!04]': 'CheckerBoard',
+            '[TPRN!05]': 'ColorBar'
 
         }
     },
@@ -128,18 +133,18 @@ export const functions: Record<string, hexFunction> = {
     LensShift: {
         name: 'Lens Shift',
         control: {
-            [ControlCommands.LENS_SHIFT_V_SP]: getControl('Vertical Slow +', 'VXX:LNSI3=+00001'),
-            [ControlCommands.LENS_SHIFT_V_SN]: getControl('Vertical Slow -', 'VXX:LNSI3=+00000'),
-            [ControlCommands.LENS_SHIFT_V_NP]: getControl('Vertical Normal +', 'VXX:LNSI3=+00101'),
-            [ControlCommands.LENS_SHIFT_V_NN]: getControl('Vertical Normal -', 'VXX:LNSI3=+00100'),
-            [ControlCommands.LENS_SHIFT_V_FP]: getControl('Vertical Fast +', 'VXX:LNSI3=+00201'),
-            [ControlCommands.LENS_SHIFT_V_FN]: getControl('Vertical Fast -', 'VXX:LNSI3=+00200'),
-            [ControlCommands.LENS_SHIFT_H_SP]: getControl('Horizontal Slow +', 'VXX:LNSI2=+00000'),
-            [ControlCommands.LENS_SHIFT_H_SN]: getControl('Horizontal Slow -', 'VXX:LNSI2=+00001'),
-            [ControlCommands.LENS_SHIFT_H_NP]: getControl('Horizontal Normal +', 'VXX:LNSI2=+00100'),
-            [ControlCommands.LENS_SHIFT_H_NN]: getControl('Horizontal Normal -', 'VXX:LNSI2=+00101'),
-            [ControlCommands.LENS_SHIFT_H_FP]: getControl('Horizontal Fast +', 'VXX:LNSI2=+00200'),
-            [ControlCommands.LENS_SHIFT_H_FN]: getControl('Horizontal Fast -', 'VXX:LNSI2=+00201'),
+            [ControlCommands.LENS_SHIFT_V_SP]: getControl('Vertical Slow +', 'LSVD1'),
+            [ControlCommands.LENS_SHIFT_V_SN]: getControl('Vertical Slow -', 'LSVU1'),
+            [ControlCommands.LENS_SHIFT_V_NP]: getControl('Vertical Normal +', 'LSVD2'),
+            [ControlCommands.LENS_SHIFT_V_NN]: getControl('Vertical Normal -', 'LSVU2'),
+            [ControlCommands.LENS_SHIFT_V_FP]: getControl('Vertical Fast +', 'LSVD2'),
+            [ControlCommands.LENS_SHIFT_V_FN]: getControl('Vertical Fast -', 'LSVU2'),
+            [ControlCommands.LENS_SHIFT_H_SP]: getControl('Horizontal Slow +', 'LSHR1'),
+            [ControlCommands.LENS_SHIFT_H_SN]: getControl('Horizontal Slow -', 'LSHL1'),
+            [ControlCommands.LENS_SHIFT_H_NP]: getControl('Horizontal Normal +', 'LSHR2'),
+            [ControlCommands.LENS_SHIFT_H_NN]: getControl('Horizontal Normal -', 'LSHL2'),
+            [ControlCommands.LENS_SHIFT_H_FP]: getControl('Horizontal Fast +', 'LSHR2'),
+            [ControlCommands.LENS_SHIFT_H_FN]: getControl('Horizontal Fast -', 'LSHL2'),
         },
         query: '',
         response: { 'None': '' }
@@ -147,12 +152,12 @@ export const functions: Record<string, hexFunction> = {
     LensFocus: {
         name: 'Lens Focus',
         control: {
-            [ControlCommands.LENS_FOCUS_SP]: getControl('Slow +', 'VXX:LNSI4=+00000'),
-            [ControlCommands.LENS_FOCUS_SN]: getControl('Slow -', 'VXX:LNSI4=+00001'),
-            [ControlCommands.LENS_FOCUS_NP]: getControl('Normal +', 'VXX:LNSI4=+00100'),
-            [ControlCommands.LENS_FOCUS_NN]: getControl('Normal -', 'VXX:LNSI4=+00101'),
-            [ControlCommands.LENS_FOCUS_FP]: getControl('Fast +', 'VXX:LNSI4=+00200'),
-            [ControlCommands.LENS_FOCUS_FN]: getControl('Fast -', 'VXX:LNSI4=+00201'),
+            [ControlCommands.LENS_FOCUS_SP]: getControl('Slow +', 'FCSI1'),
+            [ControlCommands.LENS_FOCUS_SN]: getControl('Slow -', 'FCSO1'),
+            [ControlCommands.LENS_FOCUS_NP]: getControl('Normal +', 'FCSI2'),
+            [ControlCommands.LENS_FOCUS_NN]: getControl('Normal -', 'FCSO2'),
+            [ControlCommands.LENS_FOCUS_FP]: getControl('Fast +', 'FCSI2'),
+            [ControlCommands.LENS_FOCUS_FN]: getControl('Fast -', 'FCSO2'),
         },
         query: '',
         response: { 'None': '' }
@@ -160,12 +165,12 @@ export const functions: Record<string, hexFunction> = {
     LensZoom: {
         name: 'Lens Zoom',
         control: {
-            [ControlCommands.LENS_ZOOM_SP]: getControl('Slow +', 'VXX:LNSI5=+00000'),
-            [ControlCommands.LENS_ZOOM_SN]: getControl('Slow -', 'VXX:LNSI5=+00001'),
-            [ControlCommands.LENS_ZOOM_NP]: getControl('Normal +', 'VXX:LNSI5=+00100'),
-            [ControlCommands.LENS_ZOOM_NN]: getControl('Normal -', 'VXX:LNSI5=+00101'),
-            [ControlCommands.LENS_ZOOM_FP]: getControl('Fast +', 'VXX:LNSI5=+00200'),
-            [ControlCommands.LENS_ZOOM_FN]: getControl('Fast -', 'VXX:LNSI5=+00201'),
+            [ControlCommands.LENS_ZOOM_SP]: getControl('Slow +', 'ZOMO1'),
+            [ControlCommands.LENS_ZOOM_SN]: getControl('Slow -', 'ZOMI1'),
+            [ControlCommands.LENS_ZOOM_NP]: getControl('Normal +', 'ZOMO2'),
+            [ControlCommands.LENS_ZOOM_NN]: getControl('Normal -', 'ZOMI2'),
+            [ControlCommands.LENS_ZOOM_FP]: getControl('Fast +', 'ZOMO2'),
+            [ControlCommands.LENS_ZOOM_FN]: getControl('Fast -', 'ZOMI2'),
         },
         query: '',
         response: { 'None': '' }
@@ -202,28 +207,23 @@ export const functions: Record<string, hexFunction> = {
     OSDPostion: {
         name: 'OSD Postion',
         control: {
-            [ControlCommands.OSD_POSITION_UPPER_LEFT]: getControl('Upper Left', 'ODP:1'),
-            [ControlCommands.OSD_POSITION_CENTER_LEFT]: getControl('Center Left', 'ODP:2'),
-            [ControlCommands.OSD_POSITION_LOWER_LEFT]: getControl('Lower Left', 'ODP:3'),
-            [ControlCommands.OSD_POSITION_TOP_CENTER]: getControl('Top Center', 'ODP:4'),
-            [ControlCommands.OSD_POSITION_CENTER]: getControl('Center', 'ODP:5'),
-            [ControlCommands.OSD_POSITION_LOWER_CENTER]: getControl('Lower Center', 'ODP:6'),
-            [ControlCommands.OSD_POSITION_UPPER_RIGHT]: getControl('Upper Right', 'ODP:7'),
+            [ControlCommands.OSD_POSITION_UPPER_LEFT]: getControl('Upper Left', 'MELG0'),
+            [ControlCommands.OSD_POSITION_CENTER_LEFT]: getControl('Center Left', 'MELG0'),
+            [ControlCommands.OSD_POSITION_LOWER_LEFT]: getControl('Lower Left', 'MELG2'),
+            [ControlCommands.OSD_POSITION_TOP_CENTER]: getControl('Top Center', 'MELG0'),
+            [ControlCommands.OSD_POSITION_CENTER]: getControl('Center', 'MELG0'),
+            [ControlCommands.OSD_POSITION_LOWER_CENTER]: getControl('Lower Center', 'MELG0'),
+            [ControlCommands.OSD_POSITION_UPPER_RIGHT]: getControl('Upper Right', 'MELG1'),
             [ControlCommands.OSD_POSITION_CENTER_RIGHT]: getControl('Center Right', 'ODP:8'),
-            [ControlCommands.OSD_POSITION_LOWER_RIGHT]: getControl('Lower Right', 'ODP:9'),
+            [ControlCommands.OSD_POSITION_LOWER_RIGHT]: getControl('Lower Right', 'MELG3'),
 
         },
-        query: '00QDP',
+        query: getQuery('MELG'),
         response: {
-            '001': 'Upper Left',
-            '002': 'Center Left',
-            '003': 'Lower Left',
-            '004': 'Top Center',
-            '005': 'Center',
-            '006': 'Lower Center',
-            '007': 'Upper Right',
-            '008': 'Center Right',
-            '009': 'Lower Right'
+            '[MELG!0]': 'Left Top',
+            '[MELG!1]': 'Right Top',
+            '[MELG!2]': 'Left Bottom',
+            '[MELG!3]': 'Right Bottom'
         }
 
     },
@@ -271,47 +271,36 @@ export const functions: Record<string, hexFunction> = {
     Input_Signal_Name_Main: {
         name: 'Input Signal Name - Main',
         control: {},
-        query: '00QVX:NSGS1',
-        response: {}
+        query: getQuery('MSCS'),
+        response: {
+            '[MSCS!YUV]' : 'HDMI-2'
+        }
     },
     HDMI_In_Signal_Level: {
         name: 'HDMI In-Signal Level',
         control: {},
-        query: '00QVX:HSLI0',
+        query: getQuery('MSVR'),
         response: {
-            '00HSLI0=+00000': '0-1023',
+            '[MSVR!60Hz]': '60Hz',
             '00HSLI0=+00001': '64-940',
             '00HSLI0=+00002': 'Auto'
+            
         }
     },
     HDMI_In_EDID_Resolution: {
         name: 'HDMI In-EDID Resolution',
         control: {},
-        query: '00QVX:EDRS3',
+        query: getQuery('MSRS'),
         response: {
-            '00EDRS3=1024:0768:p': '1024x768p',
-            '00EDRS3=1280:0720:p': '1280x720p',
-            '00EDRS3=1280:0768:p': '1280x768p',
-            '00EDRS3=1280:0800:p': '1280x800p',
-            '00EDRS3=1280:1024:p': '1280x1024p',
-            '00EDRS3=1366:0768:p': '1366x768p',
-            '00EDRS3=1400:1050:p': '1400x1050p',
-            '00EDRS3=1440:0900:p': '1440x900p',
-            '00EDRS3=1600:0900:p': '1600x900p',
-            '00EDRS3=1600:1200:p': '1600x1200p',
-            '00EDRS3=1680:1050:p': '1680x1050p',
-            '00EDRS3=1920:1080:p': '1920x1080p',
-            '00EDRS3=1920:1080:i': '1920x1080i',
-            '00EDRS3=1920:1200:p': '1920x1200p',
-            '00EDRS3=3840:2400:p': '3840x2400p'
+            '[MSRS!1920x1200]': '1920x1200'
         }
     },
     HDMI_In_EDID_Vertical_Scan:{
         name: 'HDMI In-EDID Vertical Scan Frequency',
         control: {},
-        query: '00QVX:EDVI3',
+        query: getQuery('MSHR'),
         response:{
-            '00EDVI3=+06000': '60Hz',
+            '[MSHR!74.1kHz]': '74.1Hz',
             '00EDVI3=+05000': '50Hz',
             '00EDVI3=+04800': '48Hz',
             '00EDVI3=+03000': '30Hz',
@@ -323,7 +312,7 @@ export const functions: Record<string, hexFunction> = {
     Projector_Name: {
         name: 'Projector Name',
         control: { [ControlCommands.PROJECTOR_NAME]: getControl('Name', 'VXX:NCGS8') }, //Drops Return and Equal, Handled In Setter
-        query: '00QVX:NCGS8',
+        query: getQuery('LIPA'),
         response: {}
     },
     Projector_ID: {

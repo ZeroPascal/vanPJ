@@ -34,7 +34,7 @@ pjs.start().then(() => {
   console.log('PJS Built!', (Date.now() - time) / 1000 + 's')
   //io.emit(ioCommands.EMITTING_PJS, pjs)
   config.PollingFunction = () => {
-    console.log('Polling ', Date())
+    console.log('Polling ', Date()) 
     let time = Date.now()
     pjs.pollAllPJs().then(() => {
       console.log('PJs Rereshed', (Date.now() - time) / 1000 + 's')
@@ -203,6 +203,7 @@ io.on('connection', (socket: Socket) => {
   socket.on(ioCommands.STORE_GROUP, (group: Group)=>{
     config.setGroup(group)
   })
+  //let newPJs = false
   socket.on(ioCommands.EMITTING_CMD, async (CommandPackage: CommandPackage)=>{
     console.group('Got CMD',CommandPackage.cmd,CommandPackage.pjIDs?.length, CommandPackage.vartiable)
     if(!CommandPackage.pjIDs) return
@@ -229,11 +230,18 @@ io.on('connection', (socket: Socket) => {
     })
   } 
       pjs.updateStatus()
+    //  newPJs = true
      // io.emit(ioCommands.EMITTING_PJS, pjs)
      // io.emit(ioCommands.EMITTING_STATUS, pjs.getStatus())
       console.log('CMD Done',CommandPackage.cmd)
       console.groupEnd()
   })
+/*
+  while(newPJs){
+    socket.emit(ioCommands.EMITTING_PJS,pjs)
+    newPJs= false
+  }
+  */
   
 
 });

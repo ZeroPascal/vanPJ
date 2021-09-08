@@ -4,6 +4,7 @@ import * as _ from 'lodash'
 import { uniqueId } from "lodash"
 const fs = require('fs')
 const path =require('path')
+const translate = require('translate')
 
 
 const configFolder = path.join(__dirname, 'local')
@@ -37,6 +38,7 @@ function writeConfig(config: Config){
 function getLocalConfig() {
 
     try {
+        
         return JSON.parse(fs.readFileSync(configFile).toString())
 
     } catch (e) {
@@ -47,14 +49,29 @@ function getLocalConfig() {
         return defaultConfig
     }
 }
+/*
+function getBarco(){
+    try{
+        console.log('Getting Config')
+        let p = path.join('C:/Users/Winst/OneDrive/Desktop/F-141.cfg')
+      //  return fs.readFileSync(p, 'utf16le').toString()
+      return fs.readFileSync(p, 'utf16le').toString()
+      
+    }catch(e){
+        console.log(e)
+    }
+}*/
+
 
 export default class ConfigHandler {
     config: Config
+   // barco: string
     io?: Server
     pollingFunction: ()=>void
     pollingFunctionInt: NodeJS.Timeout
     constructor(io?: Server) {
         this.config = getLocalConfig()
+      //  this.barco = getBarco()
         this.io = io
         this.pollingFunction = undefined
         this.pollingFunctionInt = undefined

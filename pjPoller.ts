@@ -1,9 +1,11 @@
 
-import { ioCommands, RigStatus } from "./constants";
+import { ioCommands, PROJECTOR_MAKES, RigStatus, PJ } from "./constants";
 import PromisePool, { } from '@supercharge/promise-pool'
 import  {Server}  from "socket.io";
 import ConfigHandler from "./ConfigHandler";
-import PJ from "./pj";
+//import PJ from "./constants";
+import pansonicPJ from "./Panasonic/pansonicPJ";
+import barcoPJ from "./Barco/barcoPJ";
 
 
 export default class pjPoller {
@@ -32,10 +34,20 @@ export default class pjPoller {
     await this.buildAllPJS()
   }
  async buildAllPJS(){
-
+  //console.log(this.config.Patch)
   Object.values(this.config.Patch).forEach(pj=>{
-  
-    this.pjs[pj.id] = new PJ(pj)
+    //console.log('pjPoller making PJS', pj.make)
+    switch(pj.make){
+      case PROJECTOR_MAKES.PANASONIC:
+      //  console.log('Panasonic Made')
+        this.pjs[pj.id] = new pansonicPJ(pj)
+        break;
+      case PROJECTOR_MAKES.BARCO:
+        this.pjs[pj.id] = new barcoPJ(pj)
+       // console.log('Barco Made', this.pjs)
+        break;
+    }
+    
   })
   await this.pollAllPJs()
   /*
