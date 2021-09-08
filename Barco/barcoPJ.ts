@@ -28,6 +28,8 @@ export default class barcoPJ extends Projector implements PJ{
                     return res.slice(-4,-1)
                 case '':
                     return res.slice(8,-1)
+                case functions.Auto_Shutdown.name:
+                    return res.slice(6,-1)
 
             }
             res = res.trim()
@@ -130,7 +132,7 @@ export default class barcoPJ extends Projector implements PJ{
     }
     async pollLampStatus() {
         this.lampStatus = await this.poll(functions.Lamp_Control_Status)
-        this.lampStatus +=  await this.poll(functions.Auto_Shutdown)
+        this.lampStatus += ' '+ await this.poll(functions.Auto_Shutdown)
         //console.log(this.id, 'Lamp',this.lampStatus)
     }
     async pollEdgeBlending() {
@@ -346,6 +348,7 @@ export default class barcoPJ extends Projector implements PJ{
 
             case ControlCommands.PROJECTOR_ID:
                 await this.setter(functions.Projector_ID, command, vartiable)
+                await this.pollName()
                 return true
             
             case ControlCommands.CEILING_MOUNT_ON:
