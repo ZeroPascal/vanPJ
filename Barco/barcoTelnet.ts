@@ -50,7 +50,7 @@ export const netConnect = async (pj: Projector, request: string): Promise<string
              //   console.log('NETSocket Connectd')
                socket.write(request,(error)=>{
                    //console.log('Error',error)
-                  // console.log('Written')
+                   console.log(pj.ID,'Written', request)
                })
             })
 

@@ -183,6 +183,7 @@ export const functions: Record<string, hexFunction> = {
         query: '',
         response: { 'None': '' }
     },
+    /*
     BackColor: {
         name: 'Back Color',
         control: {
@@ -193,7 +194,7 @@ export const functions: Record<string, hexFunction> = {
         },
         query: '00QBC',
         response: { '000': 'Blue', '001': 'Black', '002': 'User Logo', '003': 'Default Logo' }
-    },
+    },*/
     OSD:{
         name: 'OSD On/OFf',
         control:{
