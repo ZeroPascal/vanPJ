@@ -73,13 +73,13 @@ export const functions: Record<string, hexFunction> = {
     Menu: {
         name: 'Menu',
         control: {
-            [ControlCommands.MENU]: getControl('Menu', 'OMN'),
-            [ControlCommands.MENU_ENTER_KEY]: getControl('Enter', 'OEN'),
-            [ControlCommands.MENU_UP_KEY]: getControl('Up', 'OCU'),
-            [ControlCommands.MENU_RIGHT_KEY]: getControl('Right', 'OCR'),
-            [ControlCommands.MENU_DOWN_KEY]: getControl('Down', 'OCD'),
-            [ControlCommands.MENU_LEFT_KEY]: getControl('Left', 'OCL'),
-            [ControlCommands.MENU_DEFAULT_KEY]: getControl('Default', 'OST')
+            [ControlCommands.MENU]: getControl('Menu', 'KEYG20'),
+            [ControlCommands.MENU_ENTER_KEY]: getControl('Enter', 'KEYG12'),
+            [ControlCommands.MENU_UP_KEY]: getControl('Up', 'KEYG10'),
+            [ControlCommands.MENU_RIGHT_KEY]: getControl('Right', 'KEYG13'),
+            [ControlCommands.MENU_DOWN_KEY]: getControl('Down', 'KEYG14'),
+            [ControlCommands.MENU_LEFT_KEY]: getControl('Left', 'KEYG11'),
+            [ControlCommands.MENU_DEFAULT_KEY]: getControl('Default', 'KEYG72')
 
         },
         query: '',

@@ -35,11 +35,8 @@ async function querySocket(socket: net.Socket, request: string, auth = '') {
 
 }
 export const netConnect = async (pj: Projector, request: string): Promise<string> => {
-    console.log('Barco_NetConnect',pj.IP_Address, request)
-    if(request.includes('QVX')){
-        console.error('QVX')
-        return 
-    }
+    //console.log('Barco_NetConnect',pj.IP_Address, request)
+   
     return new Promise((res, err) => {
         try {
             let socket = net.connect(pj.Port, pj.IP_Address)
@@ -61,7 +58,7 @@ export const netConnect = async (pj: Projector, request: string): Promise<string
             socket.on('data', async (response: any) => {
               //   console.log(response)
                 let data: string = response.toString()
-                console.log('Barco_NETConnect Responce',data)
+                //console.log('Barco_NETConnect Responce',data)
                 res(data)
                 socket.write('disconnect')
                 /*
