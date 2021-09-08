@@ -89,16 +89,16 @@ export const functions: Record<string, hexFunction> = {
     NumericKey: {
         name: 'Numeric Key',
         control: {
-            [ControlCommands.NUMBER_KEY_0]: getControl('0', 'ONK:0'),
-            [ControlCommands.NUMBER_KEY_1]: getControl('1', 'ONK:1'),
-            [ControlCommands.NUMBER_KEY_2]: getControl('2', 'ONK:2'),
-            [ControlCommands.NUMBER_KEY_3]: getControl('3', 'ONK:3'),
-            [ControlCommands.NUMBER_KEY_4]: getControl('4', 'ONK:4'),
-            [ControlCommands.NUMBER_KEY_5]: getControl('5', 'ONK:5'),
-            [ControlCommands.NUMBER_KEY_6]: getControl('6', 'ONK:6'),
-            [ControlCommands.NUMBER_KEY_7]: getControl('7', 'ONK:7'),
-            [ControlCommands.NUMBER_KEY_8]: getControl('8', 'ONK:8'),
-            [ControlCommands.NUMBER_KEY_9]: getControl('9', 'ONK:9')
+            [ControlCommands.NUMBER_KEY_0]: getControl('0', 'KEYG60'),
+            [ControlCommands.NUMBER_KEY_1]: getControl('1', 'KEYG51'),
+            [ControlCommands.NUMBER_KEY_2]: getControl('2', 'KEYG52'),
+            [ControlCommands.NUMBER_KEY_3]: getControl('3', 'KEYG53'),
+            [ControlCommands.NUMBER_KEY_4]: getControl('4', 'KEYG54'),
+            [ControlCommands.NUMBER_KEY_5]: getControl('5', 'KEYG55'),
+            [ControlCommands.NUMBER_KEY_6]: getControl('6', 'KEYG56'),
+            [ControlCommands.NUMBER_KEY_7]: getControl('7', 'KEYG57'),
+            [ControlCommands.NUMBER_KEY_8]: getControl('8', 'KEYG58'),
+            [ControlCommands.NUMBER_KEY_9]: getControl('9', 'KEYG59')
         },
         query: '',
         response: { 'None': '' }
@@ -191,14 +191,10 @@ export const functions: Record<string, hexFunction> = {
         name: 'OSD Postion',
         control: {
             [ControlCommands.OSD_POSITION_UPPER_LEFT]: getControl('Upper Left', 'MELG0'),
-            [ControlCommands.OSD_POSITION_CENTER_LEFT]: getControl('Center Left', 'MELG0'),
-            [ControlCommands.OSD_POSITION_LOWER_LEFT]: getControl('Lower Left', 'MELG2'),
-            [ControlCommands.OSD_POSITION_TOP_CENTER]: getControl('Top Center', 'MELG0'),
-            [ControlCommands.OSD_POSITION_CENTER]: getControl('Center', 'MELG0'),
-            [ControlCommands.OSD_POSITION_LOWER_CENTER]: getControl('Lower Center', 'MELG0'),
+            [ControlCommands.OSD_POSITION_LOWER_LEFT]: getControl('Lower Left', 'MELG3'),
+            [ControlCommands.OSD_POSITION_CENTER]: getControl('Center', 'MELG2'),
             [ControlCommands.OSD_POSITION_UPPER_RIGHT]: getControl('Upper Right', 'MELG1'),
-            [ControlCommands.OSD_POSITION_CENTER_RIGHT]: getControl('Center Right', 'ODP:8'),
-            [ControlCommands.OSD_POSITION_LOWER_RIGHT]: getControl('Lower Right', 'MELG3'),
+            [ControlCommands.OSD_POSITION_LOWER_RIGHT]: getControl('Lower Right', 'MELG4'),
 
         },
         query: getQuery('MELG'),
@@ -308,10 +304,10 @@ export const functions: Record<string, hexFunction> = {
         name: 'Freeze',
         control:{
             [ControlCommands.FREEZE_OFF]: getControl('Off','OFZ:0'),
-            [ControlCommands.FREEZE_ON]: getControl('On','OFZ:1')
+            [ControlCommands.FREEZE_ON]: getControl('On','HKST2')
         },
-        query: '00QFZ',
-        response: {'000': 'Off', '001': 'On'}
+        query: 'HKST',
+        response: {'[HKST!2]': 'On', '[HKST!0]': 'Blank', '[HKST!1]': 'Aspect', '[HKST!3]': 'PJ Info'}
     },
     Ceiling_Mount:{
         name: 'Ceiling Mount',
@@ -324,7 +320,27 @@ export const functions: Record<string, hexFunction> = {
                 '[CEMO!0]' :'Off',
                 '[CEMO!1]': 'On'
             }
-        }
+        },
+    Standby_Mode:{
+        name: 'Standby Mode',
+        control:{
+            [ControlCommands.STANDBY_MODE_NETWORK]: getControl('Network','SBPM1')
+        },
+            query: getQuery('SBPM'),
+            response:{
+                '[SBPM!0]': 'Standby',
+                '[SPBM!1]': 'Network',
+                '[SPBM!2]': 'Communication'
+            }
+    },
+    Auto_Shutdown:{
+        name: 'Auto Shutdown',
+        control:{
+            [ControlCommands.AUTO_SHUTDOWN_OFF]: getControl('Auto Off', 'APOF00')
+        },
+        query: getQuery('APOF'),
+        response:{}
+    }
     
 
 

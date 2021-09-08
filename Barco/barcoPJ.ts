@@ -110,6 +110,7 @@ export default class barcoPJ extends Projector implements PJ{
     }
     async pollPower() {
         this.power = await this.poll(functions.Power)
+        this.power += await this.poll(functions.Auto_Shutdown)
     }
     async pollShutter() {
         this.shutter = await this.poll(functions.Shutter)
@@ -260,7 +261,7 @@ export default class barcoPJ extends Projector implements PJ{
             
             case ControlCommands.FREEZE_OFF:
             case ControlCommands.FREEZE_ON:
-             //   await this.setter(functions.Freeze, command)
+                await this.setter(functions.Freeze, command)
                 return true
 
             case ControlCommands.PROJECTOR_NAME:
@@ -278,7 +279,7 @@ export default class barcoPJ extends Projector implements PJ{
             case ControlCommands.NUMBER_KEY_7:
             case ControlCommands.NUMBER_KEY_8:
             case ControlCommands.NUMBER_KEY_9:
-              //  await this.setter(functions.NumericKey, command)
+                await this.setter(functions.NumericKey, command)
                 return true
 
             case ControlCommands.LENS_POSTION_HOME:
@@ -337,8 +338,11 @@ export default class barcoPJ extends Projector implements PJ{
             case ControlCommands.CEILING_MOUNT_OFF:
                 await this.setter(functions.Ceiling_Mount,command);
                 return true
+            case ControlCommands.POWER_HOG_ON:
+                await this.setter(functions.Standby_Mode, ControlCommands.STANDBY_MODE_NETWORK)
+                await this.setter(functions.Auto_Shutdown, ControlCommands.AUTO_SHUTDOWN_OFF)
+                return true
             
-
             default:
                 return false
 
