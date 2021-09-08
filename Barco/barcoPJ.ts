@@ -21,9 +21,9 @@ export default class barcoPJ extends Projector implements PJ{
            
             switch (hexFunction.name){
                 case functions.Projector_Name.name:
-                    return res.slice(5,-1)
+                    return res.slice(6,-1)
                 case functions.Projector_ID.name:
-                    return res.slice(5,-1)
+                    return res.slice(6,-1)
                 case functions.Input_Signal_Name_Main.name:
                     return res.slice(-4,-1)
                 case '':
@@ -32,7 +32,7 @@ export default class barcoPJ extends Projector implements PJ{
             }
             res = res.trim()
             if (hexFunction.response[res]) {
-                console.log('PJ Res',res, hexFunction.response[res])
+               // console.log('PJ Res',res, hexFunction.response[res])
                 return hexFunction.response[res]
             } else {
                 if (res === '00ER401') {

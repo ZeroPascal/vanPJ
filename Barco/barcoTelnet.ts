@@ -51,7 +51,8 @@ export const netConnect = async (pj: Projector, request: string): Promise<string
              //   console.log('NETSocket Connectd')
                socket.write(request,(error)=>{
                    //console.log('Error',error)
-                   console.log(pj.ID,'Written', request)
+                  // console.log(pj.ID,'Written', request)
+                   socket.end()
                })
             })
 
@@ -60,7 +61,7 @@ export const netConnect = async (pj: Projector, request: string): Promise<string
                 let data: string = response.toString()
                 //console.log('Barco_NETConnect Responce',data)
                 res(data)
-                socket.write('disconnect')
+                socket.end()
                 /*
                 let a = data.split(' ')
 
