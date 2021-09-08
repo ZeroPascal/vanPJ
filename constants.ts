@@ -136,7 +136,9 @@ export enum ControlCommands {
     OSD_ON = 'OSD_ON',
     OSD_OFF = 'OSD_OFF',
     FREEZE_OFF = 'FREEZE_OFF',
-    FREEZE_ON = 'FREEZE_ON'
+    FREEZE_ON = 'FREEZE_ON',
+    CEILING_MOUNT_ON ='CEILING_MOUNT_ON',
+    CEILING_MOUNT_OFF='CEILING_MOUNT_OFF'
 
 
 }

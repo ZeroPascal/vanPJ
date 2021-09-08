@@ -329,7 +329,21 @@ export const functions: Record<string, hexFunction> = {
         },
         query: '00QFZ',
         response: {'000': 'Off', '001': 'On'}
-    }
+    },
+    Ceiling_Mount:{
+        name: 'Ceiling Mount',
+        control:{
+            [ControlCommands.CEILING_MOUNT_OFF]: getControl('Off', 'CEMO0'),
+            [ControlCommands.CEILING_MOUNT_ON]: getControl('On','CEMO1'),
+        },
+            query: getQuery('CEMO'),
+            response:{
+                '[CEMO!0]' :'Off',
+                '[CEMO!1': 'On'
+            }
+        }
+    
+
 
 
 }

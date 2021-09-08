@@ -121,14 +121,14 @@ export default class barcoPJ extends Projector implements PJ{
         console.log(this.id, 'Lamp',this.lampStatus)
     }
     async pollEdgeBlending() {
-        this.edgeBlending = await this.poll(functions.Edge_Blending)
-        this.edgeBlendingUpper = await this.poll(functions.Edge_Blending_Upper)
-        this.edgeBlendingLower = await this.poll(functions.Edge_Blending_Lower)
-        this.edgeBlendingRight = await this.poll(functions.Edge_Blending_Right)
-        this.edgeBlendingLeft = await this.poll(functions.Edge_Blending_Left)
+      //  this.edgeBlending = await this.poll(functions.Edge_Blending)
+      //  this.edgeBlendingUpper = await this.poll(functions.Edge_Blending_Upper)
+     //   this.edgeBlendingLower = await this.poll(functions.Edge_Blending_Lower)
+     //   this.edgeBlendingRight = await this.poll(functions.Edge_Blending_Right)
+      //  this.edgeBlendingLeft = await this.poll(functions.Edge_Blending_Left)
     }
     async pollEdgeBlendingMarkers() {
-        this.edgeBlendingMarker = await this.poll(functions.Edge_Blending_Markers)
+     //   this.edgeBlendingMarker = await this.poll(functions.Edge_Blending_Markers)
     }
     async pollTestPattren() {
         this.testPattren = await this.poll(functions.Test_Pattern)
@@ -140,7 +140,7 @@ export default class barcoPJ extends Projector implements PJ{
         this.hdmiVerticalFrequency = await this.poll(functions.HDMI_In_EDID_Vertical_Scan)
     }
     async pollOSD() {
-        this.osdPostion = await this.poll(functions.OSD)
+      //  this.osdPostion = await this.poll(functions.OSD)
     }
     async pollName() {
         this.name = await this.poll(functions.Projector_Name)
@@ -331,6 +331,13 @@ export default class barcoPJ extends Projector implements PJ{
                 return true
             case ControlCommands.PROJECTOR_ID:
                 await this.setter(functions.Projector_ID, command, vartiable)
+                return true
+            
+            case ControlCommands.CEILING_MOUNT_ON:
+            case ControlCommands.CEILING_MOUNT_OFF:
+                await this.setter(functions.Ceiling_Mount,command);
+                return true
+            
 
             default:
                 return false
