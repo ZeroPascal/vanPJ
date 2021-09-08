@@ -92,7 +92,7 @@ export default class barcoPJ extends Projector implements PJ{
                     return
                 case(ControlCommands.PROJECTOR_NAME):
                    // cmd === ControlCommands.PROJECTOR_NAME
-                    responce = await this.loopCommand(hexFunction.control[command].command+vartiable,count)
+                    responce = await this.loopCommand(cmd,count)
                     return
             
                 case(ControlCommands.LENS_FOCUS_FN):
