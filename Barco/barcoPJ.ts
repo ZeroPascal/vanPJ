@@ -87,11 +87,12 @@ export default class barcoPJ extends Projector implements PJ{
             switch(command){
                 case(ControlCommands.PROJECTOR_ID):
                     //cmd === ControlCommands.PROJECTOR_ID
-                    console.log(cmd)
+                   
                     responce = await this.loopCommand(cmd, count )
                     return
                 case(ControlCommands.PROJECTOR_NAME):
                    // cmd === ControlCommands.PROJECTOR_NAME
+                   console.log(cmd)
                     responce = await this.loopCommand(cmd,count)
                     return
             
