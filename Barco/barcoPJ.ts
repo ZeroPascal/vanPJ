@@ -80,7 +80,7 @@ export default class barcoPJ extends Projector implements PJ{
              console.log('Setting: ', this.id, command)
              let cmd = hexFunction.control[command].command
              if(vartiable){
-                cmd = cmd.slice(-1)+vartiable+']'
+                cmd = cmd.slice(0,-1)+vartiable+']'
              }
             let count = 1
             let responce =''
