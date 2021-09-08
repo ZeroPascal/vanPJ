@@ -339,7 +339,7 @@ export const functions: Record<string, hexFunction> = {
             query: getQuery('CEMO'),
             response:{
                 '[CEMO!0]' :'Off',
-                '[CEMO!1': 'On'
+                '[CEMO!1]': 'On'
             }
         }
     

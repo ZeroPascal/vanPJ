@@ -163,8 +163,8 @@ export default class barcoPJ extends Projector implements PJ{
             await this.pollPower()
             await this.pollShutter()
             await this.pollLampStatus()
-            await this.pollEdgeBlending()
-            await this.pollEdgeBlendingMarkers()
+            //await this.pollEdgeBlending()
+            //await this.pollEdgeBlendingMarkers()
             await this.pollTestPattren()
             await this.pollHDMI()
             await this.pollName()
@@ -206,40 +206,40 @@ export default class barcoPJ extends Projector implements PJ{
             case ControlCommands.MENU_RIGHT_KEY:
             case ControlCommands.MENU_DOWN_KEY:
             case ControlCommands.MENU_LEFT_KEY:
-                return await this.setter(functions.Menu, command)
+                return //await this.setter(functions.Menu, command)
 
             case ControlCommands.EDGE_BLENDING_MARKERS_OFF:
             case ControlCommands.EDGE_BLENDING_MARKERS_ON:
-                await this.setter(functions.Edge_Blending_Markers, command)
-                await this.pollEdgeBlendingMarkers()
+               // await this.setter(functions.Edge_Blending_Markers, command)
+                //await this.pollEdgeBlendingMarkers()
                 return true
 
             case ControlCommands.EDGE_BLENDING_OFF:
             case ControlCommands.EDGE_BLENDING_ON:
-                await this.setter(functions.Edge_Blending, command)
-                await this.pollEdgeBlending()
+               // await this.setter(functions.Edge_Blending, command)
+                //await this.pollEdgeBlending()
                 return true
             case ControlCommands.EDGE_BLENDING_UPPER_OFF:
             case ControlCommands.EDGE_BLENDING_UPPER_ON:
-                await this.setter(functions.Edge_Blending_Upper, command)
-                await this.pollEdgeBlending()
+               // await this.setter(functions.Edge_Blending_Upper, command)
+                //await this.pollEdgeBlending()
                 return true
 
             case ControlCommands.EDGE_BLENDING_RIGHT_ON:
             case ControlCommands.EDGE_BLENDING_RIGHT_OFF:
-                await this.setter(functions.Edge_Blending_Right, command)
-                await this.pollEdgeBlending()
+               // await this.setter(functions.Edge_Blending_Right, command)
+               // await this.pollEdgeBlending()
                 return true
 
             case ControlCommands.EDGE_BLENDING_LOWER_OFF:
             case ControlCommands.EDGE_BLENDING_LOWER_ON:
-                await this.setter(functions.Edge_Blending_Lower, command)
-                await this.pollEdgeBlending()
+              //  await this.setter(functions.Edge_Blending_Lower, command)
+               // await this.pollEdgeBlending()
                 return true;
             case ControlCommands.EDGE_BLENDING_LEFT_OFF:
             case ControlCommands.EDGE_BLENDING_LEFT_ON:
-                await this.setter(functions.Edge_Blending_Left, command)
-                await this.pollEdgeBlending()
+               // await this.setter(functions.Edge_Blending_Left, command)
+               // await this.pollEdgeBlending()
                 return true;
             case ControlCommands.OSD_POSITION_UPPER_LEFT:
             case ControlCommands.OSD_POSITION_CENTER_LEFT:
@@ -260,7 +260,7 @@ export default class barcoPJ extends Projector implements PJ{
             
             case ControlCommands.FREEZE_OFF:
             case ControlCommands.FREEZE_ON:
-                await this.setter(functions.Freeze, command)
+             //   await this.setter(functions.Freeze, command)
                 return true
 
             case ControlCommands.PROJECTOR_NAME:
@@ -278,11 +278,11 @@ export default class barcoPJ extends Projector implements PJ{
             case ControlCommands.NUMBER_KEY_7:
             case ControlCommands.NUMBER_KEY_8:
             case ControlCommands.NUMBER_KEY_9:
-                await this.setter(functions.NumericKey, command)
+              //  await this.setter(functions.NumericKey, command)
                 return true
 
             case ControlCommands.LENS_POSTION_HOME:
-                await this.setter(functions.LensPositionHome, command)
+              //  await this.setter(functions.LensPositionHome, command)
                 return true
 
             case ControlCommands.LENS_SHIFT_H_FN:
@@ -319,7 +319,7 @@ export default class barcoPJ extends Projector implements PJ{
                 return true
 
             case ControlCommands.LENS_CALIBRATION:
-                await this.setter(functions.LensCalibration, command)
+              //  await this.setter(functions.LensCalibration, command)
                 return true;
 
             case ControlCommands.BACK_COLOR_BLUE:
