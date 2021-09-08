@@ -206,7 +206,7 @@ export default class barcoPJ extends Projector implements PJ{
             case ControlCommands.MENU_RIGHT_KEY:
             case ControlCommands.MENU_DOWN_KEY:
             case ControlCommands.MENU_LEFT_KEY:
-                return //await this.setter(functions.Menu, command)
+                return await this.setter(functions.Menu, command)
 
             case ControlCommands.EDGE_BLENDING_MARKERS_OFF:
             case ControlCommands.EDGE_BLENDING_MARKERS_ON:
