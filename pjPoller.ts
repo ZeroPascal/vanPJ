@@ -44,7 +44,7 @@ export default class pjPoller {
         break;
       case PROJECTOR_MAKES.BARCO:
         this.pjs[pj.id] = new barcoPJ(pj)
-        console.log('Barco Made', this.pjs)
+       // console.log('Barco Made', this.pjs)
         break;
     }
     
