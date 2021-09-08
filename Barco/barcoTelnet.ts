@@ -35,7 +35,7 @@ async function querySocket(socket: net.Socket, request: string, auth = '') {
 
 }
 export const netConnect = async (pj: Projector, request: string): Promise<string> => {
-    console.log('NetConnect',pj.IP_Address, request)
+    console.log('Barco_NetConnect',pj.IP_Address, request)
     if(request.includes('QVX')){
         console.error('QVX')
         return 
@@ -61,7 +61,7 @@ export const netConnect = async (pj: Projector, request: string): Promise<string
             socket.on('data', async (response: any) => {
               //   console.log(response)
                 let data: string = response.toString()
-                console.log('NETConnect Responce',data)
+                console.log('Barco_NETConnect Responce',data)
                 res(data)
                 socket.write('disconnect')
                 /*
@@ -109,7 +109,7 @@ export const netConnect = async (pj: Projector, request: string): Promise<string
                 err('Socket Closed Without Answer: ' + request)
             })
         } catch (e) {
-            console.log('NetConnect Error: ', e)
+            console.log('Barco_NetConnect Error: ', e)
             err(e)
         }
     })
