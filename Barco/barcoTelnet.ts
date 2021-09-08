@@ -3,6 +3,7 @@ import net from 'net'
 import md5 from 'md5'
 import { functions } from './barcoControlCommands'
 import Projector from '../Projector'
+import { write } from 'fs'
 interface tel_parmas {
     host: string,
     port: number
@@ -58,6 +59,7 @@ export const netConnect = async (pj: Projector, request: string): Promise<string
                 let data: string = response.toString()
                 console.log('NETConnect Responce',data)
                 res(data)
+                socket.write('disconnect')
                 /*
                 let a = data.split(' ')
 
