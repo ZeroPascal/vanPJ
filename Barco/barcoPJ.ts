@@ -82,7 +82,11 @@ export default class barcoPJ extends Projector implements PJ{
                 case(ControlCommands.PROJECTOR_ID):
                     cmd === ControlCommands.PROJECTOR_ID
                     responce = await this.loopCommand(hexFunction.control[command].command + vartiable + '\r', count )
-                    break
+                    return
+                case(ControlCommands.PROJECTOR_NAME):
+                    cmd === ControlCommands.PROJECTOR_NAME
+                    responce = await this.loopCommand(hexFunction.control[command].command+vartiable+'\r',count)
+                    return
             
                 case(ControlCommands.LENS_FOCUS_FN):
                 case(ControlCommands.LENS_FOCUS_FP):
@@ -110,7 +114,6 @@ export default class barcoPJ extends Projector implements PJ{
     }
     async pollPower() {
         this.power = await this.poll(functions.Power)
-        this.power += await this.poll(functions.Auto_Shutdown)
     }
     async pollShutter() {
         this.shutter = await this.poll(functions.Shutter)
@@ -119,7 +122,8 @@ export default class barcoPJ extends Projector implements PJ{
     }
     async pollLampStatus() {
         this.lampStatus = await this.poll(functions.Lamp_Control_Status)
-        console.log(this.id, 'Lamp',this.lampStatus)
+        this.lampStatus +=  await this.poll(functions.Auto_Shutdown)
+        //console.log(this.id, 'Lamp',this.lampStatus)
     }
     async pollEdgeBlending() {
       //  this.edgeBlending = await this.poll(functions.Edge_Blending)

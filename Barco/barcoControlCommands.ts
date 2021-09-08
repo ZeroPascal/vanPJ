@@ -290,14 +290,14 @@ export const functions: Record<string, hexFunction> = {
     },
     Projector_Name: {
         name: 'Projector Name',
-        control: { [ControlCommands.PROJECTOR_NAME]: getControl('Name', 'VXX:NCGS8') }, //Drops Return and Equal, Handled In Setter
-        query: getQuery('LIPA'),
+        control: { [ControlCommands.PROJECTOR_NAME]: getControl('Name', 'NPJN') }, //Drops Return and Equal, Handled In Setter
+        query: getQuery('NPJN'),
         response: {}
     },
     Projector_ID: {
         name: 'Projector ID',
-        control: { [ControlCommands.PROJECTOR_ID]: getControl('ID', 'QIS:') }, //Drops Return and Equal, Handled In Setter
-        query: '',
+        control: { [ControlCommands.PROJECTOR_ID]: getControl('ID', 'PJAD') }, //Drops Return and Equal, Handled In Setter
+        query: getQuery('PJAD'),
         response: {}
     },
     Freeze:{
