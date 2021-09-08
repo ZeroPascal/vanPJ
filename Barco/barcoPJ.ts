@@ -84,11 +84,11 @@ export default class barcoPJ extends Projector implements PJ{
             switch(command){
                 case(ControlCommands.PROJECTOR_ID):
                     cmd === ControlCommands.PROJECTOR_ID
-                    responce = await this.loopCommand(hexFunction.control[command].command + vartiable + '\r', count )
+                    responce = await this.loopCommand(hexFunction.control[command].command + vartiable, count )
                     return
                 case(ControlCommands.PROJECTOR_NAME):
                     cmd === ControlCommands.PROJECTOR_NAME
-                    responce = await this.loopCommand(hexFunction.control[command].command+vartiable+'\r',count)
+                    responce = await this.loopCommand(hexFunction.control[command].command+vartiable,count)
                     return
             
                 case(ControlCommands.LENS_FOCUS_FN):
