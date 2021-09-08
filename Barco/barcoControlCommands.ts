@@ -40,26 +40,7 @@ export const functions: Record<string, hexFunction> = {
             '[PMUT!00]': 'Open',
             '[PMUT!01]': 'Closed'
         }
-    },/*
-    Edge_Blending: {
-        name: 'Edge Blending',
-        control: { [ControlCommands.EDGE_BLENDING_OFF]: getControl('Off', 'VXX:EDBI0=+00000'), [ControlCommands.EDGE_BLENDING_ON]: getControl('On', 'VXX:EDBI0=+00001'), 'User': getControl('User', 'VXX:EDBI0=+00002') },
-        query: '00QVX:EDBI0',
-        response: {
-            '00EDBI0=+00000': 'Off',
-            '00EDBI0=+00001': 'On',
-            '00EDBI0=+00002': 'User'
-        }
     },
-    Edge_Blending_Markers: {
-        name: 'Edge Blending Markers',
-        control: { [ControlCommands.EDGE_BLENDING_MARKERS_ON]: getControl('Marker On', 'VGM:1'), [ControlCommands.EDGE_BLENDING_MARKERS_OFF]: getControl('Marker Off', 'VGM:0') },
-        query: '00QGM',
-        response: {
-            '000': 'Off',
-            '001': 'On'
-        }
-    }, */
     Lamp_Control_Status: {
         name: 'Lamp Control Status',
         control: {},
@@ -183,6 +164,7 @@ export const functions: Record<string, hexFunction> = {
         query: '',
         response: { 'None': '' }
     },
+
     /*
     BackColor: {
         name: 'Back Color',
