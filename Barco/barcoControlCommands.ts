@@ -302,11 +302,11 @@ export const functions: Record<string, hexFunction> = {
     Freeze:{
         name: 'Freeze',
         control:{
-            [ControlCommands.FREEZE_OFF]: getControl('Off','FREZ0'),
-            [ControlCommands.FREEZE_ON]: getControl('On','FREZ1')
+            [ControlCommands.FREEZE_OFF]: getControl('Off','FRZE0'),
+            [ControlCommands.FREEZE_ON]: getControl('On','FRZE1')
         },
-        query: getQuery('FREZ'),
-        response: {'[FREZ!0]': 'Off', '[FERZ!1]': 'On'}
+        query: getQuery('FRZE'),
+        response: {'[FRZE!0]': 'Off', '[FEZE!1]': 'On'}
     },
     Ceiling_Mount:{
         name: 'Ceiling Mount',
