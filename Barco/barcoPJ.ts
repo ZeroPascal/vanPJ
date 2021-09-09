@@ -112,6 +112,7 @@ export default class barcoPJ extends Projector implements PJ{
 
 
             }
+            console.log(cmd)
              responce = await this.loopCommand(cmd,count) 
              console.log('TCP Responce:', responce)
             return (responce === hexFunction.control[command].command)
