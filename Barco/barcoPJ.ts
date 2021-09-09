@@ -127,6 +127,7 @@ export default class barcoPJ extends Projector implements PJ{
     }
     async pollShutter() {
         this.shutter = await this.poll(functions.Shutter)
+        this.shutter += await this.poll(functions.Freeze) === 'On'? 'FROZEN' : ''
        // console.log(this.id, this.shutter)
 
     }
@@ -277,6 +278,7 @@ export default class barcoPJ extends Projector implements PJ{
             case ControlCommands.FREEZE_OFF:
             case ControlCommands.FREEZE_ON:
                 await this.setter(functions.Freeze, command)
+                await this.pollShutter()
                 return true
 
             case ControlCommands.PROJECTOR_NAME:
