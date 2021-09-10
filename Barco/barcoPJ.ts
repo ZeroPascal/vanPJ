@@ -18,7 +18,7 @@ export default class barcoPJ extends Projector implements PJ{
             let res = await netConnect(this, hexFunction.query)
             this.lastSeen = Date.now()
             this.online = 'true'
-           
+          //  console.log(hexFunction.query,res)
             switch (hexFunction.name){
                 case functions.Projector_Name.name:
                     return res.slice(6,-1)
@@ -34,7 +34,7 @@ export default class barcoPJ extends Projector implements PJ{
             }
             res = res.trim()
             if (hexFunction.response[res]) {
-               // console.log('PJ Res',res, hexFunction.response[res])
+                console.log('PJ Res',res, hexFunction.response[res])
                 return hexFunction.response[res]
             } else {
                 if (res === '00ER401') {
@@ -94,7 +94,7 @@ export default class barcoPJ extends Projector implements PJ{
                     return
                 case(ControlCommands.PROJECTOR_NAME):
                    // cmd === ControlCommands.PROJECTOR_NAME
-                   console.log(cmd)
+               //    console.log(cmd)
                     responce = await this.loopCommand(cmd,count)
                     return
             
@@ -128,8 +128,7 @@ export default class barcoPJ extends Projector implements PJ{
     }
     async pollShutter() {
         this.shutter = await this.poll(functions.Shutter)
-        this.shutter += await this.poll(functions.Freeze) === 'On'? 'FROZEN' : ''
-       // console.log(this.id, this.shutter)
+        this.shutter += await this.poll(functions.Freeze) === 'On'? ' FROZEN' : '';
 
     }
     async pollLampStatus() {

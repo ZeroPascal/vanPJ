@@ -306,7 +306,7 @@ export const functions: Record<string, hexFunction> = {
             [ControlCommands.FREEZE_ON]: getControl('On','FRZE1')
         },
         query: getQuery('FRZE'),
-        response: {'[FRZE!0]': 'Off', '[FEZE!1]': 'On'}
+        response: {'[FRZE!00]': 'Off', '[FRZE!01]': 'On'}
     },
     Ceiling_Mount:{
         name: 'Ceiling Mount',
