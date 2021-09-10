@@ -323,7 +323,7 @@ export const functions: Record<string, hexFunction> = {
     Standby_Mode:{
         name: 'Standby Mode',
         control:{
-            [ControlCommands.STANDBY_MODE_NETWORK]: getControl('Network','SBPM1')
+            [ControlCommands.STANDBY_MODE_NETWORK]: getControl('Network','SBPM2') //2 is Communication mode, what we want. Name wrong
         },
             query: getQuery('SBPM'),
             response:{
