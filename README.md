@@ -14,7 +14,7 @@ Windows-
 5. Confrim you have NPM installed by typing `npm --version`
 6. Enter - `git clone https://github.com/ZeroPascal/vanPJ`
 7. Goto project directory 
-    a. Default `cd ~/vanPJ`
+  a. Default `cd ~/vanPJ`
 
 ## Starting:
 7. Enter - `npm start` (This can take a second on first install)
@@ -26,13 +26,13 @@ Windows-
 # Usage:
 1. Visit (http://localhost:3002) or machinesIP:3002
 2. Configure
-    a. Settings Gear In Upper Left -> Edit Config
-    b. Location: Usualy City Name
-    c. Polling: Toggle On
-    d. Add PJs (+ Button Bottom Right)
-    e. Enter Amount
-    f. Password (if any)
-    g. Hit Submit
-    h. Hit Save in Upper Right
+  a. Settings Gear In Upper Left -> Edit Config
+  b. Location: Usualy City Name
+  c. Polling: Toggle On
+  d. Add PJs (+ Button Bottom Right)
+  e. Enter Amount
+  f. Password (if any)
+  g. Hit Submit
+  h. Hit Save in Upper Right
 
 
