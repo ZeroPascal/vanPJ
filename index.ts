@@ -120,6 +120,10 @@ app.get('/api/status/*', async (req, res, next) => {
   }
 
 })
+
+app.get('/stop',(req,res)=>{
+  process.exit(0)
+})
 app.get('/api/set/*', async (req, res) => {
 
   let q = req.query
