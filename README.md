@@ -5,8 +5,8 @@
 ## Setup:
 Windows-
 1. Install Git: [Git for Windows](https://github.com/git-for-windows/git/releases/download/v2.33.0.windows.2/Git-2.33.0.2-64-bit.exe)
-2. Install a Node and NPM: [Nodist](https://github.com/coreybutler/nvm-windows/releases) -> 'NVM-Setup.zip'
-3. Open Git Bash on your computer as Admin
+2. Install a Node and NPM: [NVM-Windows](https://github.com/coreybutler/nvm-windows/releases) -> 'NVM-Setup.zip'
+3. Open the 'Git Bash' app on your computer as Admin
 4. Enter- `nvm install latest && nvm use latest && npm i -g ts-node`
 
 ## Install:
