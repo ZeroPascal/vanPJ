@@ -1,4 +1,4 @@
-# panasonicServer
+# vanPJ
 
 ## Prebaked GUI interface on Port 3002.
 
