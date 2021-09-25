@@ -204,8 +204,23 @@ io.on('connection', (socket: Socket) => {
     socket.emit(ioCommands.REQUEST_CONFIG)
     pjs.buildAllPJS()
   })
-  socket.on(ioCommands.STORE_GROUP, (group: Group)=>{
-    config.setGroup(group)
+  socket.on(ioCommands.STORE_GROUP, (payload: {key: number, group: number[], name: string})=>{
+    console.log('Store Group Payload',payload)
+    config.storeGroup(payload)
+  })
+  socket.on(ioCommands.UPDATE_GROUP, (payload: {groupID: number, group: number[]})=>{
+    console.log('Update Group',payload)
+    if(payload.groupID !==0)
+      config.updateGroup(payload.groupID, payload.group)
+  })
+  socket.on(ioCommands.LABEL_GROUP,(payload:{groupID: number, name: string})=>{
+    console.log('Label Group', payload)
+    if(payload.groupID !==0)
+      config.labelGroup(payload.groupID, payload.name)
+  })
+  socket.on(ioCommands.DELETE_GROUP, (payload:{groupID: number})=>{
+    if(payload.groupID !==0)
+    config.deleteGroup(payload.groupID)
   })
   //let newPJs = false
   socket.on(ioCommands.EMITTING_CMD, async (CommandPackage: CommandPackage)=>{

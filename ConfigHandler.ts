@@ -149,17 +149,43 @@ export default class ConfigHandler {
     getPJIDs(){
         return Object.values(this.Patch).map(pj=> {return pj.id})
     }
-    setGroup(group: Group){
-        let good = true
+    storeGroup( payload: {key: number, group: number[], name: string}){
+        this.setGroup({name: payload.name, group: payload.group})
+    }
+    labelGroup(groupID: number, name: string){
+        if(groupID === 0) return
+        let g = this.config.Groups[groupID]
+        if(g){
+            g.name = name
+            this.setGroup(g,groupID)
+        }
+    }
+    updateGroup(groupID: number, group: number[]){
+        if(groupID === 0) return
+        let g = this.config.Groups[groupID]
+        if(g){
+            g.group=group
+            this.setGroup(g,groupID)
+        }
+    }
+    deleteGroup(groupID: number){
+        if(groupID === 0) return
+        delete this.config.Groups[groupID]
+        this.update()
+    }
+    private validateGroup(group: number[]){
         let ids = this.getPJIDs()
-        let newGroup = Object.values(group.group).map(pj=>{
+        return Object.values(group).map(pj=>{
             if(ids.includes(pj)){
                 return pj
             }
         })
-        this.config.Groups[this.HighestGroupNumber+1] = {
+    }
+    setGroup(group: Group, index = this.HighestGroupNumber+1){
+        if(group.name == '') return
+        this.config.Groups[index] = {
             name:group.name,
-            group: newGroup
+            group: this.validateGroup(group.group)
         }
         this.update()
        
