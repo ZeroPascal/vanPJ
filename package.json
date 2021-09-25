@@ -16,7 +16,7 @@
   "author": "ZeroPascal",
   "repository": {
     "type": "git",
-    "url": "git://github.com/ZeroPascal/panasonicServer.git"
+    "url": "git://github.com/ZeroPascal/vanPJ.git"
   },
   "license": "MIT",
   "dependencies": {
