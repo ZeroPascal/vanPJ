@@ -8,9 +8,17 @@ interface control {
     name: string,
     command: string
 }
+export interface range {
+    min: number,
+    max: number,
+    default: number
+}
 export interface hexFunction {
     name: string
     control: Record<string, control>,
+    range?: range ,
+    dropEqual?: boolean,
+    fixedSize?: number
     query: string,
     response: Record<string, string>
 }
@@ -328,7 +336,8 @@ export const functions: Record<string, hexFunction> = {
     },
     Projector_ID: {
         name: 'Projector ID',
-        control: { [ControlCommands.PROJECTOR_ID]: getControl('ID', 'QIS:') }, //Drops Return and Equal, Handled In Setter
+        control: { [ControlCommands.PROJECTOR_ID]: getControl('ID', 'QIS:') }, //Drops Return and Equal, Handled In Setter,
+        range: {min: 0, max: 64, default: 0},
         query: '',
         response: {}
     },
@@ -340,6 +349,58 @@ export const functions: Record<string, hexFunction> = {
         },
         query: '00QFZ',
         response: {'000': 'Off', '001': 'On'}
+    },
+    Input:{
+        name: 'Input',
+        control:{
+            [ControlCommands.INPUT_SELECT_COMPUTER1]: getControl('Computer 1','IIS:RG1'),
+            [ControlCommands.INPUT_SELECT_COMPUTER2]: getControl('Computer 2', 'IIS:RG2'),
+            [ControlCommands.INPUT_SELECT_VIDEO]: getControl('Video','IIS:VID'),
+            [ControlCommands.INPUT_SELECT_YC]: getControl('Y/C','IIS:SVD'),
+            [ControlCommands.INPUT_SELECT_DVI]: getControl('DVI','IIS:DVI'),
+            [ControlCommands.INPUT_SELECT_HDMI1]: getControl('HDMI1', 'IIS:HD1'),
+            [ControlCommands.INPUT_SELECT_HDMI2]: getControl('HDMI2', 'IIS:HD2'),
+            [ControlCommands.INPUT_SELECT_SDI1]: getControl('SDI','IIS:SD1'),
+            [ControlCommands.INPUT_SELECT_DIGITALLINK]: getControl('Digital Link','IIS:DL1')
+        },
+        query: '00QIN',
+        response:{'00RG1': 'Computer 1', '00RG2': 'Computer 2', '00VID': 'Video', '00SVD': 'Y/C', '00HD1': 'HDMI', '00SD1': 'SDI1', '00DL1': 'Digital Link'}
+    },
+    OSD_Rotation:{
+        name: 'OSD Rotation',
+        control:{
+            [ControlCommands.OSD_ROTATION_OFF]: getControl('Off', 'VXX:OSRI1=+00000'),
+            [ControlCommands.OSD_ROTATION_CLOCKWISE]: getControl('Clockwise', 'VXX:OSRI1=+00001'),
+            [ControlCommands.OSD_ROTATION_COUNTERCLOCKWISE]: getControl('CounterClockwise','VXX:OSRI1=+00002')
+
+        },
+        query:'00QVX:OSRI1',
+        response:{'00OSRI1=+00000': 'Off', '00SRI1=+00001': 'Clockwise', '00SRI1=+00002': 'CounterClockwise'}
+    },
+    Install_Postion:{
+        name: 'Install Postion',
+        control:{
+            [ControlCommands.PROJECTOR_INSTALL_METHOD_FRONT_DESK]: getControl('Front/Desk','OIL:0'),
+            [ControlCommands.PROJECTOR_INSTALL_METHOD_REAR_DESK]: getControl('Rear/Desk','OIL:1'),
+            [ControlCommands.PROJECTOR_INSTALL_METHOD_FRONT_CEILING]:getControl('Front/Ceiling','OIL:2'),
+            [ControlCommands.PROJECTOR_INSTALL_METHOD_REAR_CEILING]: getControl('Rear/Ceiling','OIL:3'),
+            [ControlCommands.PROJECTOR_INSTALL_METHOD_FRONT_AUTO]: getControl('Front/Auto','OIL:4'),
+            [ControlCommands.PROJECTOR_INSTALL_METHOD_REAR_AUTO]: getControl('Rear/Auto','OIL:5')
+
+        },
+        query: '00QSP',
+        response:{'000': 'Front/Desk', '001': 'Rear/Desk','002': 'Front/Ceiling','003':'Rear/Ceiling','004':'Front/Auto','005':'Rear/Auto'}
+    },
+    LightOutput:{
+        name:'Light Output',
+        control:{
+            [ControlCommands.LIGHT_OUTPUT]: getControl('Light Output','VXX:LOPI2=+') // Vartable Handled In Setter. No Equal
+        },
+        dropEqual: true,
+        fixedSize: 5,
+        range: {min:50, max: 1000, default:1000},
+        query: '00QVB',
+        response:{}
     }
 
 

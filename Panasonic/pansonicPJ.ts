@@ -1,4 +1,4 @@
-import { functions, hexFunction } from "./panasonicControlCommands"
+import { functions, hexFunction, range } from "./panasonicControlCommands"
 import { ControlCommands, ControlKeys, PJ, PJ_OBJ, PROJECTOR_MAKE, PROJECTOR_MAKES } from '../constants'
 import { netConnect } from "./panasoincTelnet"
 import Projector from "../Projector"
@@ -6,7 +6,7 @@ import { times } from "lodash"
 
 
 
-export default class panasonicPJ extends Projector implements PJ{
+export default class panasonicPJ extends Projector implements PJ {
 
     constructor(projectorInfo: Projector) {
         super(projectorInfo)
@@ -17,18 +17,18 @@ export default class panasonicPJ extends Projector implements PJ{
             let res = await netConnect(this, hexFunction.query)
             this.lastSeen = Date.now()
             this.online = 'true'
-           
-            switch (hexFunction.name){
+
+            switch (hexFunction.name) {
                 case functions.Projector_Name.name:
                 case functions.Input_Signal_Name_Main.name:
-                    return res.slice(8,-1)
+                    return res.slice(8, -1)
                 case '':
-                    return res.slice(8,-1)
+                    return res.slice(8, -1)
 
             }
             res = res.trim()
             if (hexFunction.response[res]) {
-               // console.log('PJ Res',res, hexFunction.response[res])
+                // console.log('PJ Res',res, hexFunction.response[res])
                 return hexFunction.response[res]
             } else {
                 if (res === '00ER401') {
@@ -52,15 +52,40 @@ export default class panasonicPJ extends Projector implements PJ{
             return 'Unknown'
         }
     }
+    private setFixedSize(vartiable: string, size: number){
+        while(vartiable.length<size){
+            vartiable=0+vartiable
+        }
+        return vartiable
+    }
     private async setter(hexFunction: hexFunction, command: ControlKeys, vartiable?: string) {
         try {
-            // console.log('Setting: ', this.id, hexFunction)
-            let responce 
-            if(command === ControlCommands.PROJECTOR_ID){
-                 responce = await netConnect(this, hexFunction.control[command].command + vartiable + '\r' )
-            } else {
-                 responce = await netConnect(this, hexFunction.control[command].command + (vartiable ? '=' + vartiable + '\r' : ''))
+            console.log('Setting: ', this.id, hexFunction)
+            let responce
+            switch (command) {
+                case ControlCommands.PROJECTOR_ID:
+                    responce = await netConnect(this, hexFunction.control[command].command + vartiable + '\r')
+                    break;
+
+                default:
+                    let cmd = hexFunction.control[command].command
+                    if (hexFunction.range) {
+                        vartiable = this.checkRange(hexFunction.range, vartiable)
+                        vartiable = this.setFixedSize(vartiable,hexFunction.fixedSize)
+                    }
+                    if(vartiable){
+                        if(hexFunction.dropEqual){
+                            cmd+=vartiable
+                        } else{
+                            cmd+='='+vartiable
+                        }
+                    }
+                    cmd+='\r'
+                    console.log(cmd)
+                    await netConnect(this,cmd)
+                    break;
             }
+
             // console.log('TCP Responce:', responce)
             return (responce === hexFunction.control[command].command)
 
@@ -101,12 +126,13 @@ export default class panasonicPJ extends Projector implements PJ{
     }
     async pollOSD() {
         this.osdPostion = await this.poll(functions.OSD)
+        // this.osdRotaion = await this.poll(functions.OSD_Rotation)
     }
     async pollName() {
         this.name = await this.poll(functions.Projector_Name)
     }
 
-    async pollBackColor(){
+    async pollBackColor() {
         this.backColor = await this.poll(functions.BackColor)
     }
 
@@ -135,8 +161,24 @@ export default class panasonicPJ extends Projector implements PJ{
         }
 
     }
+    private checkRange(range: range, vartiable: string | undefined): string {
+        let s = range.default
+        if (vartiable) {
+            let v = parseInt(vartiable)
+            if (isFinite(v))
+                s = v
+            if (s > range.max)
+                s = range.max
+            if (s < range.min)
+                s = range.min
+        }
+
+        return s + ''
+
+
+    }
     async Control(command: ControlKeys, vartiable: undefined | string) {
-       // console.log('PJ Running CMD', this.ID, command)
+        // console.log('PJ Running CMD', this.ID, command)
         switch (command) {
             case ControlCommands.POWER_OFF:
             case ControlCommands.POWER_ON:
@@ -210,14 +252,14 @@ export default class panasonicPJ extends Projector implements PJ{
             case ControlCommands.OSD_POSITION_UPPER_RIGHT:
             case ControlCommands.OSD_POSITION_CENTER_RIGHT:
             case ControlCommands.OSD_POSITION_LOWER_RIGHT:
-                await this.setter(functions.OSD, command)
-                await this.pollOSD()
+                await this.setter(functions.OSDPostion, command)
+                // await this.pollOSD()
                 return true
             case ControlCommands.OSD_ON:
             case ControlCommands.OSD_OFF:
                 await this.setter(functions.OSD, command)
                 return true
-            
+
             case ControlCommands.FREEZE_OFF:
             case ControlCommands.FREEZE_ON:
                 await this.setter(functions.Freeze, command)
@@ -292,6 +334,33 @@ export default class panasonicPJ extends Projector implements PJ{
             case ControlCommands.PROJECTOR_ID:
                 await this.setter(functions.Projector_ID, command, vartiable)
 
+            case ControlCommands.PROJECTOR_INSTALL_METHOD_REAR_AUTO:
+            case ControlCommands.PROJECTOR_INSTALL_METHOD_REAR_CEILING:
+            case ControlCommands.PROJECTOR_INSTALL_METHOD_REAR_DESK:
+            case ControlCommands.PROJECTOR_INSTALL_METHOD_FRONT_AUTO:
+            case ControlCommands.PROJECTOR_INSTALL_METHOD_FRONT_CEILING:
+            case ControlCommands.PROJECTOR_INSTALL_METHOD_FRONT_DESK:
+                await this.setter(functions.Install_Postion, command)
+                return true
+            case ControlCommands.OSD_ROTATION_CLOCKWISE:
+            case ControlCommands.OSD_ROTATION_COUNTERCLOCKWISE:
+            case ControlCommands.OSD_ROTATION_OFF:
+                await this.setter(functions.OSD_Rotation, command)
+                return true
+            case ControlCommands.INPUT_SELECT_DIGITALLINK:
+            case ControlCommands.INPUT_SELECT_COMPUTER1:
+            case ControlCommands.INPUT_SELECT_COMPUTER2:
+            case ControlCommands.INPUT_SELECT_DVI:
+            case ControlCommands.INPUT_SELECT_HDMI1:
+            case ControlCommands.INPUT_SELECT_HDMI2:
+            case ControlCommands.INPUT_SELECT_SDI1:
+            case ControlCommands.INPUT_SELECT_VIDEO:
+            case ControlCommands.INPUT_SELECT_YC:
+                await this.setter(functions.Input, command)
+                return true
+            case ControlCommands.LIGHT_OUTPUT:
+                await this.setter(functions.LightOutput, command, vartiable)
+                return true
             default:
                 return false
 
