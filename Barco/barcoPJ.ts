@@ -20,10 +20,8 @@ export default class barcoPJ extends Projector implements PJ{
             this.online = 'true'
           //  console.log(hexFunction.query,res)
             switch (hexFunction.name){
-                case functions.Projector_Name.name:
-                    return res.slice(6,-1)
-                case functions.Projector_ID.name:
-                    return res.slice(6,-1)
+              //  case functions.Projector_ID.name:
+              //      return res.slice(6,-1)
                 case functions.Input_Signal_Name_Main.name:
                     return res.slice(-4,-1)
                 case '':
@@ -92,11 +90,11 @@ export default class barcoPJ extends Projector implements PJ{
                    
                     responce = await this.loopCommand(cmd, count )
                     return
-                case(ControlCommands.PROJECTOR_NAME):
+               // case(ControlCommands.PROJECTOR_NAME):
                    // cmd === ControlCommands.PROJECTOR_NAME
                //    console.log(cmd)
-                    responce = await this.loopCommand(cmd,count)
-                    return
+                 //   responce = await this.loopCommand(cmd,count)
+               //     return
             
                 case(ControlCommands.LENS_FOCUS_FN):
                 case(ControlCommands.LENS_FOCUS_FP):
@@ -159,8 +157,8 @@ export default class barcoPJ extends Projector implements PJ{
       //  this.osdPostion = await this.poll(functions.OSD)
     }
     async pollName() {
-        this.name = await this.poll(functions.Projector_Name)
-        this.name +='(' +await this.poll(functions.Projector_ID)+')'
+      //  this.name = await this.poll(functions.Projector_Name)
+        this.id = parseInt(await this.poll(functions.Projector_ID))
     }
 
     async pollBackColor(){
