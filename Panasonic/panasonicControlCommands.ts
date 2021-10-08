@@ -82,7 +82,7 @@ export const functions: Record<string, hexFunction> = {
             [ControlCommands.TEST_PATTERN_WHITE]: getControl('White', 'OTS:01'),
             [ControlCommands.TEST_PATTERN_BLACK]: getControl('Black', 'OTS:02'),
             [ControlCommands.TEST_PATTERN_FOCUS_RED]: getControl('Focus Red', 'OTS:70'),
-            [ControlCommands.TEST_PATTERN_FOCUS_WHITE]: getControl('Focus White','OTS:59')
+            [ControlCommands.TEST_PATTERN_FOCUS_WHITE]: getControl('Focus White','OTS:07')
         },
         query: '00QTS',
         response: {

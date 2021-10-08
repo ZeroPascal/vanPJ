@@ -104,6 +104,7 @@ export default class pjPoller {
     return this.rigStatus
   }
   updateStatus(){
+    console.groupEnd()
     console.log('Updating Rig Status')
     let s:RigStatus = {
       online: true,

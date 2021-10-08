@@ -60,7 +60,7 @@ export default class panasonicPJ extends Projector implements PJ {
     }
     private async setter(hexFunction: hexFunction, command: ControlKeys, vartiable?: string) {
         try {
-            console.log('Setting: ', this.id, hexFunction)
+            //console.log('Setting: ', this.id, hexFunction)
             let responce
             switch (command) {
                 case ControlCommands.PROJECTOR_ID:
@@ -81,7 +81,7 @@ export default class panasonicPJ extends Projector implements PJ {
                         }
                     }
                     cmd+='\r'
-                    console.log(cmd)
+                    console.log(this.id, hexFunction.control[command].name,cmd)
                     await netConnect(this,cmd)
                     break;
             }
@@ -90,9 +90,10 @@ export default class panasonicPJ extends Projector implements PJ {
             return (responce === hexFunction.control[command].command)
 
         } catch (e) {
-
+            if(e.message)
             console.log(this.id, 'Setting Error:', e.message)
             return false
+            
         }
     }
     async pollPower() {
