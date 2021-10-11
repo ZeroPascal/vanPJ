@@ -336,9 +336,10 @@ export const functions: Record<string, hexFunction> = {
     },
     Projector_ID: {
         name: 'Projector ID',
-        control: { [ControlCommands.PROJECTOR_ID]: getControl('ID', 'QIS:') }, //Drops Return and Equal, Handled In Setter,
+        control: { [ControlCommands.PROJECTOR_ID]: getControl('ID', 'RIS:') }, //Drops Return and Equal, Handled In Setter,
         range: {min: 0, max: 64, default: 0},
         query: '',
+        dropEqual: true,
         response: {}
     },
     Freeze:{

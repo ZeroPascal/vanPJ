@@ -63,9 +63,9 @@ export default class panasonicPJ extends Projector implements PJ {
             //console.log('Setting: ', this.id, hexFunction)
             let responce
             switch (command) {
-                case ControlCommands.PROJECTOR_ID:
-                    responce = await netConnect(this, hexFunction.control[command].command + vartiable + '\r')
-                    break;
+               // case ControlCommands.PROJECTOR_ID:
+               //     responce = await netConnect(this, hexFunction.control[command].command + vartiable + '\r')
+               //     break;
 
                 default:
                     let cmd = hexFunction.control[command].command
