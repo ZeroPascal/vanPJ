@@ -1,6 +1,7 @@
 #!/bin/sh
 
 echo 'Starting vanPJ'
+cd /home/pi/vanPJ
 rm -rf package-lock.json
 git fetch
 git pull
