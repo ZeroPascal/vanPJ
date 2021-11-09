@@ -205,7 +205,10 @@ export enum ioCommands {
     STORE_GROUP = 'STORE_GROUP',
     UPDATE_GROUP = 'UPDATE_GROUP',
     DELETE_GROUP= 'DELETE_GROUP',
-    LABEL_GROUP='LABEL_GROUP'
+    LABEL_GROUP='LABEL_GROUP',
+    EMITTING_MACROS='EMITTING_MACROS',
+    NEW_MACRO='NEW_MACRO',
+    DELETE_MACRO = 'DELETE_MACRO'
 }
 export interface RigStatus {
     online: boolean,
@@ -220,6 +223,11 @@ export interface RigStatus {
 }
 
 export type ControlKeys = keyof typeof ControlCommands
+
+
+export type MacroLine = {cmd: ControlKeys, var: string, requestVar: boolean}
+export type Macro = {key: string, name: string, commands: MacroLine[]}
+export type Macros = Record<string,Macro>
 
 export type poll = (hexFuntion: hexFunction) => Promise<string>
 export type setter = (hexFunction: hexFunction, command: ControlKeys, vartiable?: string)=>Promise<boolean>;

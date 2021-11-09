@@ -3,7 +3,8 @@ import express from 'express'
 import { Socket } from 'socket.io'
 import { Server } from 'socket.io'
 import ConfigHandler from './ConfigHandler'
-import { CommandPackage, Config, ControlCommands, ControlKeys, defaultConfig, Group, ioCommands, Patch } from './constants'
+import { CommandPackage, Config, ControlCommands, ControlKeys, defaultConfig, Group, ioCommands, Macro, Patch } from './constants'
+import MacroHandler from './MacroHandler'
 import pjPoller from './pjPoller'
 
 const https = require('https')
@@ -25,6 +26,7 @@ app.get('/test', (req, res) => {
 })
 
 export let config = new ConfigHandler()
+export let macroHandler = new MacroHandler()
 const pjs = new pjPoller(config);
 let time = Date.now()
 
@@ -45,28 +47,8 @@ pjs.start().then(() => {
 
 
 app.get('/api/config*', (req, res) => {
-  //res.send('Hello World From Panasonic Server')
-  // console.log('Config',req.query)
   if (req.query) {
     config.processUpdate(req.query)
-    /*
-    let query = req.query
-    Object.entries(query).forEach(item=>{
-      let target = item[0].toString().trim() as keyof Config
-      let value = item[1].toString()
-     
-      if(target && value){
-       switch(target){
-         case 'IP_TOP':
-           console.log('Changing IP_Top')
-           config.IP_Top= value
-           break
-       }
-      }
-    })
-    console.log(config.IP_Top)
-    
-    */
   }
   io.emit(ioCommands.REQUEST_CONFIG)
   res.status(200).json({})
@@ -175,10 +157,12 @@ let clients  = 0
 const io = new Server(server);
 pjs.io = io
 config.io = io
+macroHandler.io = io
 io.on('connection', (socket: Socket) => {
   socket.emit(ioCommands.EMITTING_PJS, pjs.pjs)
   socket.emit(ioCommands.EMITTING_STATUS, pjs.getStatus())
   socket.emit(ioCommands.EMITTING_CONFIG, config.config)
+  macroHandler.emitMacros()
   //socket.emit(ioCommands.REQUEST_UPDATE)
   //socket.emit(ioCommands.REQUEST_CONFIG)
   clients++
@@ -196,6 +180,13 @@ io.on('connection', (socket: Socket) => {
   socket.on(ioCommands.REQUESTING_CONFIG, () => {
      console.log('Sending Current Config')
     //socket.emit(ioCommands.EMITTING_CONFIG, config.config)
+  })
+
+  socket.on(ioCommands.NEW_MACRO,(payload:{macro: Macro})=>{
+    macroHandler.setMacro(payload.macro)
+  })
+  socket.on(ioCommands.DELETE_MACRO,(payload:string)=>{
+    macroHandler.removeMacro(payload)
   })
 
   socket.on(ioCommands.EMITTING_PATCH, (patch) => {

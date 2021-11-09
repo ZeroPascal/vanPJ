@@ -4,7 +4,6 @@ import * as _ from 'lodash'
 import { uniqueId } from "lodash"
 const fs = require('fs')
 const path =require('path')
-const translate = require('translate')
 
 
 const configFolder = path.join(__dirname, 'local')
