@@ -31,21 +31,18 @@ export default class panasonicPJ extends Projector implements PJ {
                 // console.log('PJ Res',res, hexFunction.response[res])
                 return hexFunction.response[res]
             } else {
+                let error = 'Unknown Error '+res
                 if (res === '00ER401') {
-
-                    let error: string = 'Can not executed: ' + hexFunction.query
-                    //  console.log(error)
-                    throw new Error(error)
-
+                    error ='Can not executed: ' + hexFunction.query
                 }
                 if (res === '00ER402') {
-                    throw new Error(hexFunction.query + ' Invalid parameter')
+                    error = 'Invalid parameter ' + hexFunction.query 
                 }
-                throw new Error(hexFunction.query + ' Unknown Responce: ' + res)
+                throw new Error(error)
             }
 
         } catch (e) {
-            //  console.log(this.id, 'Error:', e.message)
+             console.error(this.id, e,)
 
             this.error = this.error + e.message
             this.online = 'false'

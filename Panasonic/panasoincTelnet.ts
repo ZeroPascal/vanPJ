@@ -74,22 +74,41 @@ export const netConnect = async (pj: Projector, request: string): Promise<string
                         }
                     }
                 } else {
-                     //console.log(pjID,data)
-                    if(data==='ERR1\r'){
-                      //  console.log('ERR1')
-                        err(new Error('Undefined Control Command '+request))
-                    }
-                   // console.log('NETSocket Data',data)
-                    res(data)
+                    let e= 'Unknow Error'+ data
+                     switch(data){
+                         case 'ERR1\r':
+                             e= 'Undefined Control Command '+ request
+                             break;
+                        case 'ERR2\r':
+                            e= 'Out of Parameter range '+request
+                            break;
+                        case 'ERR3\r':
+                            e= 'Busy State or no-acceptable period '+request
+                            break;
+                        case 'ERR4\r':
+                            e = 'Timeout or no-acceptable period '+request
+                            break;
+                        case 'ERR5\r':
+                            e = 'Wrong data lenght '+request
+                            break;
+                        case 'ERRA\r':
+                            e = 'Password mismatch'
+                            break;
+                     }
+                    
+                        err(new Error(e))
+                    
+                   
+                   // res(data)
                 }
             })
             socket.on('error',(error)=>{
                //console.log('NETSocket got ERROR!')
-                err(new Error('Socket '+error.message))
+                err(new Error('Socket Error '+error.message))
             })
             socket.on('end', ()=>{
                 
-                err('Socket Eneded Without Answer: '+request)
+                err('Socket Ended Without Answer: '+request)
             })
             socket.on('close', (res) => {
                 err('Socket Closed Without Answer: ' + request)
