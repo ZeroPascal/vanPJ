@@ -182,10 +182,15 @@ io.on('connection', (socket: Socket) => {
     //socket.emit(ioCommands.EMITTING_CONFIG, config.config)
   })
 
-  socket.on(ioCommands.NEW_MACRO,(payload:{macro: Macro})=>{
-    macroHandler.setMacro(payload.macro)
+  socket.on(ioCommands.NEW_MACRO,(payload: Macro )=>{
+    console.log('Adding Macro', payload)
+    macroHandler.addMacro(payload)
   })
-  socket.on(ioCommands.DELETE_MACRO,(payload:string)=>{
+  socket.on(ioCommands.UPDATE_MACRO,(payload: Macro)=>{
+    macroHandler.setMacro(payload)
+  })
+  socket.on(ioCommands.DELETE_MACRO,(payload: string)=>{
+    console.log('Deleting')
     macroHandler.removeMacro(payload)
   })
 
@@ -194,6 +199,10 @@ io.on('connection', (socket: Socket) => {
     config.Patch = patch as Patch
     socket.emit(ioCommands.REQUEST_CONFIG)
     pjs.buildAllPJS()
+  })
+  socket.on(ioCommands.FIRE_MACRO,(payload: Macro)=>{
+    console.log('Firing Macro',payload)
+    
   })
   socket.on(ioCommands.STORE_GROUP, (payload: {key: number, group: number[], name: string})=>{
     console.log('Store Group Payload',payload)

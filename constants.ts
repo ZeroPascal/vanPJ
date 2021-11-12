@@ -208,7 +208,9 @@ export enum ioCommands {
     LABEL_GROUP='LABEL_GROUP',
     EMITTING_MACROS='EMITTING_MACROS',
     NEW_MACRO='NEW_MACRO',
-    DELETE_MACRO = 'DELETE_MACRO'
+    DELETE_MACRO = 'DELETE_MACRO',
+    UPDATE_MACRO = 'UPDATE_MACRO',
+    FIRE_MACRO = 'FIRE_MACRO'
 }
 export interface RigStatus {
     online: boolean,

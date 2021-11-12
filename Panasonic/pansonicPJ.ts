@@ -42,7 +42,7 @@ export default class panasonicPJ extends Projector implements PJ {
             }
 
         } catch (e) {
-             console.error(this.id, e,)
+           //  console.log(this.id, e,)
 
             this.error = this.error + e.message
             this.online = 'false'

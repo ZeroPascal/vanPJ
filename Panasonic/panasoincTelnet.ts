@@ -114,7 +114,7 @@ export const netConnect = async (pj: Projector, request: string): Promise<string
                 err('Socket Closed Without Answer: ' + request)
             })
         } catch (e) {
-            console.log('NetConnect Error: ', e)
+            //console.log('NetConnect Error: ', e.message)
             err(e)
         }
     })

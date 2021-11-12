@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 import { Server } from "socket.io"
 import { ioCommands, Macro, Macros } from "./constants"
 
@@ -58,14 +59,24 @@ export default class MacroHandler{
     emitMacros(){
         this.io?.emit(ioCommands.EMITTING_MACROS, this.macros)
     }
+    addMacro(macro: Macro){
+        console.log(macro)
+        macro.key = uuidv4()
+        this.setMacro(macro)
+    }
     setMacro(macro: Macro){
-        
+        try{
         this.macros[macro.key] = macro
+        console.log(this.macros)
         writeMacros(this.macros)
         this.emitMacros()
+        }catch(e){
+            console.log(e)
+        }
         
     }
     removeMacro(key: string){
+        console.log('Deleteing Macro ',key, this.macros[key])
         delete this.macros[key]
         writeMacros(this.macros)
         this.emitMacros()
