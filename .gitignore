@@ -4,6 +4,7 @@
 .pnp.js
 /certs
 /log
+/local
 ServerConfig.json
 
 # testing
