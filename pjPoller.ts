@@ -4,8 +4,9 @@ import PromisePool, { } from '@supercharge/promise-pool'
 import  {Server}  from "socket.io";
 import ConfigHandler from "./ConfigHandler";
 //import PJ from "./constants";
-import pansonicPJ from "./Panasonic/pansonicPJ";
-import barcoPJ from "./Barco/barcoPJ";
+import pansonicPJ from "./Projectors/Panasonic/panasonicProjector";
+import barcoPJ from "./Projectors/Barco/barcoPJ";
+import pansonicProjector from "./Projectors/Panasonic/panasonicProjector";
 
 
 export default class pjPoller {
@@ -40,10 +41,10 @@ export default class pjPoller {
     switch(pj.make){
       case PROJECTOR_MAKES.PANASONIC:
       //  console.log('Panasonic Made')
-        this.pjs[pj.id] = new pansonicPJ(pj)
+        this.pjs[pj.id] = new pansonicProjector(pj)
         break;
       case PROJECTOR_MAKES.BARCO:
-        this.pjs[pj.id] = new barcoPJ(pj)
+        //this.pjs[pj.id] = new barcoPJ(pj)
        // console.log('Barco Made', this.pjs)
         break;
     }
@@ -82,7 +83,8 @@ export default class pjPoller {
       .for(Object.values(this.pjs))
       .process(async pj => {
         this.io?.emit(ioCommands.EMITTING_POLLING_PROGRESS,(p/l*100))
-        await pj.pollStatus()
+       //----------------------------
+        //  await pj.pollStatus()
         p++
        
         this.io?.emit(ioCommands.EMITTING_POLLING_PROGRESS,(p/l*100))
@@ -93,7 +95,8 @@ export default class pjPoller {
     //console.log(pjs)
   }
   async pollPJ(pjID: number){
-   await  this.pjs[pjID]?.pollStatus()
+    //----------------------------
+  // await  this.pjs[pjID]?.pollStatus()
    console.log('Polled',pjID)
    return this.getPJ(pjID)
   }

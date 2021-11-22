@@ -5,8 +5,8 @@ export const pjWorldEnd = 198
 export const pjWorldOmit: number[] = []
 */
 
-import { hexFunction } from "./Panasonic/panasonicControlCommands"
-import Projector from "./Projector"
+import { hexFunction } from "./Projectors/Panasonic/panasonicControlCommands"
+import Projector from "./Projectors/Projector"
 
 
 export enum PROJECTOR_MAKES {
@@ -53,6 +53,17 @@ export const defaultConfig: Config = {
 
 export const header = { Authorization: 'Basic YWRtaW4xOnBhbmFzb25pYw==' }
 
+export enum AttributeKeys{
+    ip_address= 'ip_address',
+    port = 'port',
+    auth = 'auth',
+    make = 'make',
+    id = 'id',
+    name = 'name',
+    power ='power',
+    shutter = 'shutter',
+
+}
 export enum ControlCommands {
     POWER_OFF = 'POWER_OFF',
     POWER_ON = 'POWER_ON',
@@ -231,11 +242,15 @@ export type MacroLine = {cmd: ControlKeys, var: string, requestVar: boolean}
 export type Macro = {key: string, name: string, commands: MacroLine[]}
 export type Macros = Record<string,Macro>
 
-export type poll = (hexFuntion: hexFunction) => Promise<string>
+export type poll = (hexFunction: hexFunction) => Promise<string>
 export type setter = (hexFunction: hexFunction, command: ControlKeys, vartiable?: string)=>Promise<boolean>;
+export type cmdPackage = {cmd: ControlKeys, vartiable: undefined | string}
+export type CommandCallback ={pjID: number, cmd: string, res: string, err: string | undefined, user: string}
+
 export interface PJ extends Projector{
     //poll: poll,
    // setter: setter,
+   /*
     pollPower: ()=>Promise<void>,
     pollShutter: ()=>Promise<void>,
     pollEdgeBlending: ()=>Promise<void>,
@@ -246,6 +261,7 @@ export interface PJ extends Projector{
     pollName:()=> Promise<void>,
     pollBackColor: ()=>Promise<void>,
     pollStatus: ()=>Promise<void>,
-    Control: (command:ControlKeys, vartiable: undefined | string) => Promise<boolean>
+    */
+    Control: (payload: cmdPackage, user: string) => Promise<CommandCallback>
 
 }

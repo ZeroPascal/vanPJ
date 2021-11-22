@@ -1,15 +1,16 @@
-import { functions, hexFunction, range } from "./panasonicControlCommands"
-import { ControlCommands, ControlKeys, PJ, PJ_OBJ, PROJECTOR_MAKE, PROJECTOR_MAKES } from '../constants'
-import { netConnect } from "./panasoincTelnet"
+import { functions, hexFunction } from "./barcoControlCommands"
+import { cmdPackage, ControlCommands, ControlKeys, PJ, PJ_OBJ, PROJECTOR_MAKE, PROJECTOR_MAKES } from '../../constants'
+import { netConnect } from "./barcoTelnet"
 import Projector from "../Projector"
 import { times } from "lodash"
 
 
 
-export default class panasonicPJ extends Projector implements PJ {
+export default class barcoPJ extends Projector implements PJ{
 
     constructor(projectorInfo: Projector) {
         super(projectorInfo)
+        this.port = 3023
     }
     private async poll(hexFunction: hexFunction) {
         if (!hexFunction) { return 'Unknown' }
@@ -17,80 +18,107 @@ export default class panasonicPJ extends Projector implements PJ {
             let res = await netConnect(this, hexFunction.query)
             this.lastSeen = Date.now()
             this.online = 'true'
-
-            switch (hexFunction.name) {
-                case functions.Projector_Name.name:
+          //  console.log(hexFunction.query,res)
+            switch (hexFunction.name){
+              //  case functions.Projector_ID.name:
+              //      return res.slice(6,-1)
                 case functions.Input_Signal_Name_Main.name:
-                    return res.slice(8, -1)
+                    return res.slice(-4,-1)
                 case '':
-                    return res.slice(8, -1)
+                    return res.slice(8,-1)
+                case functions.Auto_Shutdown.name:
+                    return res.slice(6,-1)
 
             }
             res = res.trim()
             if (hexFunction.response[res]) {
-                // console.log('PJ Res',res, hexFunction.response[res])
+                console.log('PJ Res',res, hexFunction.response[res])
                 return hexFunction.response[res]
             } else {
-                let error = 'Unknown Error '+res
                 if (res === '00ER401') {
-                    error ='Can not executed: ' + hexFunction.query
+
+                    let error: string = 'Can not executed: ' + hexFunction.query
+                    //  console.log(error)
+                    throw new Error(error)
+
                 }
                 if (res === '00ER402') {
-                    error = 'Invalid parameter ' + hexFunction.query 
+                    throw new Error(hexFunction.query + ' Invalid parameter')
                 }
-                throw new Error(error)
+                throw new Error(hexFunction.query + ' Unknown Responce: ' + res)
             }
 
         } catch (e) {
-           //  console.log(this.id, e,)
+            //  console.log(this.id, 'Error:', e.message)
 
             this.error = this.error + e.message
             this.online = 'false'
             return 'Unknown'
         }
     }
-    private setFixedSize(vartiable: string, size: number){
-        while(vartiable.length<size){
-            vartiable=0+vartiable
+    private async loopCommand(cmd: string, n: number){
+        console.group('Loop Command'+' '+n)
+        try{
+        if(n==1){
+            return await netConnect(this, cmd)
         }
-        return vartiable
+        for(let i=0; i<n; i++){
+           // console.log('Looping', i)
+            await netConnect(this,cmd)
+        }
+        console.groupEnd()
+        return await netConnect(this,cmd)
+        }
+        catch(e){
+            console.log('Broke')
+            console.groupEnd()
+
+        }
     }
     private async setter(hexFunction: hexFunction, command: ControlKeys, vartiable?: string) {
         try {
-            //console.log('Setting: ', this.id, hexFunction)
-            let responce
-            switch (command) {
-               // case ControlCommands.PROJECTOR_ID:
-               //     responce = await netConnect(this, hexFunction.control[command].command + vartiable + '\r')
-               //     break;
-
+             console.log('Setting: ', this.id, command)
+             let cmd = hexFunction.control[command].command
+             if(vartiable){
+                cmd = cmd.slice(0,-1)+vartiable+']'
+             }
+            let count = 1
+            let responce =''
+            switch(command){
+                case(ControlCommands.PROJECTOR_ID):
+                    //cmd === ControlCommands.PROJECTOR_ID
+                   
+                    responce = await this.loopCommand(cmd, count )
+                    return
+               // case(ControlCommands.PROJECTOR_NAME):
+                   // cmd === ControlCommands.PROJECTOR_NAME
+               //    console.log(cmd)
+                 //   responce = await this.loopCommand(cmd,count)
+               //     return
+            
+                case(ControlCommands.LENS_FOCUS_FN):
+                case(ControlCommands.LENS_FOCUS_FP):
+                case(ControlCommands.LENS_ZOOM_FN):
+                case(ControlCommands.LENS_ZOOM_FP):
+                case(ControlCommands.LENS_SHIFT_H_FN):
+                case(ControlCommands.LENS_SHIFT_H_FP):
+                   count = 2
+                   break;
                 default:
-                    let cmd = hexFunction.control[command].command
-                    if (hexFunction.range) {
-                        vartiable = this.checkRange(hexFunction.range, vartiable)
-                        vartiable = this.setFixedSize(vartiable,hexFunction.fixedSize)
-                    }
-                    if(vartiable){
-                        if(hexFunction.dropEqual){
-                            cmd+=vartiable
-                        } else{
-                            cmd+='='+vartiable
-                        }
-                    }
-                    cmd+='\r'
-                    console.log(this.id, hexFunction.control[command].name,cmd)
-                    await netConnect(this,cmd)
+                    count = 1
                     break;
-            }
 
-            // console.log('TCP Responce:', responce)
+
+            }
+           // console.log(cmd)
+             responce = await this.loopCommand(cmd,count) 
+             console.log('TCP Responce:', responce)
             return (responce === hexFunction.control[command].command)
 
         } catch (e) {
-            if(e.message)
+
             console.log(this.id, 'Setting Error:', e.message)
             return false
-            
         }
     }
     async pollPower() {
@@ -98,20 +126,23 @@ export default class panasonicPJ extends Projector implements PJ {
     }
     async pollShutter() {
         this.shutter = await this.poll(functions.Shutter)
+        this.shutter += await this.poll(functions.Freeze) === 'On'? ' FROZEN' : '';
 
     }
     async pollLampStatus() {
         this.lampStatus = await this.poll(functions.Lamp_Control_Status)
+        this.lampStatus += ' '+ await this.poll(functions.Auto_Shutdown)
+        //console.log(this.id, 'Lamp',this.lampStatus)
     }
     async pollEdgeBlending() {
-        this.edgeBlending = await this.poll(functions.Edge_Blending)
-        this.edgeBlendingUpper = await this.poll(functions.Edge_Blending_Upper)
-        this.edgeBlendingLower = await this.poll(functions.Edge_Blending_Lower)
-        this.edgeBlendingRight = await this.poll(functions.Edge_Blending_Right)
-        this.edgeBlendingLeft = await this.poll(functions.Edge_Blending_Left)
+      //  this.edgeBlending = await this.poll(functions.Edge_Blending)
+      //  this.edgeBlendingUpper = await this.poll(functions.Edge_Blending_Upper)
+     //   this.edgeBlendingLower = await this.poll(functions.Edge_Blending_Lower)
+     //   this.edgeBlendingRight = await this.poll(functions.Edge_Blending_Right)
+      //  this.edgeBlendingLeft = await this.poll(functions.Edge_Blending_Left)
     }
     async pollEdgeBlendingMarkers() {
-        this.edgeBlendingMarker = await this.poll(functions.Edge_Blending_Markers)
+     //   this.edgeBlendingMarker = await this.poll(functions.Edge_Blending_Markers)
     }
     async pollTestPattren() {
         this.testPattren = await this.poll(functions.Test_Pattern)
@@ -123,14 +154,14 @@ export default class panasonicPJ extends Projector implements PJ {
         this.hdmiVerticalFrequency = await this.poll(functions.HDMI_In_EDID_Vertical_Scan)
     }
     async pollOSD() {
-        this.osdPostion = await this.poll(functions.OSD)
-        // this.osdRotaion = await this.poll(functions.OSD_Rotation)
+      //  this.osdPostion = await this.poll(functions.OSD)
     }
     async pollName() {
-        this.name = await this.poll(functions.Projector_Name)
+      //  this.name = await this.poll(functions.Projector_Name)
+        this.id = parseInt(await this.poll(functions.Projector_ID))
     }
 
-    async pollBackColor() {
+    async pollBackColor(){
         this.backColor = await this.poll(functions.BackColor)
     }
 
@@ -147,8 +178,8 @@ export default class panasonicPJ extends Projector implements PJ {
             await this.pollPower()
             await this.pollShutter()
             await this.pollLampStatus()
-            await this.pollEdgeBlending()
-            await this.pollEdgeBlendingMarkers()
+            //await this.pollEdgeBlending()
+            //await this.pollEdgeBlendingMarkers()
             await this.pollTestPattren()
             await this.pollHDMI()
             await this.pollName()
@@ -159,24 +190,9 @@ export default class panasonicPJ extends Projector implements PJ {
         }
 
     }
-    private checkRange(range: range, vartiable: string | undefined): string {
-        let s = range.default
-        if (vartiable) {
-            let v = parseInt(vartiable)
-            if (isFinite(v))
-                s = v
-            if (s > range.max)
-                s = range.max
-            if (s < range.min)
-                s = range.min
-        }
-
-        return s + ''
-
-
-    }
-    async Control(command: ControlKeys, vartiable: undefined | string) {
-        // console.log('PJ Running CMD', this.ID, command)
+    async Control(payload:cmdPackage) {
+        let command = payload.cmd
+        let vartiable = payload.vartiable
         switch (command) {
             case ControlCommands.POWER_OFF:
             case ControlCommands.POWER_ON:
@@ -210,36 +226,36 @@ export default class panasonicPJ extends Projector implements PJ {
 
             case ControlCommands.EDGE_BLENDING_MARKERS_OFF:
             case ControlCommands.EDGE_BLENDING_MARKERS_ON:
-                await this.setter(functions.Edge_Blending_Markers, command)
-                await this.pollEdgeBlendingMarkers()
+               // await this.setter(functions.Edge_Blending_Markers, command)
+                //await this.pollEdgeBlendingMarkers()
                 return true
 
             case ControlCommands.EDGE_BLENDING_OFF:
             case ControlCommands.EDGE_BLENDING_ON:
-                await this.setter(functions.Edge_Blending, command)
-                await this.pollEdgeBlending()
+               // await this.setter(functions.Edge_Blending, command)
+                //await this.pollEdgeBlending()
                 return true
             case ControlCommands.EDGE_BLENDING_UPPER_OFF:
             case ControlCommands.EDGE_BLENDING_UPPER_ON:
-                await this.setter(functions.Edge_Blending_Upper, command)
-                await this.pollEdgeBlending()
+               // await this.setter(functions.Edge_Blending_Upper, command)
+                //await this.pollEdgeBlending()
                 return true
 
             case ControlCommands.EDGE_BLENDING_RIGHT_ON:
             case ControlCommands.EDGE_BLENDING_RIGHT_OFF:
-                await this.setter(functions.Edge_Blending_Right, command)
-                await this.pollEdgeBlending()
+               // await this.setter(functions.Edge_Blending_Right, command)
+               // await this.pollEdgeBlending()
                 return true
 
             case ControlCommands.EDGE_BLENDING_LOWER_OFF:
             case ControlCommands.EDGE_BLENDING_LOWER_ON:
-                await this.setter(functions.Edge_Blending_Lower, command)
-                await this.pollEdgeBlending()
+              //  await this.setter(functions.Edge_Blending_Lower, command)
+               // await this.pollEdgeBlending()
                 return true;
             case ControlCommands.EDGE_BLENDING_LEFT_OFF:
             case ControlCommands.EDGE_BLENDING_LEFT_ON:
-                await this.setter(functions.Edge_Blending_Left, command)
-                await this.pollEdgeBlending()
+               // await this.setter(functions.Edge_Blending_Left, command)
+               // await this.pollEdgeBlending()
                 return true;
             case ControlCommands.OSD_POSITION_UPPER_LEFT:
             case ControlCommands.OSD_POSITION_CENTER_LEFT:
@@ -251,16 +267,17 @@ export default class panasonicPJ extends Projector implements PJ {
             case ControlCommands.OSD_POSITION_CENTER_RIGHT:
             case ControlCommands.OSD_POSITION_LOWER_RIGHT:
                 await this.setter(functions.OSDPostion, command)
-                // await this.pollOSD()
+                await this.pollOSD()
                 return true
             case ControlCommands.OSD_ON:
             case ControlCommands.OSD_OFF:
                 await this.setter(functions.OSD, command)
                 return true
-
+            
             case ControlCommands.FREEZE_OFF:
             case ControlCommands.FREEZE_ON:
                 await this.setter(functions.Freeze, command)
+                await this.pollShutter()
                 return true
 
             case ControlCommands.PROJECTOR_NAME:
@@ -282,7 +299,7 @@ export default class panasonicPJ extends Projector implements PJ {
                 return true
 
             case ControlCommands.LENS_POSTION_HOME:
-                await this.setter(functions.LensPositionHome, command)
+              //  await this.setter(functions.LensPositionHome, command)
                 return true
 
             case ControlCommands.LENS_SHIFT_H_FN:
@@ -319,7 +336,7 @@ export default class panasonicPJ extends Projector implements PJ {
                 return true
 
             case ControlCommands.LENS_CALIBRATION:
-                await this.setter(functions.LensCalibration, command)
+              //  await this.setter(functions.LensCalibration, command)
                 return true;
 
             case ControlCommands.BACK_COLOR_BLUE:
@@ -329,36 +346,21 @@ export default class panasonicPJ extends Projector implements PJ {
                 await this.setter(functions.BackColor, command)
                 await this.pollBackColor()
                 return true
+
             case ControlCommands.PROJECTOR_ID:
                 await this.setter(functions.Projector_ID, command, vartiable)
-
-            case ControlCommands.PROJECTOR_INSTALL_METHOD_REAR_AUTO:
-            case ControlCommands.PROJECTOR_INSTALL_METHOD_REAR_CEILING:
-            case ControlCommands.PROJECTOR_INSTALL_METHOD_REAR_DESK:
-            case ControlCommands.PROJECTOR_INSTALL_METHOD_FRONT_AUTO:
-            case ControlCommands.PROJECTOR_INSTALL_METHOD_FRONT_CEILING:
-            case ControlCommands.PROJECTOR_INSTALL_METHOD_FRONT_DESK:
-                await this.setter(functions.Install_Postion, command)
+                await this.pollName()
                 return true
-            case ControlCommands.OSD_ROTATION_CLOCKWISE:
-            case ControlCommands.OSD_ROTATION_COUNTERCLOCKWISE:
-            case ControlCommands.OSD_ROTATION_OFF:
-                await this.setter(functions.OSD_Rotation, command)
+            
+            case ControlCommands.CEILING_MOUNT_ON:
+            case ControlCommands.CEILING_MOUNT_OFF:
+                await this.setter(functions.Ceiling_Mount,command);
                 return true
-            case ControlCommands.INPUT_SELECT_DIGITALLINK:
-            case ControlCommands.INPUT_SELECT_COMPUTER1:
-            case ControlCommands.INPUT_SELECT_COMPUTER2:
-            case ControlCommands.INPUT_SELECT_DVI:
-            case ControlCommands.INPUT_SELECT_HDMI1:
-            case ControlCommands.INPUT_SELECT_HDMI2:
-            case ControlCommands.INPUT_SELECT_SDI1:
-            case ControlCommands.INPUT_SELECT_VIDEO:
-            case ControlCommands.INPUT_SELECT_YC:
-                await this.setter(functions.Input, command)
+            case ControlCommands.POWER_HOG_ON:
+                await this.setter(functions.Standby_Mode, ControlCommands.STANDBY_MODE_NETWORK)
+                await this.setter(functions.Auto_Shutdown, ControlCommands.AUTO_SHUTDOWN_OFF)
                 return true
-            case ControlCommands.LIGHT_OUTPUT:
-                await this.setter(functions.LightOutput, command, vartiable)
-                return true
+            
             default:
                 return false
 

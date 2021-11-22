@@ -123,7 +123,7 @@ app.get('/api/set/*', async (req, res) => {
       if (Object.keys(ControlCommands).includes(cmd)) {
         res.status(200).json('Good Command')
         let vartiable = q.vartiable ? q.vartiable.toString() : undefined;
-        pj.Control(cmd, vartiable).then((res: any) => {
+        pj.Control({cmd, vartiable},'API').then((res: any) => {
           pjs.updateStatus()
           io.emit(ioCommands.REQUEST_UPDATE)
         })
@@ -236,7 +236,7 @@ io.on('connection', (socket: Socket) => {
     .for(activePJs)
     .withConcurrency(activePJs.length)
     .process(async pj => {
-      await pj.Control(CommandPackage.cmd,CommandPackage.vartiable)
+      await pj.Control({cmd:CommandPackage.cmd,vartiable: CommandPackage.vartiable},socket.id)
     
     })
  } else {
@@ -244,7 +244,7 @@ io.on('connection', (socket: Socket) => {
     const { results, errors } = await PromisePool
     .for(activePJs)
     .process(async pj => {
-      await pj.Control(CommandPackage.cmd,CommandPackage.vartiable)
+      await pj.Control({cmd: CommandPackage.cmd,vartiable: CommandPackage.vartiable},socket.id)
     
     })
   } 

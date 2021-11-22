@@ -1,4 +1,6 @@
-import { PROJECTOR_MAKES } from "./constants"
+import { cmdPackage, PROJECTOR_MAKES, AttributeKeys, PROJECTOR_MAKE } from "../constants"
+import { blockKey } from "./Library"
+
 
 interface projector {
     ip_address: string,
@@ -25,13 +27,16 @@ interface projector {
     hdmiVerticalFrequency: string,
     osdPostion: string,
     inputSignalName_Main: string,
-    error: string
+    error: string,
+    isLocked: boolean,
+    cmdQueue: cmdPackage[]
 }
 export default class Projector implements projector {
+   
     ip_address: string
     port: number
     auth: string
-    make: keyof typeof PROJECTOR_MAKES
+    make: "PANASONIC" | "BARCO"
     id: number
     power: string
     name: string
@@ -53,34 +58,39 @@ export default class Projector implements projector {
     osdPostion: string
     inputSignalName_Main: string
     error: string
-    constructor(projectorInfo: projector) {
-        this.id = projectorInfo.id
-        this.ip_address = projectorInfo.ip_address
-        this.port = projectorInfo.port
-        this.auth = projectorInfo.auth
-        this.make = projectorInfo.make
+
+    isLocked: boolean
+    cmdQueue: cmdPackage[]
+    lockOwner: string | undefined
+    
+
+    constructor(info: projector) {
+        this.auth = info.auth
+        this.port= info. port
+        this.make = info.make
+        this.id = info.id
+        this.ip_address = info.ip_address
         this.power = 'Unknown'
-        this.name = 'Unknown'
         this.shutter = 'Unknown'
-        this.online = 'Unknown'
-        this.lastSeen = -1
-        this.error = ''
-        this.lampStatus = 'Unknown'
-        this.edgeBlending = 'Unknown'
-        this.testPattren = 'Unknown'
-        this.edgeBlendingMarker = 'Unknown'
-        this.edgeBlendingLeft = 'Unknown'
-        this.edgeBlendingLower = 'Unknown'
-        this.edgeBlendingRight = 'Unknown'
-        this.edgeBlendingUpper = 'Unknown'
-        this.hdmiResolution = 'Unknown'
-        this.hdmiSignalLevel = 'Unknown'
-        this.hdmiVerticalFrequency = 'Unknown'
-        this.osdPostion = 'Unknown'
-        this.backColor = 'Unknown'
+        this.cmdQueue = []
+        this.lockOwner = undefined
+        this.isLocked = false
     }
-    get IP_Address() {
+    get IP_Address(){
         return this.ip_address
+    }
+    setAttribute(attribute: AttributeKeys, value: any){
+        switch (attribute) {
+            case AttributeKeys.power:
+                this.power = value;
+                break;
+            case AttributeKeys.shutter:
+                this.shutter = value;
+                break;
+        
+            default:
+                break;
+        }
     }
     set IP_Address(address: string) {
         address.trim()
@@ -95,7 +105,7 @@ export default class Projector implements projector {
                 }
             }
             if (good) {
-
+                
                 this.ip_address = address
             }
         }
@@ -104,7 +114,7 @@ export default class Projector implements projector {
         return this.port
     }
     set Port(port: number) {
-        this.port = port
+        this.port= port
     }
     get Auth() {
         return this.auth
@@ -112,16 +122,11 @@ export default class Projector implements projector {
     set Auth(auth: string) {
         this.auth = auth
     }
-    get Make() {
-        return this.make
+    get Make(): PROJECTOR_MAKE {
+        return this.auth as PROJECTOR_MAKE
     }
-    set Make(make) {
+    set Make(make: PROJECTOR_MAKE) {
         this.make = make
     }
-    get ID() {
-        return this.id
-    }
-    set ID(id) {
-        this.id = id
-    }
+    
 }

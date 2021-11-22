@@ -36,13 +36,14 @@ export const netConnect = async (pj: Projector, request: string): Promise<string
     //console.log('NetConnect',pj.IP_Address)
     return new Promise((res, err) => {
         try {
+            
             let socket = net.connect(pj.Port, pj.IP_Address)
             
             socket.setTimeout(1500)
             socket.on('timeout', () => {
                // console.log('NETSocket Timeout '+pj.ID)
                 socket.end()
-                err('Socket Timed Out. Query: ' + request)
+                err('Socket Timed Out')
             })
             socket.on('connect', (res: string) => {
                //  console.log('NETSocket Connected',pj.ID, pj.IP_Address)

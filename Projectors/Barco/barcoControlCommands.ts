@@ -1,5 +1,5 @@
 import { query, response } from 'express'
-import { ControlCommands, ControlKeys } from '../constants'
+import { ControlCommands, ControlKeys } from '../../constants'
 
 interface responce {
     callbacks: Record<string, string | boolean>
