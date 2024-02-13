@@ -334,6 +334,12 @@ export const functions: Record<string, hexFunction> = {
         query: '00QVX:NCGS8',
         response: {}
     },
+    Direct_Command: {
+        name: 'Direct Command',
+        control: { [ControlCommands.DIRECT_COMMAND]: getControl('Command', '') }, //Drops Return and Equal, Handled In Setter
+        query: '',
+        response: {}
+    },
     Projector_ID: {
         name: 'Projector ID',
         control: { [ControlCommands.PROJECTOR_ID]: getControl('ID', 'RIS:') }, //Drops Return and Equal, Handled In Setter,

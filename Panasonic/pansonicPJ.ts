@@ -66,7 +66,10 @@ export default class panasonicPJ extends Projector implements PJ {
                // case ControlCommands.PROJECTOR_ID:
                //     responce = await netConnect(this, hexFunction.control[command].command + vartiable + '\r')
                //     break;
-
+                case ControlCommands.DIRECT_COMMAND:
+                    vartiable='00'+vartiable+'\r'
+                    await netConnect(this,vartiable)
+                    break
                 default:
                     let cmd = hexFunction.control[command].command
                     if (hexFunction.range) {
@@ -75,7 +78,7 @@ export default class panasonicPJ extends Projector implements PJ {
                     }
                     if(vartiable){
                         if(hexFunction.dropEqual){
-                            cmd+=vartiable
+                            cmd+='00'+vartiable
                         } else{
                             cmd+='='+vartiable
                         }
@@ -361,6 +364,9 @@ export default class panasonicPJ extends Projector implements PJ {
                 return true
             case ControlCommands.LIGHT_OUTPUT:
                 await this.setter(functions.LightOutput, command, vartiable)
+                return true
+            case ControlCommands.DIRECT_COMMAND:
+                await this.setter(functions.Direct_Command,command, vartiable)
                 return true
             default:
                 return false
